@@ -1,0 +1,101 @@
+<script setup>
+import { ref } from "vue";
+import experiencesData from "../experiences.json";
+import heroImg from "../assets/images/hero.jpg";
+import arrowImg from "../assets/arrow-back-ios-new-rounded.svg";
+
+// Vi tar t.ex. "spaceAdventures" som top experiences
+const topExperiences = ref(experiencesData.TopExperineces);
+
+// Scrollref för horisontell scroll
+const carouselRef = ref(null);
+
+// Funktioner för pilar
+const scrollLeft = () => {
+  if (carouselRef.value)
+    carouselRef.value.scrollBy({ left: -300, behavior: "smooth" });
+};
+
+const scrollRight = () => {
+  if (carouselRef.value)
+    carouselRef.value.scrollBy({ left: 300, behavior: "smooth" });
+};
+</script>
+
+<template>
+  <section class="py-15">
+    <h2 class="mb-4">Top Experiences</h2>
+
+    <div class="relative h-96 m-5">
+      <!-- Fade-sidor -->
+      <div
+        class="absolute left-0 top-0 h-full w-20 pointer-events-none"
+        style="background: linear-gradient(to right, #fffcf9, transparent)"
+      ></div>
+
+      <div
+        class="absolute right-0 top-0 h-full w-40 pointer-events-none"
+        style="background: linear-gradient(to left, #fffcf9, transparent)"
+      ></div>
+
+      <!-- Vänster pil -->
+      <button
+        @click="scrollLeft"
+        class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 shadow-md z-10 hover:bg-white w-10"
+      >
+        <img :src="arrowImg" alt="" />
+      </button>
+
+      <!-- Carousel -->
+      <div
+        ref="carouselRef"
+        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full"
+      >
+        <div
+          v-for="(exp, index) in topExperiences"
+          :key="exp.id"
+          class="flex-shrink-0 w-73 snap-start flex flex-col h-full"
+        >
+          <div class="flex items-center">
+            <div class="text-8xl font-bold text-purple-600 pl-5">
+              {{ index + 1 }}
+            </div>
+
+            <div
+              class="flex-1 rounded-lg shadow-md p-4 flex flex-col h-86 overflow-hidden cursor-pointer bg-white transform duration-300 hover:shadow-xl"
+            >
+              <img
+                :src="heroImg"
+                alt=""
+                class="w-full h-40 object-cover rounded-t-lg mb-2"
+              />
+              <h3 class="font-bold text-lg mb-1">{{ exp.title }}</h3>
+              <p class="text-gray-600 text-sm line-clamp-3 h-full">
+                {{ exp.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Höger pil -->
+      <button
+        @click="scrollRight"
+        class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 shadow-md z-10 hover:bg-white w-10"
+      >
+        <img :src="arrowImg" alt="" class="scale-x-[-1]" />
+      </button>
+    </div>
+  </section>
+</template>
+
+<style>
+/* Tailwind scroll snap + dölja scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

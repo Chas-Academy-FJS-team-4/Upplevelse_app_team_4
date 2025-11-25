@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
+main {
+  padding: 0 5rem;
+  background-color: #fffcf9;
+}
+
+h2 {
+  font-size: 1.7rem;
+  font-weight: 500;
+  padding: 0 30px;
+}
+
 li {
+  cursor: pointer;
+}
+
+button {
   cursor: pointer;
 }
 
