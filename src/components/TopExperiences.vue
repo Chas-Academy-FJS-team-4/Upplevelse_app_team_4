@@ -49,12 +49,12 @@ const scrollRight = () => {
       <!-- Carousel -->
       <div
         ref="carouselRef"
-        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full"
+        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full mr-6"
       >
         <div
           v-for="(exp, index) in topExperiences"
           :key="exp.id"
-          class="flex-shrink-0 w-73 snap-start flex flex-col h-full"
+          class="flex-shrink-0 w-72 snap-start flex flex-col h-full"
         >
           <div class="flex items-center">
             <div class="text-8xl font-bold text-purple-600 pl-5">
