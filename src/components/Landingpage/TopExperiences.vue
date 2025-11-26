@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import experiencesData from "../experiences.json";
-import heroImg from "../assets/images/hero.jpg";
-import arrowImg from "../assets/arrow-back-ios-new-rounded.svg";
+import experiencesData from "../../experiences.json";
+import heroImg from "../../assets/images/hero.jpg";
+import arrowImg from "../../assets/arrow-back-ios-new-rounded.svg";
 
 // Vi tar t.ex. "spaceAdventures" som top experiences
 const topExperiences = ref(experiencesData.TopExperineces);
@@ -23,7 +23,7 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <section class="py-15">
+  <section class="py-25">
     <h2 class="mb-4">Top Experiences</h2>
 
     <div class="relative h-96 m-5">
@@ -69,7 +69,7 @@ const scrollRight = () => {
                 alt=""
                 class="w-full h-40 object-cover rounded-t-lg mb-2"
               />
-              <h3 class="font-bold text-lg mb-1">{{ exp.title }}</h3>
+              <h4 class="mb-1">{{ exp.title }}</h4>
               <p class="text-gray-600 text-sm line-clamp-3 h-full">
                 {{ exp.description }}
               </p>

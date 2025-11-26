@@ -8,9 +8,20 @@ main {
 h2 {
   font-size: 1.7rem;
   font-weight: 500;
-  padding: 0 30px;
+  padding: 0 60px;
 }
 
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* font-bold text-lg */
 li {
   cursor: pointer;
 }

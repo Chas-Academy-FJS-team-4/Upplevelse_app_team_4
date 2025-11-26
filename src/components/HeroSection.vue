@@ -1,6 +1,6 @@
 <script setup>
 import heroImg from "../assets/images/hero.jpg";
-import SearchBar from "./SearchBar.vue";
+import SearchBar from "./SearchBox.vue";
 </script>
 <template>
   <section class="">
