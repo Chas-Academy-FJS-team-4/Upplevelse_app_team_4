@@ -8,7 +8,7 @@ import Articles from "./components/Landingpage/Articles.vue";
   <Header />
   <HeroSection />
 
-  <main>
+  <main class="">
     <TopExperiences />
     <Articles />
   </main>

@@ -23,10 +23,10 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <section class="py-25">
+  <section class="py-25 px-3 lg:px-15">
     <h2 class="mb-4">Top Experiences</h2>
 
-    <div class="relative h-96 m-5">
+    <div class="relative h-96 my-5 sm:mx-5">
       <!-- Fade-sidor -->
       <div
         class="absolute left-0 top-0 h-full w-20 pointer-events-none"
@@ -73,6 +73,11 @@ const scrollRight = () => {
               <p class="text-gray-600 text-sm line-clamp-3 h-full">
                 {{ exp.description }}
               </p>
+              <a
+                class="text-right text-xs text-gray-600 hover:text-purple-800"
+                href="#"
+                >Läs mer...</a
+              >
             </div>
           </div>
         </div>
