@@ -12,13 +12,17 @@ function focusOnSearch() {
   <header
     class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center p-5 text-white"
   >
-    <h1 class="text-2xl">WildX</h1>
+    <h1 class="text-2xl">
+      <router-link to="/">WildX</router-link>
+    </h1>
     <ul class="flex flex-row sm:gap-10 gap-3 text-sm sm:textmd">
       <li>Våra upplevelser</li>
       <li @click="focusOnSearch">Sök</li>
-      <li>Kundkorg</li>
+      <li>
+        <router-link to="/cart">Kundkorg</router-link>
+      </li>
     </ul>
   </header>
 
-  <SearchBox ref="searchBoxRef" />
+  <!-- <SearchBox ref="searchBoxRef" /> -->
 </template>

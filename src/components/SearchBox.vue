@@ -41,7 +41,7 @@ defineExpose({ focusSearch });
       <!-- Sökfält -->
       <input
         type="text"
-        placeholder="Search experiences..."
+        placeholder="Sök upplevelse..."
         class="flex-1 p-4 rounded-lg bg-white w-full min-w-42"
         v-model="search"
         ref="searchInput"
@@ -52,7 +52,7 @@ defineExpose({ focusSearch });
           <input
             type="number"
             min="1"
-            placeholder="People"
+            placeholder="Antal personer"
             class="p-4 rounded-md bg-white w-1/3 flex-2"
             v-model="people"
           />
@@ -62,10 +62,10 @@ defineExpose({ focusSearch });
             class="p-4 rounded-md bg-white w-1/3 flex-2 text-gray-500"
             v-model="ageCategory"
           >
-            <option value="" hidden>Age Category</option>
-            <option value="any">Any</option>
-            <option value="kids">Kids (0–12)</option>
-            <option value="adult">Adult (13–64)</option>
+            <option value="" hidden>Åldersgrupp</option>
+            <option value="any">Familj</option>
+            <option value="kids">Barn (0–12)</option>
+            <option value="adult">Vuxna (13–64)</option>
             <option value="senior">Senior (65+)</option>
           </select>
         </div>
@@ -84,7 +84,7 @@ defineExpose({ focusSearch });
         type="submit"
         class="bg-purple-800 text-white px-6 py-4 rounded-md hover:bg-purple-700 w-full md:w-auto"
       >
-        Search
+        Sök
       </button>
     </div>
     <div class="w-3/4 flex max-w-7xl">
