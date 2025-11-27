@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+main {
+  /* padding: 0 5rem; */
+  background-color: #fffcf9;
+}
+
+h2 {
+  font-size: 1.7rem;
+  font-weight: 500;
+  padding: 0 50px;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* font-bold text-lg */
+li {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+.hero {
+  background-image: url("@/assets/images/hero.jpg");
+}
