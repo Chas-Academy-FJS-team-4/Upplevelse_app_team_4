@@ -10,7 +10,7 @@ const tags = ["Rökgalet", "Rymd", "Fallskärm"];
 // Formulärdata
 const selectedDate = ref<string | null>(null);
 const people = ref<number>(1);
-const ageCategory = ref<string>("vuxen");
+const ageCategory = ref<string>("adult");
 
 // Minsta datum = idag
 const today = new Date();
@@ -36,15 +36,13 @@ function addToCart() {
 
 
 <template>
-    <section class="flex flex-col items-center my-20 gap-6 mx-30">
-        <div class="justify-self-start">
-            <h1 class="text-3xl font-extrabold"> Boka din upplevelse:</h1>
-        </div>
+    <section class="flex flex-col items-start my-20 gap-6 max-w-3xl mx-auto">
+        <h1 class="text-3xl font-extrabold"> Boka din upplevelse:</h1>
         <article class="flex flex-col gap-4 p-4 border border-zinc-500 rounded shadow-md max-w-3xl">
             <div class="flex ">
-                <div class="flex w-48 h-48 shrink-0">
+                <div class="flex w-54 shrink-0">
                     <img src="/moon.jpg" alt="Bild på månen i rymden"
-                    class="w-full h-full object-cover rounded-lg"/>
+                    class="w-full h-auto object-cover rounded-lg"/>
                 </div>
                 <div class="flex flex-col gap-4 ml-3">
                     <h2 class="text-zinc-800 text-2xl font-bold"> {{  title }}</h2>
@@ -62,8 +60,8 @@ function addToCart() {
 
                         <label for="personer" class="sr-only">Antal personer</label>
                         <select id="personer" v-model="people" class="border p-2 rounded-md text-sm "
-                                aria-placeholder="Välj antal personer för upplevelsen" >
-                            <option v-for="n in 10" :key="n" :value="n">{{ n }} person {{ n > 1 ? "er" : "" }}</option>
+                                aria-label="Välj antal personer för upplevelsen" >
+                            <option v-for="n in 10" :key="n" :value="n">{{ n }} person{{ n > 1 ? "er" : "" }}</option>
                         </select>
 
                         <label for="alderskategori" class="sr-only">Ålderskategori</label>
