@@ -1,15 +1,4 @@
-<script setup>
-import Header from "./components/Header.vue";
-import HeroSection from "./components/HeroSection.vue";
-import TopExperiences from "./components/Landingpage/TopExperiences.vue";
-import Articles from "./components/Landingpage/Articles.vue";
-</script>
+<script setup></script>
 <template>
-  <Header />
-  <HeroSection />
-
-  <main class="">
-    <TopExperiences />
-    <Articles />
-  </main>
+  <router-view />
 </template>
