@@ -4,8 +4,7 @@ import experiencesData from "../../experiences.json";
 import heroImg from "../../assets/images/hero.jpg";
 import arrowImg from "../../assets/arrow-back-ios-new-rounded.svg";
 
-// Vi tar t.ex. "spaceAdventures" som top experiences
-const topExperiences = ref(experiencesData.TopExperineces);
+const topExperiences = ref(experiencesData.topExperineces);
 
 // Scrollref för horisontell scroll
 const carouselRef = ref(null);

@@ -16,7 +16,9 @@ function focusOnSearch() {
     <ul class="flex flex-row sm:gap-10 gap-3 text-sm sm:textmd">
       <li>Våra upplevelser</li>
       <li @click="focusOnSearch">Sök</li>
-      <li>Kundkorg</li>
+      <li>
+        <router-link to="/cart">Kundkorg</router-link>
+      </li>
     </ul>
   </header>
 
