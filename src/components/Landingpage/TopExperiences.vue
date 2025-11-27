@@ -22,9 +22,11 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <section class="py-25 px-3 lg:px-15">
-    <h2 class="mb-4">Top Experiences</h2>
+  <div class="mx-[40px] lg:mx-[90px] pt-20 mb-7">
+    <h2 class="">Mest bokade upplevelser</h2>
+  </div>
 
+  <div class="pb-25 px-3 lg:px-[45px]">
     <div class="relative h-96 my-5 sm:mx-5">
       <!-- Fade-sidor -->
       <div
@@ -90,7 +92,7 @@ const scrollRight = () => {
         <img :src="arrowImg" alt="" class="scale-x-[-1]" />
       </button>
     </div>
-  </section>
+  </div>
 </template>
 
 <style>
