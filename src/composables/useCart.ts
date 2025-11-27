@@ -11,9 +11,9 @@ export interface CartItem {
 }
 
 const cartItems = ref<CartItem[]>([
-  { id: 1, title: "Åka skidor", description: "Upplev Sälen!", peopleCount: 1, selectedDate: "", pricePerPerson: 1200, image: "/src/public/sälen.jpeg" },
-  { id: 2, title: "Fallskärm", description: "Hoppa fallskärm i världens finaste städer!", peopleCount: 1, selectedDate: "", pricePerPerson: 3500, image: "/src/public/fallskärm.jpeg" },
-  { id: 3, title: "Klättra", description: "Klättra på riktiga berg!", peopleCount: 1, selectedDate: "", pricePerPerson: 890, image: "/src/public/klättra.jpg" }
+  { id: 1, title: "Åka skidor", description: "Upplev Sälen!", peopleCount: 1, selectedDate: "", pricePerPerson: 1200, image: "./assets/experiences/sälen.jpeg" },
+  { id: 2, title: "Fallskärm", description: "Hoppa fallskärm i världens finaste städer!", peopleCount: 1, selectedDate: "", pricePerPerson: 3500, image: "./assets/experiences/fallskärm.jpeg" },
+  { id: 3, title: "Klättra", description: "Klättra på riktiga berg!", peopleCount: 1, selectedDate: "", pricePerPerson: 890, image: "./assets/experiences/klättra.jpg" }
 ]);
 
 export function useCart() {
