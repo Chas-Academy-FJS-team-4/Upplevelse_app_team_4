@@ -7,7 +7,7 @@ const newExperiences = ref(experiencesData.newExperiences);
 </script>
 <template>
   <section class="pb-50 lg:px-0">
-    <h2 class="lg:mx-[90px] mx-[40px] mb-10">Nya spännande upplevelser</h2>
+    <h2 class="lg:mx-[90px] mx-10 mb-10">Nya spännande upplevelser</h2>
 
     <div class="flex flex-col">
       <article
@@ -96,8 +96,7 @@ const newExperiences = ref(experiencesData.newExperiences);
                       <path
                         d="M54.55,56.85A22.55,22.55,0,0,0,32,34.3h0A22.55,22.55,0,0,0,9.45,56.85Z"
                       ></path>
-                    </g></svg
-                ></span>
+                    </g></svg></span>
                 {{ newExperiences[0].ageGroup }}
               </p>
             </div>
@@ -196,8 +195,8 @@ const newExperiences = ref(experiencesData.newExperiences);
                       <path
                         d="M54.55,56.85A22.55,22.55,0,0,0,32,34.3h0A22.55,22.55,0,0,0,9.45,56.85Z"
                       ></path>
-                    </g></svg
-                ></span>
+                    </g></svg>
+                  </span>
                 {{ newExperiences[0].ageGroup }}
               </p>
             </div>
