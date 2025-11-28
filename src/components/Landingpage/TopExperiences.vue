@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import experiencesData from "../../utils/experiences.json";
 import heroImg from "../../assets/images/hero.jpg";
-import arrowImg from "../../assets/arrow-back-ios-new-rounded.svg";
+import arrowImg from "../../assets/icons/arrow-back-ios-new-rounded.svg";
 
 // Vi tar t.ex. "spaceAdventures" som top experiences
 const topExperiences = ref(experiencesData.TopExperineces);
