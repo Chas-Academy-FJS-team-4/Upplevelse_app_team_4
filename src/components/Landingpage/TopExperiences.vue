@@ -63,15 +63,18 @@ const scrollRight = () => {
             </div>
 
             <div
-              class="flex-1 rounded-lg shadow-md p-4 flex flex-col h-86 overflow-hidden cursor-pointer bg-white transform duration-300 hover:shadow-xl"
+              class="flex-1 rounded-lg shadow-md p-4 flex flex-col h-86 cursor-pointer bg-white transform duration-300 hover:shadow-xl"
             >
-              <img
-                :src="heroImg"
-                alt=""
-                class="w-full h-40 object-cover rounded-t-lg mb-2"
-              />
+              <div class="w-full h-38 mb-2">
+                <img
+                  :src="exp.image"
+                  alt=""
+                  class="w-full h-38 object-cover rounded-t-lg mb-2"
+                />
+              </div>
+
               <h4 class="mb-1">{{ exp.title }}</h4>
-              <p class="text-gray-600 text-sm line-clamp-3 h-full">
+              <p class="text-gray-600 text-sm h-full line-clamp-4">
                 {{ exp.description }}
               </p>
               <a

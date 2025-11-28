@@ -9,7 +9,7 @@
       "price": 12000000,
       "tags": ["rymd", "fallskärm", "extremt"],
       "ageGroup": "adults",
-      "image": "/images/skydive-moon.jpg"
+      "image": "/experiences/1.png"
     },
     {
       "id": 2,
@@ -20,7 +20,7 @@
       "price": 7000000,
       "tags": ["rymd", "surfing", "zero-g"],
       "ageGroup": "adults",
-      "image": "/images/saturn-gravity-surf.jpg"
+      "image": "/experiences/2.png"
     },
     {
       "id": 3,
@@ -31,7 +31,7 @@
       "price": 3500000,
       "tags": ["rymd", "musik", "show"],
       "ageGroup": "any",
-      "image": "/images/alien-opera.jpg"
+      "image": "/experiences/3.png"
     }
   ],
 
@@ -45,7 +45,7 @@
       "price": 4999999,
       "tags": ["tidsresa", "dinosaurier", "äventyr"],
       "ageGroup": "kids",
-      "image": "/images/t-rex-ride.jpg"
+      "image": "/experiences/4.png"
     },
     {
       "id": 5,
@@ -56,7 +56,7 @@
       "price": 1500000,
       "tags": ["tidsresa", "turnering", "history"],
       "ageGroup": "any",
-      "image": "/images/medieval-jousting.jpg"
+      "image": "/experiences/5.png"
     }
   ],
 
@@ -70,7 +70,7 @@
       "price": 1250000,
       "tags": ["fantasy", "flyg", "strid"],
       "ageGroup": "any",
-      "image": "/images/dragon-joust.jpg"
+      "image": "/experiences/6.png"
     },
     {
       "id": 7,
@@ -81,7 +81,7 @@
       "price": 250000,
       "tags": ["fantasy", "äventyr", "mystik"],
       "ageGroup": "any",
-      "image": "/images/portal-forest.jpg"
+      "image": "/experiences/7.png"
     }
   ],
 
@@ -95,7 +95,7 @@
       "price": 899000,
       "tags": ["extremt", "värme", "science-fiction"],
       "ageGroup": "adults",
-      "image": "/images/lava-swim.jpg"
+      "image": "/experiences/8.png"
     },
 
     {
@@ -107,7 +107,7 @@
       "price": 2500000,
       "tags": ["äventyr", "underjordiskt", "fysik"],
       "ageGroup": "adults",
-      "image": "/images/earth-core-dive.jpg"
+      "image": "/experiences/9.png"
     },
 
     {
@@ -119,7 +119,7 @@
       "price": 80000,
       "tags": ["fysik", "extremt", "vr"],
       "ageGroup": "any",
-      "image": "/images/blackhole-simulator.jpg"
+      "image": "/experiences/10.png"
     },
 
     {
@@ -131,7 +131,7 @@
       "price": 70000,
       "tags": ["parkour", "tidsmanipulation", "adrenalin"],
       "ageGroup": "adults",
-      "image": "/images/time-freeze.jpg"
+      "image": "/experiences/11.png"
     }
   ],
 
@@ -145,7 +145,7 @@
       "price": 1900000,
       "tags": ["monster", "vatten", "kamp"],
       "ageGroup": "adults",
-      "image": "/images/cyber-kraken.jpg"
+      "image": "/experiences/12.png"
     }
   ],
 
@@ -159,7 +159,7 @@
       "price": 120000,
       "tags": ["sci-fi", "speed", "challenge"],
       "ageGroup": "any",
-      "image": "/images/teleport-race.jpg"
+      "image": "/experiences/13.png"
     },
 
     {
@@ -171,7 +171,7 @@
       "price": 350000,
       "tags": ["robotar", "action", "turnering"],
       "ageGroup": "kids",
-      "image": "/images/mecha-battle.jpg"
+      "image": "/experiences/14.png"
     },
 
     {
@@ -183,7 +183,7 @@
       "price": 599000,
       "tags": ["extremsport", "hastighet", "berg"],
       "ageGroup": "adults",
-      "image": "/images/hyperspeed-snowboard.jpg"
+      "image": "/experiences/15.png"
     }
   ],
 
@@ -197,7 +197,7 @@
       "price": 12000000,
       "tags": ["rymd", "fallskärm", "extremt"],
       "ageGroup": "adults",
-      "image": "/images/skydive-moon.jpg"
+      "image": "/experiences/1.png"
     },
 
     {
@@ -209,7 +209,7 @@
       "price": 599000,
       "tags": ["extremsport", "hastighet", "berg"],
       "ageGroup": "adults",
-      "image": "/images/hyperspeed-snowboard.jpg"
+      "image": "/experiences/15.png"
     },
 
     {
@@ -221,7 +221,7 @@
       "price": 3500000,
       "tags": ["rymd", "musik", "show"],
       "ageGroup": "any",
-      "image": "/images/alien-opera.jpg"
+      "image": "/experiences/3.png"
     },
 
     {
@@ -233,7 +233,7 @@
       "price": 1900000,
       "tags": ["monster", "vatten", "kamp"],
       "ageGroup": "adults",
-      "image": "/images/cyber-kraken.jpg"
+      "image": "/experiences/12.png"
     },
 
     {
@@ -245,7 +245,7 @@
       "price": 1250000,
       "tags": ["fantasy", "flyg", "strid"],
       "ageGroup": "any",
-      "image": "/images/dragon-joust.jpg"
+      "image": "/experiences/6.png"
     },
 
     {
@@ -257,7 +257,7 @@
       "price": 250000,
       "tags": ["fantasy", "äventyr", "mystik"],
       "ageGroup": "any",
-      "image": "/images/portal-forest.jpg"
+      "image": "/experiences/7.png"
     },
 
     {
@@ -269,7 +269,7 @@
       "price": 4999999,
       "tags": ["tidsresa", "dinosaurier", "äventyr"],
       "ageGroup": "kids",
-      "image": "/images/t-rex-ride.jpg"
+      "image": "/experiences/4.png"
     }
   ],
 
@@ -283,7 +283,7 @@
       "price": 300000,
       "tags": ["avkoppling", "rymd", "wellness"],
       "ageGroup": "seniors",
-      "image": "/images/starlight-springs.jpg"
+      "image": "/experiences/101.png"
     },
     {
       "id": 102,
@@ -294,7 +294,7 @@
       "price": 50000,
       "tags": ["barn", "robotar", "äventyr"],
       "ageGroup": "kids",
-      "image": "/images/robot-safari.jpg"
+      "image": "/experiences/102.png"
     }
   ]
 }
