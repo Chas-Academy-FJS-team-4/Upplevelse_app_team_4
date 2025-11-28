@@ -10,7 +10,7 @@ function focusOnSearch() {
 </script>
 <template>
   <header
-    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center p-5 text-white"
+    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center p-5 text-white z-100"
   >
     <h1 class="text-2xl">
       <router-link to="/">WildX</router-link>
