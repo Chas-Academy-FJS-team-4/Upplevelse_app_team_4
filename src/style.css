@@ -5,10 +5,19 @@ main {
   background-color: #fffcf9;
 }
 
+/* section {
+  padding: 50px 50px;
+} */
+
+/* article {
+  margin: 0 90px;
+} */
+
 h2 {
   font-size: 1.7rem;
   font-weight: 500;
-  padding: 0 50px;
+  /* margin: 0 90px; */
+  /* margin-bottom: 40px; */
 }
 
 h3 {
