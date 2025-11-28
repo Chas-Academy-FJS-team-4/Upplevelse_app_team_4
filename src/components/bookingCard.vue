@@ -41,7 +41,7 @@ function addToCart() {
         <article class="flex flex-col gap-4 p-4 border border-zinc-500 rounded shadow-md max-w-3xl">
             <div class="flex ">
                 <div class="flex w-54 shrink-0">
-                    <img src="./assets/experiences/moon.jpg" alt="Bild på månen i rymden"
+                    <img src="../assets/experiences/moon.jpg" alt="Bild på månen i rymden"
                     class="w-full h-auto object-cover rounded-lg"/>
                 </div>
                 <div class="flex flex-col gap-4 ml-3">
@@ -76,6 +76,7 @@ function addToCart() {
                 </div>
             </div>
         </article>
+        <Addons />
     </section>
 </template>
 
