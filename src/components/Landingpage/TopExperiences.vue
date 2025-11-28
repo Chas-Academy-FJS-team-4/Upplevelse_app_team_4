@@ -63,7 +63,7 @@ const scrollRight = () => {
             </div>
 
             <div
-              class="flex-1 rounded-lg shadow-md p-4 flex flex-col h-86 cursor-pointer bg-white transform duration-300 hover:shadow-xl"
+              class="flex-1 rounded-lg shadow-md border-[0.5px] border-gray-300 p-4 flex flex-col h-86 cursor-pointer bg-white transform duration-300 hover:shadow-xl"
             >
               <div class="w-full h-38 mb-2">
                 <img
