@@ -1,0 +1,28 @@
+{
+"addons": [
+    {
+        "id": 1,
+        "title": "Premium Gear Upgrade",
+        "description": "Tillgång till exklusiv och förstärkt utrustning anpassad för den extrema miljön, inklusive skyddsdräkt, HUD-hjälm och extra säkerhetsmoduler.",
+        "priceType": "percentage",
+        "priceValue": 15
+    },
+    {
+        "id": 2,
+        "title": "Cinematic Memory Package",
+        "description": "En professionell drone-, VR- eller AI-kamera följer hela din upplevelse och skapar en personaliserad highlight-film.",
+        "priceType": "fixed",
+        "priceValue": 1499
+    },
+    {
+        "id": 3,
+        "title": "VIP Companion Upgrade",
+        "description": "En personlig guide, sidekick eller AI-hologram följer med dig och hjälper dig genom upplevelsen.",
+        "priceType": "range",
+        "priceValue": {
+            "min": 1000,
+            "max": 10000
+        }
+    }
+    ]
+}
