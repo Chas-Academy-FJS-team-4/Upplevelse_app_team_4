@@ -22,11 +22,11 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <div class="mx-10 lg:mx-[90px] pt-20 mb-7">
+  <div class="mx-10 lg:mx-[90px] pt-20">
     <h2 class="">Mest bokade upplevelser</h2>
   </div>
 
-  <div class="pb-25 px-3 lg:px-[45px]">
+  <div class="pb-20 px-3 lg:px-[45px]">
     <div class="relative h-96 my-5 sm:mx-5">
       <!-- Fade-sidor -->
       <div
@@ -58,7 +58,7 @@ const scrollRight = () => {
           class="shrink-0 w-72 snap-start flex flex-col h-full"
         >
           <div class="flex items-center">
-            <div class="text-8xl font-bold text-purple-600 pl-5">
+            <div class="text-8xl font-bold text-(--color-primary-light) pl-5">
               {{ index + 1 }}
             </div>
 
@@ -78,7 +78,7 @@ const scrollRight = () => {
                 {{ exp.description }}
               </p>
               <a
-                class="text-right text-xs text-gray-600 hover:text-purple-800"
+                class="text-right text-xs text-(--color-accent-light) hover:text-(--color-accent)"
                 href="#"
                 >Läs mer...</a
               >
