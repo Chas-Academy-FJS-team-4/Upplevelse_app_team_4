@@ -7,16 +7,16 @@ const newExperiences = ref(experiencesData.newExperiences);
 </script>
 <template>
   <section class="pb-50 lg:px-0">
-    <h2 class="lg:mx-[90px] mx-10 mb-10">Nya spännande upplevelser</h2>
+    <h2 class="lg:mx-[90px] mx-10 mb-10">Vi har upplevelser för alla åldrar</h2>
 
     <div class="flex flex-col">
       <article
         class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0 mx-10 lg:mx-[90px]"
       >
         <img
-          :src="heroImg"
+          :src="newExperiences[0].image"
           alt=""
-          class="lg:w-1/2 object-cover rounded-lg mb-2"
+          class="lg:w-1/2 h-50 md:h-80 lg:h-80 object-cover object-[center_80%] rounded-lg mb-2 shadow-md"
         />
         <div class="flex flex-col justify-center gap-5 lg:w-1/2">
           <h3>{{ newExperiences[0].title }}</h3>
@@ -96,7 +96,8 @@ const newExperiences = ref(experiencesData.newExperiences);
                       <path
                         d="M54.55,56.85A22.55,22.55,0,0,0,32,34.3h0A22.55,22.55,0,0,0,9.45,56.85Z"
                       ></path>
-                    </g></svg></span>
+                    </g></svg
+                ></span>
                 {{ newExperiences[0].ageGroup }}
               </p>
             </div>
@@ -114,9 +115,9 @@ const newExperiences = ref(experiencesData.newExperiences);
       <article class="flex flex-col md:flex-row lg:gap-15 mx-10 lg:mx-[90px]">
         <div class="flex flex-col justify-center gap-5 lg:w-1/2">
           <img
-            :src="heroImg"
+            :src="newExperiences[1].image"
             alt=""
-            class="object-cover rounded-lg mb-2 flex lg:hidden"
+            class="object-cover rounded-lg mb-2 flex lg:hidden shadow-md h-50 md:h-80"
           />
           <h3>{{ newExperiences[1].title }}</h3>
           <p>
@@ -195,9 +196,10 @@ const newExperiences = ref(experiencesData.newExperiences);
                       <path
                         d="M54.55,56.85A22.55,22.55,0,0,0,32,34.3h0A22.55,22.55,0,0,0,9.45,56.85Z"
                       ></path>
-                    </g></svg>
-                  </span>
-                {{ newExperiences[0].ageGroup }}
+                    </g>
+                  </svg>
+                </span>
+                {{ newExperiences[1].ageGroup }}
               </p>
             </div>
             <button
@@ -208,9 +210,9 @@ const newExperiences = ref(experiencesData.newExperiences);
           </div>
         </div>
         <img
-          :src="heroImg"
+          :src="newExperiences[1].image"
           alt=""
-          class="w-1/2 object-cover rounded-lg mb-2 hidden lg:flex"
+          class="w-1/2 h-80 object-cover rounded-lg mb-2 hidden lg:flex shadow-md"
         />
       </article>
     </div>
