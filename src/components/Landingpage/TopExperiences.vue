@@ -96,11 +96,17 @@ const scrollRight = () => {
               <p class="text-gray-600 text-sm h-full line-clamp-4">
                 {{ exp.description }}
               </p>
-              <a
+              <router-link
+                class="text-right text-xs text-(--color-accent-light) hover:text-(--color-accent)"
+                :to="{ name: 'experience', params: { id: exp.id } }"
+                >Läs mer...</router-link
+              >
+
+              <!-- <a
                 class="text-right text-xs text-(--color-accent-light) hover:text-(--color-accent)"
                 href="#"
                 >Läs mer...</a
-              >
+              > -->
             </div>
           </div>
         </div>

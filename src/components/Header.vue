@@ -45,7 +45,7 @@ function focusOnSearch() {
             </g>
           </svg>
         </span>
-        Våra upplevelser
+        <router-link to="/experiences">Våra upplevelser</router-link>
       </li>
       <li
         class="flex flex-row items-center justify-center gap-2 pr-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"

@@ -1,8 +1,15 @@
 <script setup>
 import { ref } from "vue";
 import experiencesData from "../../utils/experiences.json";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const newExperiences = ref(experiencesData.newExperiences);
+
+function goToBookingPage(id) {
+  router.push({ name: "booking", params: { id } });
+}
 </script>
 <template>
   <section class="py-20 lg:px-0 bg-(--color-bg-secondary)">
@@ -100,8 +107,11 @@ const newExperiences = ref(experiencesData.newExperiences);
                 {{ newExperiences[0].ageGroup }}
               </p>
             </div>
+
+            <!-- TODO - Länk till boka upplevelse med id-->
             <button
-              class="bg-(--color-primary) text-white px-6 py-2 rounded-md hover:bg-(--color-primary-hover)"
+              @click="goToBookingPage(newExperiences[0].id)"
+              class="bg-(--color-primary) text-white px-6 py-2 rounded-md hover:bg-(--color-primary-hover) shadow-sm hover:shadow-md"
             >
               Boka nu
             </button>
@@ -201,8 +211,11 @@ const newExperiences = ref(experiencesData.newExperiences);
                 {{ newExperiences[1].ageGroup }}
               </p>
             </div>
+
+            <!-- TODO - Länk till boka upplevelse med id-->
             <button
-              class="bg-(--color-primary) text-white px-6 py-2 rounded-md hover:bg-(--color-primary-hover)"
+              @click="goToBookingPage(newExperiences[1].id)"
+              class="bg-(--color-primary) text-white px-6 py-2 rounded-md hover:bg-(--color-primary-hover) shadow-sm hover:shadow-md"
             >
               Boka nu
             </button>
