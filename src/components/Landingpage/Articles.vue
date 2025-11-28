@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import experiencesData from "../../experiences.json";
+import experiencesData from "../../utils/experiences.json";
 import heroImg from "../../assets/images/hero.jpg";
 
 const newExperiences = ref(experiencesData.newExperiences);
