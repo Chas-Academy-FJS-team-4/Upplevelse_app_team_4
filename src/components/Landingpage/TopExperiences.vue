@@ -22,7 +22,7 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <div class="mx-[40px] lg:mx-[90px] pt-20 mb-7">
+  <div class="mx-10 lg:mx-[90px] pt-20 mb-7">
     <h2 class="">Mest bokade upplevelser</h2>
   </div>
 
@@ -55,7 +55,7 @@ const scrollRight = () => {
         <div
           v-for="(exp, index) in topExperiences"
           :key="exp.id"
-          class="flex-shrink-0 w-72 snap-start flex flex-col h-full"
+          class="shrink-0 w-72 snap-start flex flex-col h-full"
         >
           <div class="flex items-center">
             <div class="text-8xl font-bold text-purple-600 pl-5">
