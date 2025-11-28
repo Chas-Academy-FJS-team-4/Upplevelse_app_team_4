@@ -3,24 +3,35 @@ import { ref, onMounted } from 'vue';
 import AddonsCard from './AddonsCard.vue';
 import BaseModal from '../BaseModal.vue';
 import addonsJson from "../../utils/addons.json";
+import { useBookingStore } from '../../stores/bookingStore';
 
-interface Addon {
+interface RawAddon {
     id: number;
     title: string;
     description: string;
+    image: string;
     priceType: string;
     priceValue: any;
 }
 
-const addons = ref<Addon[]>([]);
-const activeAddon = ref<Addon | null>(null);
+interface ResolvedAddon extends RawAddon {
+    imageUrl: string;
+}
+
+const store = useBookingStore();
+
+const addons = ref<ResolvedAddon[]>([]);
+const activeAddon = ref<ResolvedAddon | null>(null);
 
 // Ladda in JSON data
 onMounted(() => {
-    addons.value = addonsJson.addons;
+    addons.value = (addonsJson.addons as RawAddon[]).map(a => {
+        const imageUrl = new URL(`../../assets/addons/${a.image}`, import.meta.url).href;
+        return { ...a, imageUrl } as ResolvedAddon;
+    })
 });
 
-function openModal(addon: Addon) {
+function openModal(addon: ResolvedAddon) {
     activeAddon.value = addon;
 };
 
@@ -28,13 +39,26 @@ function closeModal() {
     activeAddon.value = null;
 };
 
+function addActiveAddonToBooking() {
+    if(!activeAddon.value) return;
+    store.addAddon({
+        id: activeAddon.value.id,
+        title: activeAddon.value.title,
+        description: activeAddon.value.description,
+        image: activeAddon.value.imageUrl,
+        priceType: activeAddon.value.priceType as any,
+        priceValue: activeAddon.value.priceValue
+    });
+    closeModal();
+}
+
 </script>
 
 
 <template>
-<section class="max-w-5xl mx-auto mt-10">
+<section class="max-w-5xl mx-auto mt-8">
     <h2 class="text-2xl font-bold mb-4">Paket & tillval</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <AddonsCard 
             v-for="addon in addons"
             :key="addon.id"
@@ -56,10 +80,13 @@ function closeModal() {
                 Pris: {{ activeAddon.priceValue.min }} - {{ activeAddon.priceValue.max }} Kr
             </p>
         </div>
-
-        <button class="bg-black text-white px-4 py-2 rounded-md">
-            Lägg till paket till upplevelsen
-        </button>
+        <div class="flex gap-3">
+            <button @click="addActiveAddonToBooking"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md">
+                Lägg till paket till upplevelsen
+            </button>
+            <button @click="closeModal" class="bg-gray-100 px-4 py-2 rounded-md">Stäng</button>
+        </div>
     </BaseModal>
 </section>
 

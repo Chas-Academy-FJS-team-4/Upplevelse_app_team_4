@@ -16,6 +16,7 @@ export interface Addon {
     id: number;
     title: string;
     description: string;
+    image: string;
     priceType: "fixed" | "percentage" | "range";
     priceValue: PriceValue;
 };
