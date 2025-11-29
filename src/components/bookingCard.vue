@@ -5,7 +5,8 @@ import type { Addon } from '../stores/bookingStore';
 import Addons from './addons/Addons.vue';
 
 const title = "Sky diving from the moon";
-const description = "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet."
+const description =
+  "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.";
 const price = 12000000;
 const currency = "Kr";
 const tags = ["Rökgalet", "Rymd", "Fallskärm"];
@@ -35,15 +36,18 @@ const ageCategory = computed({
 
 // Emit för att skicka till parent (lägga i varukorg)
 const emit = defineEmits<{
-    (e: "add-to-cart", payload: { date: string | null; people: number; ageCategory: string}): void
+  (
+    e: "add-to-cart",
+    payload: { date: string | null; people: number; ageCategory: string }
+  ): void;
 }>();
 
 function addToCart() {
-    emit("add-to-cart", {
-        date: selectedDate.value,
-        people: people.value,
-        ageCategory: ageCategory.value
-    });
+  emit("add-to-cart", {
+    date: selectedDate.value,
+    people: people.value,
+    ageCategory: ageCategory.value,
+  });
 }
 
 function formatAddonPrice(addon: Addon) {
@@ -58,7 +62,6 @@ function formatAddonPrice(addon: Addon) {
 }
 
 </script>
-
 
 <template>
     <section class="flex flex-col items-center md:items-start mt-20 gap-6 max-w-3xl mx-10 sm:mx-auto">
@@ -83,11 +86,17 @@ function formatAddonPrice(addon: Addon) {
                             class="border p-2 rounded-md text-sm"
                             aria-label="Välj Datum för upplevelsen" />
 
-                        <label for="personer" class="sr-only">Antal personer</label>
-                        <select id="personer" v-model="people" class="border p-2 rounded-md text-sm "
-                                aria-label="Välj antal personer för upplevelsen" >
-                            <option v-for="n in 10" :key="n" :value="n">{{ n }} person{{ n > 1 ? "er" : "" }}</option>
-                        </select>
+            <label for="personer" class="sr-only">Antal personer</label>
+            <select
+              id="personer"
+              v-model="people"
+              class="border p-2 rounded-md text-sm"
+              aria-label="Välj antal personer för upplevelsen"
+            >
+              <option v-for="n in 10" :key="n" :value="n">
+                {{ n }} person{{ n > 1 ? "er" : "" }}
+              </option>
+            </select>
 
                         <label for="alderskategori" class="sr-only">Ålderskategori</label>
                         <select id="alderskategori" v-model="ageCategory" class="border p-2 rounded-md text-sm"
@@ -138,8 +147,4 @@ function formatAddonPrice(addon: Addon) {
     </section>
 </template>
 
-
-<style scoped>
-
-
-</style>
+<style scoped></style>
