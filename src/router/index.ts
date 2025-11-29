@@ -12,5 +12,4 @@ export const router = createRouter({
         { path: "/experiences", component: ExperiencePage },
         { path: "/experience/:id", name: "experience" },
     ],
-
 });

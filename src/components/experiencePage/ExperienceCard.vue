@@ -1,7 +1,13 @@
 <script setup lang="ts">
-const props = defineProps({
-    activity: Object,
-});
+interface Activities {
+    image: string;
+    description: string;
+    title: string;
+}
+
+const props = defineProps<{
+    activity: Activities;
+}>();
 
 const { image, title, description } = props.activity;
 </script>
