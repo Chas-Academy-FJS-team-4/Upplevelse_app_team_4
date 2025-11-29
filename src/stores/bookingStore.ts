@@ -1,76 +1,110 @@
-// import { defineStore } from "pinia";
+import { defineStore } from "pinia";
 
-// export const useBookingStore = defineStore('booking', {
-//     state: () => ({
-//         experience: null as null | {
-//             id: number;
-//             title: string;
-//             description: string;
-//             price: number;
-//             image: string;
-//             tags: string[];
-//             totalExperiencePrice: number;
-//         },
-//         date: null as string | null,
-//         people: 1,
-//         ageCategory: 'adult',
+interface Experience {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    image: string;
+    tags: string[];
+};
 
-//         addons: [] as Array<{
-//             id: number;
-//             title: string;
-//             priceType: string;
-//             priceValue: any;
-//             totalExperiencePrice?: number;
-//         }>
-//     }),
+type PriceRange = { min: number; max: number };
+type PriceValue = number | PriceRange;
 
-//     getters: {
-//         totalExperiencePrice: (state) => state.experience
-//         ? state.experience.price * state.people
-//         : 0,
+export interface Addon {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    priceType: "fixed" | "percentage" | "range";
+    priceValue: PriceValue;
+};
 
-//         addonsTotal: (state) => {
-//             let total = 0
+interface BookingState {
+    experience: Experience | null;
+    date: string | null;
+    people: number;
+    ageCategory: string;
+    addons: Addon[];
+}
 
-//             for (const add of state.addons) {
-//                 if(add.priceType === 'fixed') {
-//                     total += add.priceValue;
-//                 } else if (add.priceType === 'percentage') {
-//                     total += (state.totalExperiencePrice * add.priceValue) / 100
-//                 } else if (add.priceType === 'range') {
-//                     total += add.priceValue.min;
-//                 }
-//             }
+export const useBookingStore = defineStore('booking', {
+    state: (): BookingState => ({
+        experience: null,
+        date: null,
+        people: 1,
+        ageCategory: 'adult',
+        addons: []
+    }),
 
-//             return total
+    getters: {
+        // Basspris (per person)
+        basePrice: (state) => state.experience ? state.experience.price : 0,
 
-//         },
+        // totalpris för upplevelsen beroende på antal personer
+        totalExperiencePrice: (state) => {
+            const base = state.experience ? state.experience.price : 0;
+            return base * state.people;
+        },
 
-//         totalPrice: (state) => {
-//             return state.totalExperiencePrice + state.addonsTotal
-//         }
-//     },
+        addonsTotal: (state): number => {
+            const baseTotal = state.experience ? state.experience.price * state.people : 0;
+            let total = 0;
+            for (const add of state.addons) {
+                if(add.priceType === 'fixed') {
+                    total += (add.priceValue as number);
+                } else if (add.priceType === 'percentage') {
+                    total += (baseTotal * (add.priceValue as number)) / 100;
+                } else if (add.priceType === 'range') {
+                    const range = add.priceValue as PriceRange;
+                    total += range.min;
+                }
+            }
+            return total;
+        },
 
-//     actions: {
-//         setExperience(exp) {
-//             this.experience = exp;
-//         },
-//         updatePeople(n: number) {
-//             this.people = n;
-//         },
-//         setDate(date: string) {
-//             this.date = date;
-//         },
-//         setAgeCategory(cat: string) {
-//             this.ageCategory = cat;
-//         },
-//         addAddon(addon) {
-//             if(!this.addons.find(a => a.id === addon.id)) {
-//                 this.addons.push(addon);
-//             }
-//         },
-//         removeAddon(id: number) {
-//             this.addons = this.addons.filter(a => a.id !== id);
-//         }
-//     }
-// })
+        totalPrice: (state): number => {
+            const exp = state.experience ? state.experience.price * state.people : 0;
+            // note: we access the computed addonsTotal via this (Pinia gör getters till properties)
+            // In TS context inside this getter 'this' refers to the store instance; keep calculation consistent by recomputing addonsTotal here:
+            let addonsSum = 0;
+            for (const add of state.addons) {
+                if (add.priceType === 'fixed') {
+                    addonsSum += (add.priceValue as number);
+                } else if (add.priceType === 'percentage') {
+                    addonsSum += (exp * (add.priceValue as number)) / 100;
+                } else if (add.priceType === 'range') {
+                    addonsSum += (add.priceValue as PriceRange).min;
+                }
+            }
+            return exp + addonsSum;
+        }
+    },
+
+    actions: {
+        setExperience(exp: Experience) {
+            this.experience = exp;
+        },
+        updatePeople(n: number) {
+            this.people = n;
+        },
+        setDate(date: string | null) {
+            this.date = date;
+        },
+        setAgeCategory(cat: string) {
+            this.ageCategory = cat;
+        },
+        addAddon(addon: Addon) {
+            if(!this.addons.find(a => a.id === addon.id)) {
+                this.addons.push(addon);
+            }
+        },
+        removeAddon(id: number) {
+            this.addons = this.addons.filter(a => a.id !== id);
+        },
+        clearAddons() {
+            this.addons = [];
+        }
+    }
+})

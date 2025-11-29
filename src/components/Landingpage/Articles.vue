@@ -12,13 +12,13 @@ function goToBookingPage(id) {
 }
 </script>
 <template>
-  <section class="py-20 lg:px-0 bg-(--color-bg-secondary)">
-    <h2 class="lg:mx-[90px] mx-10 mb-10">Vi har upplevelser för alla åldrar</h2>
+  <section
+    class="pb-20 lg:px-0 flex flex-col items-center justify-center max-w-5xl mx-10 lg:mx-auto"
+  >
+    <h2 class="mb-10 w-full">Vi har upplevelser för alla åldrar</h2>
 
-    <div class="flex flex-col">
-      <article
-        class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0 mx-10 lg:mx-[90px]"
-      >
+    <div class="flex flex-col max-w-5xl">
+      <article class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0">
         <img
           :src="newExperiences[0].image"
           alt=""
@@ -121,7 +121,7 @@ function goToBookingPage(id) {
 
       <!-- <article class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0"> -->
 
-      <article class="flex flex-col md:flex-row lg:gap-15 mx-10 lg:mx-[90px]">
+      <article class="flex flex-col lg:flex-row lg:gap-15">
         <div class="flex flex-col justify-center gap-5 lg:w-1/2">
           <img
             :src="newExperiences[1].image"

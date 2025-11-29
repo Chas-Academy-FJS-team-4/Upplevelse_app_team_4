@@ -20,7 +20,7 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <div class="mx-10 lg:mx-[90px] pt-20">
+  <div class="max-w-5xl mx-10 lg:mx-auto pt-20">
     <h2 class="">Mest bokade upplevelser</h2>
   </div>
 
