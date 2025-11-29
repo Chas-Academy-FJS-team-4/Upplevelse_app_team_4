@@ -47,7 +47,9 @@ const handlePeopleBlur = (event: Event) => {
 </script>
 
 <template>
-  <div class="flex gap-4 p-4 border rounded-lg bg-white shadow-sm">
+  <div
+    class="flex gap-4 p-4 shadow-md border-[0.5px] border-gray-300 rounded-lg bg-white"
+  >
     <img
       :src="item.image"
       :alt="item.title"
