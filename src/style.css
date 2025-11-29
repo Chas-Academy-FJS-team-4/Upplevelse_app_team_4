@@ -1,14 +1,29 @@
 @import "tailwindcss";
 
+:root {
+  /* Primär färg för knappar, headers, highlights */
+  --color-primary: #6618c6;
+  --color-primary-hover: #6719c8e6;
+  --color-primary-light: #8a4fd2;
+
+  /* Accentfärg för små detaljer och text */
+  --color-accent: #f96a1d;
+  --color-accent-light: #fb965f;
+  --color-accent-dark: #fc4c01;
+  /* --color-accent-secondary: #1aece3; */
+
+  /* Bakgrundsfärger */
+  --color-bg-primary: #fffcf9;
+  --color-bg-secondary: #fdf2f9;
+}
+
 main {
-  /* padding: 0 5rem; */
-  background-color: #fffcf9;
+  background-color: var(--color-bg-primary);
 }
 
 h2 {
   font-size: 1.7rem;
   font-weight: 500;
-  padding: 0 50px;
 }
 
 h3 {
@@ -21,7 +36,6 @@ h4 {
   font-weight: 500;
 }
 
-/* font-bold text-lg */
 li {
   cursor: pointer;
 }

@@ -1,0 +1,300 @@
+{
+  "spaceAdventures": [
+    {
+      "id": 1,
+      "title": "Skydive From The Moon",
+      "description": "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.",
+      "longDescription": "Upplev det ultimata rymdäventyret med ett kontrollerat månhopp från låg omloppsbana. Du bär en hyperavancerad hypersuit som stabiliserar dig i vakuum och guidar dig genom återinträdet i jordens atmosfär. När du faller mot jorden ser du hela planeten under dig i ett panorama av moln och hav. Landningen sker i Stilla havet där ett recovery-team väntar. Perfekt för dig som vill tänja på gränserna för vad mänsklig upplevelse kan vara.",
+      "location": "Månytan → Jorden",
+      "price": 12000000,
+      "tags": ["rymd", "fallskärm", "extremt"],
+      "ageGroup": "adults",
+      "image": "/experiences/1.png"
+    },
+    {
+      "id": 2,
+      "title": "Surf a Gravity Wave on Saturn",
+      "description": "Surfa på en massiv gravitationsvåg över Saturnus ringar med en anti-gravity board.",
+      "longDescription": "Saturnus ringar är hem för gigantiska gravitationsvågor skapade av månar och partikelfält. Med en anti-gravity board kan du rida på dessa kosmiska vågor medan du svävar i nästan viktlös miljö. Guidernas AI-assisterade navigering gör upplevelsen säker trots den extrema naturen. Du får även uppleva fenomen som isfragment i ringarna och de dansande skuggorna från Saturnus stormar. Ett spektakel som inte liknar något annat i solsystemet.",
+      "location": "Saturnus",
+      "price": 7000000,
+      "tags": ["rymd", "surfing", "zero-g"],
+      "ageGroup": "adults",
+      "image": "/experiences/2.png"
+    },
+    {
+      "id": 3,
+      "title": "Sing at an Alien Opera House",
+      "description": "Sjung tillsammans med en 12-munad alienkör i en kristallteater i omloppsbana kring Andromeda.",
+      "longDescription": "Den kristallklädda teatern svävar i vakuum och fungerar som ett enormt resonansinstrument. Du får sjunga tillsammans med en professionell alienkör vars sångteknik bygger på harmoniska frekvenser från flera munpar. Omgivningen förstärker varje ton i ett glittrande spektrum av färg. Besökare får även lära sig grunderna i intergalaktisk röstprojektion. En kulturell resa bortom galaxens gränser.",
+      "location": "Andromeda-galaxen",
+      "price": 3500000,
+      "tags": ["rymd", "musik", "show"],
+      "ageGroup": "any",
+      "image": "/experiences/3.png"
+    }
+  ],
+
+  "timeTravelAndHistory": [
+    {
+      "id": 4,
+      "title": "Ride a T-Rex Through Prehistoric Jungle",
+      "description": "Tidsres tillbaka 65 miljoner år och rid på en tränad T-Rex genom djungeln.",
+      "longDescription": "Den tränade T-Rexen är utrustad med bio-neurala implantat som gör den lugn, styrbar och trygg för besökare. Resan går genom en verklighetstrogen tidszon där du möter flora och fauna från kritaperioden. Professionella tidsguider följer med hela vägen för att säkerställa stabiliteten i tidsportalen. Du får även lära dig om dinosauriernas beteende och miljö. Ett äventyr där historiens mest ikoniska rovdjur blir din följeslagare.",
+      "location": "Krita-perioden",
+      "price": 4999999,
+      "tags": ["tidsresa", "dinosaurier", "äventyr"],
+      "ageGroup": "kids",
+      "image": "/experiences/4.png"
+    },
+    {
+      "id": 5,
+      "title": "Jousting Tournament in Medieval Hyper-Reality",
+      "description": "Delta i en turnering där tiden är frusen runt dig och du rider genom historiska epoker.",
+      "longDescription": "Turneringen sker i en hyperrealistisk miljö där tiden är delvis frusen, vilket skapar en filmisk slow-motion-effekt runt dig. Du rider genom olika tidsperioder där banor förändras dynamiskt. Lansettävlingarna är helt säkra tack vare energiabsorberande utrustning. Deltagare får också lära sig om medeltida traditioner och ridteknik. Perfekt för alla som vill uppleva historia på ett intensivt men tryggt sätt.",
+      "location": "Medeltida Europa (simulerat)",
+      "price": 1500000,
+      "tags": ["tidsresa", "turnering", "history"],
+      "ageGroup": "any",
+      "image": "/experiences/5.png"
+    }
+  ],
+
+  "fantasyWorlds": [
+    {
+      "id": 6,
+      "title": "Jousting on Flying Dragons",
+      "description": "Rid på flygande drakar och delta i en himmels-turnering med laserlansar.",
+      "longDescription": "De bio-syntetiska drakarna är programmerade för att ge en känsla av äkthet men är helt kontrollerbara. Du får träna flygning i en säker zon innan turneringen börjar. I tävlingen använder du en lågintensiv laserlans som mäter träffar utan fysisk påverkan. Publiken svävar i holografiska läktare ovanför molnen. Ett perfekt äventyr för dig som älskar fantasy i full skala.",
+      "location": "Drakonien",
+      "price": 1250000,
+      "tags": ["fantasy", "flyg", "strid"],
+      "ageGroup": "any",
+      "image": "/experiences/6.png"
+    },
+    {
+      "id": 7,
+      "title": "Portal Maze of the Infinite Forest",
+      "description": "Spring genom en oändlig skog där portaler förflyttar dig slumpmässigt mellan dimensioner.",
+      "longDescription": "Den oändliga skogen består av ständigt föränderliga stigar och portaler som teleporterar dig till nya platser. Miljön är designad för att skapa både mystik och orienteringsutmaningar. Du kan stöta på magiska varelser, gåtor och dimensionella anomalier. Allt övervakas av en trygg AI som guidar dig vid behov. Passar perfekt för äventyrare som gillar lekfull utforskning.",
+      "location": "Multiversum",
+      "price": 250000,
+      "tags": ["fantasy", "äventyr", "mystik"],
+      "ageGroup": "any",
+      "image": "/experiences/7.png"
+    }
+  ],
+
+  "extremeScienceAndPhysics": [
+    {
+      "id": 8,
+      "title": "Simma i Lava i En Värmesköld-Suit",
+      "description": "Dyk ner i ett lavafält i 60 sekunder med en experimental värme-resistent suit.",
+      "longDescription": "Den avancerade värmesköld-dräkten använder magnetisk värmeavledning och nanocoating. Du får simma i en kontrollerad lavapool som håller stabil temperatur. AI-sensorer monitorerar din status konstant. Upplevelsen är extrem men trygg och ger insikt i vulkanisk fysik. En unik chans att röra sig i ett element som annars är livsfarligt.",
+      "location": "Island",
+      "price": 899000,
+      "tags": ["extremt", "värme", "science-fiction"],
+      "ageGroup": "adults",
+      "image": "/experiences/8.png"
+    },
+
+    {
+      "id": 9,
+      "title": "Dive to the Center of the Earth",
+      "description": "Färdas 6 000 km ner i en tryckmodul och se magma-oceaner och kristallkammare.",
+      "longDescription": "Resan sker i en tryckstabil modul som sakta tar dig ner genom jordens lager. Du passerar enorma kristallkammare, flytande metallzoner och glödande magmahav. Guidernas narrativ berättar om geologi på ett nytt sätt. Temperaturen runt modulen når tusentals grader men inuti är klimatet behagligt. En djupdykning i både bokstavlig och vetenskaplig mening.",
+      "location": "Jordens kärna",
+      "price": 2500000,
+      "tags": ["äventyr", "underjordiskt", "fysik"],
+      "ageGroup": "adults",
+      "image": "/experiences/9.png"
+    },
+
+    {
+      "id": 10,
+      "title": "Freefall Through a Black Hole Simulation",
+      "description": "Upplev kontrollerad spaghettifiering i en hyperrealistisk svart hål-simulator.",
+      "longDescription": "Simuleringsmodulen reproducerar gravitationella krafter från ett svart hål utan fysisk risk. Du faller genom en virtuell singularitet där tid och rum sträcks. Visuella effekter baseras på faktiska fysikmodeller. Upplevelsen är intensiv men säker, med möjlighet att pausa när som helst. Perfekt för fysikentusiaster.",
+      "location": "Virtual Gravity Center, Europa",
+      "price": 80000,
+      "tags": ["fysik", "extremt", "vr"],
+      "ageGroup": "any",
+      "image": "/experiences/10.png"
+    },
+
+    {
+      "id": 11,
+      "title": "Time Freeze Parkour",
+      "description": "Spring på frusna regndroppar och undvik explosioner i ett område där tiden stannat.",
+      "longDescription": "Zonen du går in i är delvis frusen i tid, vilket gör att droppar, gnistor och vågor står stilla i luften. Du kan springa och hoppa mellan objekten som om de vore fasta. En AI håller koll på varje rörelse för att säkerställa stabilitet. Upplevelsen är snabb, adrenalinfylld och visuellt otrolig. Passar de som älskar fart och akrobatik utan fara.",
+      "location": "Hemligt laboratorium, Schweiz",
+      "price": 70000,
+      "tags": ["parkour", "tidsmanipulation", "adrenalin"],
+      "ageGroup": "adults",
+      "image": "/experiences/11.png"
+    }
+  ],
+
+  "megaCreaturesAndMonsters": [
+    {
+      "id": 12,
+      "title": "Wrestle a Cyber-Enhanced Kraken",
+      "description": "Gå ner i en undervattensdom och brottas med en genetiskt förbättrad kraken.",
+      "longDescription": "Inuti en undervattensarena möter du en enorm cyberförstärkt kraken med säkerhetsbegränsningar. Du kan försöka brotta ner tentaklerna eller utföra styrkeutmaningar. Arena-vattnet är temperaturkontrollerat och du har en stöd-exosuit. Det är en fysisk men trygg utmaning. Perfekt för dig som älskar monster och extrem sport.",
+      "location": "Atlanten",
+      "price": 1900000,
+      "tags": ["monster", "vatten", "kamp"],
+      "ageGroup": "adults",
+      "image": "/experiences/12.png"
+    }
+  ],
+
+  "highTechSportsAndChallenges": [
+    {
+      "id": 13,
+      "title": "Teleport Race Across the Planet",
+      "description": "Delta i ett teleportationslopp där du ska ta dig genom 30 portaler på 3 minuter.",
+      "longDescription": "Teleportbanan är designad för att pressa både din snabbhet och orienteringsförmåga. Varje portal leder till nya klimat och hinder, från glaciärer till öknar. Du tävlar mot både tid och andra deltagare. Systemet är helt säkert och garanterar mjuka landningar. Ett perfekt val för dem som älskar action.",
+      "location": "Globalt",
+      "price": 120000,
+      "tags": ["sci-fi", "speed", "challenge"],
+      "ageGroup": "any",
+      "image": "/experiences/13.png"
+    },
+
+    {
+      "id": 14,
+      "title": "Mecha Battle Arena",
+      "description": "Kliv in i en 25 meter hög kamprobot och slåss mot andra mechas i en futuristisk arena.",
+      "longDescription": "Mechadräkten förstärker varje rörelse du gör, vilket ger dig styrkan av ett stålberg. Arenan är full av hinder, energibarriärer och power-ups. Alla strider är simulerade så ingen tar fysisk skada, men känslan är hundra procent verklig. Du kan anpassa din mecha med olika vapen och moduler. En episk framtidsupplevelse för alla åldrar.",
+      "location": "Neo-Tokyo",
+      "price": 350000,
+      "tags": ["robotar", "action", "turnering"],
+      "ageGroup": "kids",
+      "image": "/experiences/14.png"
+    },
+
+    {
+      "id": 15,
+      "title": "HyperSpeed Snowboard Down Everest",
+      "description": "Åk från Everest topp till basen på 2 minuter med en anti-gravitationssnowboard.",
+      "longDescription": "Med en anti-grav snowboard kan du glida nerför Everest i hastigheter inga vanliga backar kommer i närheten av. Luftkuddar och automatiska säkerhetssystem ser till att du alltid landar mjukt. Utsikten över Himalaya i hyperspeed är svår att beskriva. Perfekt för fartälskare som vill tänja på gränserna.",
+      "location": "Mount Everest",
+      "price": 599000,
+      "tags": ["extremsport", "hastighet", "berg"],
+      "ageGroup": "adults",
+      "image": "/experiences/15.png"
+    }
+  ],
+
+  "topExperineces": [
+    {
+      "id": 1,
+      "title": "Skydive From The Moon",
+      "description": "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.",
+      "longDescription": "Ett av de mest ikoniska äventyren i hela galaxen. Du hoppar från låg omloppsbana i en hypersuit och faller mot jorden i en kontrollerad bana. Synen av jordklotet under dig är helt otrolig. Landningen sker i en mjuk vattendroppe skapad av räddningsfarkoster. Ett måste för alla adrenalinälskare.",
+      "location": "Månytan → Jorden",
+      "price": 12000000,
+      "tags": ["rymd", "fallskärm", "extremt"],
+      "ageGroup": "adults",
+      "image": "/experiences/1.png"
+    },
+
+    {
+      "id": 15,
+      "title": "HyperSpeed Snowboard Down Everest",
+      "description": "Åk från Everest topp till basen på 2 minuter med en anti-gravitationssnowboard.",
+      "longDescription": "En futuristisk version av klassisk extremsport. Anti-grav-teknologin gör att du svävar över snön medan du rusar neråt. Tempot är extremt men kontrollerat. Perfekt för dig som älskar fart utan onödiga risker.",
+      "location": "Mount Everest",
+      "price": 599000,
+      "tags": ["extremsport", "hastighet", "berg"],
+      "ageGroup": "adults",
+      "image": "/experiences/15.png"
+    },
+
+    {
+      "id": 3,
+      "title": "Sing at an Alien Opera House",
+      "description": "Sjung tillsammans med en 12-munad alienkör i en kristallteater i omloppsbana kring Andromeda.",
+      "longDescription": "Teatern svävar i kosmos och fungerar som ett enormt resonansinstrument. Du sjunger tillsammans med en alienkör med harmonier som är helt unika för deras art. En kulturell musikupplevelse som förenar världar.",
+      "location": "Andromeda-galaxen",
+      "price": 3500000,
+      "tags": ["rymd", "musik", "show"],
+      "ageGroup": "any",
+      "image": "/experiences/3.png"
+    },
+
+    {
+      "id": 12,
+      "title": "Wrestle a Cyber-Enhanced Kraken",
+      "description": "Gå ner i en undervattensdom och brottas med en genetiskt förbättrad kraken.",
+      "longDescription": "En undervattensarena och en enorm cyberförstärkt kraken väntar. Kampen är trygg tack vare energisköldar och exosuit. Intensivt, fysiskt och helt oförglömligt.",
+      "location": "Atlanten",
+      "price": 1900000,
+      "tags": ["monster", "vatten", "kamp"],
+      "ageGroup": "adults",
+      "image": "/experiences/12.png"
+    },
+
+    {
+      "id": 6,
+      "title": "Jousting on Flying Dragons",
+      "description": "Rid på flygande drakar och delta i en himmels-turnering med laserlansar.",
+      "longDescription": "Upplev en fullskalig drakturnering där du svävar bland molnen och tävlar i en säker stridszon. Drakarna är bio-designade och helt kontrollerbara. Ett visuellt magnifikt äventyr.",
+      "location": "Drakonien",
+      "price": 1250000,
+      "tags": ["fantasy", "flyg", "strid"],
+      "ageGroup": "any",
+      "image": "/experiences/6.png"
+    },
+
+    {
+      "id": 7,
+      "title": "Portal Maze of the Infinite Forest",
+      "description": "Spring genom en oändlig skog där portaler förflyttar dig slumpmässigt mellan dimensioner.",
+      "longDescription": "En mystisk skog full av portaler som ständigt skiftar plats. Perfekt för nyfikna äventyrare som älskar gåtor och magi.",
+      "location": "Multiversum",
+      "price": 250000,
+      "tags": ["fantasy", "äventyr", "mystik"],
+      "ageGroup": "any",
+      "image": "/experiences/7.png"
+    },
+
+    {
+      "id": 4,
+      "title": "Ride a T-Rex Through Prehistoric Jungle",
+      "description": "Tidsres tillbaka 65 miljoner år och rid på en tränad T-Rex genom djungeln.",
+      "longDescription": "En trygg och kontrollerad tidsresa där du rider en tränad T-Rex genom en lummig urtidsmiljö. Perfekt för dinoälskare.",
+      "location": "Krita-perioden",
+      "price": 4999999,
+      "tags": ["tidsresa", "dinosaurier", "äventyr"],
+      "ageGroup": "kids",
+      "image": "/experiences/4.png"
+    }
+  ],
+
+  "newExperiences": [
+    {
+      "id": 101,
+      "title": "Starlight Hot Springs for Seniors",
+      "description": "Bada i viktlösa varma källor under en artificiell stjärnhimmel.",
+      "longDescription": "Upplevelsen är helt anpassad för seniorer med lugna, viktlösa bassänger som avlastar kroppen. Den artificiella stjärnhimlen är baserad på realtidssimuleringar av galaxer. Lugn musik och guidning ger en avkopplande atmosfär. Ett perfekt äventyr för de som vill uppleva rymdkänsla utan fysisk ansträngning.",
+      "location": "Orbital Wellness Station",
+      "price": 300000,
+      "tags": ["avkoppling", "rymd", "wellness"],
+      "ageGroup": "seniors",
+      "image": "/experiences/101.png"
+    },
+    {
+      "id": 102,
+      "title": "Kid-Friendly Robot Safari",
+      "description": "Åk i små mecha-fordon genom en park fylld med robotdjur.",
+      "longDescription": "Barnen styr små, färgglada mechas som kör genom en trygg safari-park. Robotdjuren reagerar lekfullt och har pedagogiska funktioner som lär ut fakta om naturen. En personalstyrd AI övervakar varje rörelse. Ett kul, lärorikt och barnvänligt äventyr.",
+      "location": "Future Wildlife Park",
+      "price": 50000,
+      "tags": ["barn", "robotar", "äventyr"],
+      "ageGroup": "kids",
+      "image": "/experiences/102.png"
+    }
+  ]
+}
