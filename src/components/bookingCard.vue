@@ -65,18 +65,18 @@ function formatAddonPrice(addon: Addon) {
 
 <template>
     <section class="flex flex-col items-center md:items-start mt-20 gap-6 max-w-3xl mx-10 sm:mx-auto">
-        <h1 class="text-3xl font-bold "> Boka din upplevelse:</h1>
+        <h1 class="text-3xl font-bold self-start"> Boka din upplevelse:</h1>
         <article class="flex flex-col gap-4 p-4 border border-zinc-500 rounded shadow-xl max-w-3xl">
             <div class="flex flex-col md:flex-row gap-3">
                 <div class="flex md:w-1/2 shrink-0 h-96 md:h-auto ">
-                    <img src="../assets/experiences/1.png" alt="Bild på månen i rymden"
+                    <img src="/experiences/1.png" alt="Bild på en astronaut i rymden med månen i bakgrunden"
                     class="w-full max-h-[90vh] object-cover rounded-lg md:bg-fixed"/>
                 </div>
                 <div class="flex flex-col gap-4 ml-3 justify-center">
                     <h2 class="text-zinc-800 text-2xl font-bold"> {{  title }}</h2>
                     <div class="flex items-center gap-2 flex-wrap">
                     <p v-for="tag in tags" :key="tag"
-                        class="bg-orange-300 p-2 border border-orange-600 rounded-xl text-xs "> {{ tag }}</p>
+                        class="bg-orange-300 px-2 py-1 border border-orange-600 rounded-xl text-orange-900 text-xs "> {{ tag }}</p>
                     </div>
                     <p class="text-black font-extrabold text-lg">{{ priceFormatted }} </p>
                     <p class="text-zinc-600"> {{  description }}</p>
