@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useBookingStore } from '../stores/bookingStore';
 import type { Addon } from '../stores/bookingStore';
+import Addons from './addons/Addons.vue';
 
 const title = "Sky diving from the moon";
 const description = "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet."
@@ -60,19 +61,19 @@ function formatAddonPrice(addon: Addon) {
 
 
 <template>
-    <section class="flex flex-col items-start my-20 gap-6 max-w-3xl mx-auto">
-        <h1 class="text-3xl font-extrabold"> Boka din upplevelse:</h1>
-        <article class="flex flex-col gap-4 p-4 border border-zinc-500 rounded shadow-md max-w-3xl">
-            <div class="flex ">
-                <div class="flex w-54 shrink-0">
-                    <img src="../assets/experiences/moon.jpg" alt="Bild på månen i rymden"
-                    class="w-full h-auto object-cover rounded-lg"/>
+    <section class="flex flex-col items-center md:items-start mt-20 gap-6 max-w-3xl mx-10 sm:mx-auto">
+        <h1 class="text-3xl font-bold "> Boka din upplevelse:</h1>
+        <article class="flex flex-col gap-4 p-4 border border-zinc-500 rounded shadow-xl max-w-3xl">
+            <div class="flex flex-col md:flex-row gap-3">
+                <div class="flex md:w-1/2 shrink-0 h-96 md:h-auto ">
+                    <img src="../assets/experiences/1.png" alt="Bild på månen i rymden"
+                    class="w-full max-h-[90vh] object-cover rounded-lg md:bg-fixed"/>
                 </div>
-                <div class="flex flex-col gap-4 ml-3">
+                <div class="flex flex-col gap-4 ml-3 justify-center">
                     <h2 class="text-zinc-800 text-2xl font-bold"> {{  title }}</h2>
                     <div class="flex items-center gap-2 flex-wrap">
                     <p v-for="tag in tags" :key="tag"
-                        class="bg-emerald-300 p-2 text-emerald-800 border border-emerald-700 rounded-md text-sm "> {{ tag }}</p>
+                        class="bg-orange-300 p-2 border border-orange-600 rounded-xl text-xs "> {{ tag }}</p>
                     </div>
                     <p class="text-black font-extrabold text-lg">{{ priceFormatted }} </p>
                     <p class="text-zinc-600"> {{  description }}</p>
@@ -127,11 +128,13 @@ function formatAddonPrice(addon: Addon) {
                             <span>{{ (store.totalPrice).toLocaleString('sv-SE') }} {{ currency }}</span>
                         </div>
                     </div>
-                    <button @click="addToCart" class="bg-black text-white p-3 rounded-md mt-2 w-max">Lägg till upplevelse i varukorg</button>
+                    <button @click="addToCart" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md mt-2 w-max self-center">Lägg till upplevelse i varukorg</button>
                 </div>
             </div>
         </article>
-        <Addons />
+    </section>
+    <section class="mx-10 mb-20 mt-10">
+    <Addons />
     </section>
 </template>
 

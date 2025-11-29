@@ -19,7 +19,7 @@
 
 
 <template>
-    <div class="relative rounded-lg overflow-hidden shadow-md group h-48">
+    <div class="relative rounded-lg overflow-hidden shadow-xl group h-50">
         <div class="absolute inset-0">
             <img :src="addon.imageUrl || addon.image" alt="Bild på paketerbjudande" class="w-full h-full object-cover filter blur-sm scale-105"/>
             <div class="absolute inset-0 bg-gradient-to-tr from-purple-700/25 via-orange-400/10 to-teal-400/10"></div>
