@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import data from "../../utils/experiences.json";
 import Card from "../experiencePage/ExperienceCard.vue";
 const allExperiences = Object.values(data).flat();
