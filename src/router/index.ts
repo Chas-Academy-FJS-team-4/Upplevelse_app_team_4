@@ -9,8 +9,8 @@ export const router = createRouter({
     routes: [
         { path: "/", component: LandingPage },
         { path: "/cart", component: CartPage },
-        // { path: "/booking/:id", name: "booking" },
+        { path: "/booking/:id", name: "booking" },
         { path: "/experiences", component: ExperiencePage },
-        // { path: "/experience/:id", name: "experience" },
+        { path: "/experience/:id", name: "experience" },
     ],
 });
