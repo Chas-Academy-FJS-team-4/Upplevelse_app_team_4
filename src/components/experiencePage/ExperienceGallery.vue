@@ -1,7 +1,6 @@
 <script setup>
 import data from "../../utils/experiences.json";
 import Card from "../experiencePage/ExperienceCard.vue";
-// takes
 const allExperiences = Object.values(data).flat();
 </script>
 <template>
