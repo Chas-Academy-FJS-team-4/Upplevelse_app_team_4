@@ -1,11 +1,13 @@
 <script setup>
 import data from "../../utils/experiences.json";
 import Card from "../experiencePage/ExperienceCard.vue";
+// takes
+const allExperiences = Object.values(data).flat();
 </script>
 <template>
-    <div>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
         <Card
-            v-for="experience in data.spaceAdventures"
+            v-for="experience in allExperiences"
             :key="experience.id"
             :activity="experience"
         />

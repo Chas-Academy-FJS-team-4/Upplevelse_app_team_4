@@ -6,13 +6,17 @@ const props = defineProps({
 const { image, title, description } = props.activity;
 </script>
 <template>
-    <div>
-        <div>
-            <img :src="image" :alt="title" />
+    <div class="max-w-72 p-5 shadow-xl rounded-2xl group">
+        <div class="overflow-hidden w-full h-52">
+            <img
+                class="object-cover rounded-md w-full h-full transition-transform duration-300 group-hover:scale-110"
+                :src="image"
+                :alt="title"
+            />
         </div>
-        <div>
-            <span>{{ title }}</span>
-            <p>{{ description }}</p>
+        <div class="mt-4">
+            <span class="text-xl font-extrabold">{{ title }}</span>
+            <p class="mt-2">{{ description }}</p>
         </div>
     </div>
 </template>
