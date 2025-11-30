@@ -44,7 +44,7 @@ function confirmPurchase() {
   <Header />
   <MiniHeroSection />
   <main>
-    <div class="py-20 flex flex-col max-w-3xl mx-auto">
+    <div class="py-20 flex flex-col max-w-5xl mx-10 lg:mx-auto">
       <h2 class="text-left w-full">Kundkorg</h2>
       <p class="text-sm text-gray-500 mb-10">Sammanfattning</p>
 

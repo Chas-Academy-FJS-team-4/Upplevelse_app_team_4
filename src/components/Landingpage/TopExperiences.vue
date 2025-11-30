@@ -10,21 +10,21 @@ const carouselRef = ref(null);
 // Funktioner för pilar
 const scrollLeft = () => {
   if (carouselRef.value)
-    carouselRef.value.scrollBy({ left: -300, behavior: "smooth" });
+    carouselRef.value.scrollBy({ left: -350, behavior: "smooth" });
 };
 
 const scrollRight = () => {
   if (carouselRef.value)
-    carouselRef.value.scrollBy({ left: 300, behavior: "smooth" });
+    carouselRef.value.scrollBy({ left: 350, behavior: "smooth" });
 };
 </script>
 
 <template>
-  <div class="mx-10 lg:mx-[90px] pt-20">
+  <div class="max-w-5xl mx-10 lg:mx-auto pt-20">
     <h2 class="">Mest bokade upplevelser</h2>
   </div>
 
-  <div class="pb-20 px-3 lg:px-[45px]">
+  <div class="pb-20 px-0 lg:px-0 max-w-7xl mx-0 lg:mx-auto">
     <div class="relative h-96 my-5 sm:mx-5">
       <!-- Fade-sidor -->
       <div
@@ -69,15 +69,15 @@ const scrollRight = () => {
       <!-- Carousel -->
       <div
         ref="carouselRef"
-        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full mr-6"
+        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full ml-5 mr-10"
       >
         <div
           v-for="(exp, index) in topExperiences"
           :key="exp.id"
-          class="shrink-0 w-72 snap-start flex flex-col h-full"
+          class="shrink-0 w-80 snap-start flex flex-col h-full"
         >
           <div class="flex items-center">
-            <div class="text-8xl font-bold text-(--color-primary-light) pl-5">
+            <div class="text-9xl font-bold text-(--color-primary-light) pl-3">
               {{ index + 1 }}
             </div>
 

@@ -79,7 +79,7 @@ defineExpose({ focusSearch });
     <button
       @click="applyFilters()"
       type="submit"
-      class="bg-(--color-primary) text-white px-6 py-4 rounded-md hover:bg-(--color-primary-hover) w-full md:w-auto"
+      class="bg-(--color-primary) text-white px-6 py-4 rounded-md hover:bg-(--color-primary-hover) w-full md:w-auto shadow-sm hover:shadow-md"
     >
       Sök
     </button>
