@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import experiencesData from "../../utils/experiences.json";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const newExperiences = ref(experiencesData.newExperiences);
+const newExperiences = computed(() =>
+  experiencesData.filter((exp) => exp.isNew === true)
+);
 
 function goToBookingPage(id) {
   router.push({ name: "booking", params: { id } });
