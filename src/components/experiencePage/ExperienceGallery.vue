@@ -4,7 +4,7 @@ import Card from "../experiencePage/ExperienceCard.vue";
 const allExperiences = Object.values(data).flat();
 </script>
 <template>
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(255px,1fr))] gap-4">
         <Card
             v-for="experience in allExperiences"
             :key="experience.id"
