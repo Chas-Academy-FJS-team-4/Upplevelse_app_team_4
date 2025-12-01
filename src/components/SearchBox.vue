@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 // Local refs — dessa kommer senare ersättas av en Pinia store
@@ -23,12 +23,13 @@ function applyFilters() {
   console.log("Filters to save:", filters);
 }
 
-const searchInput = ref(null);
+const searchInput = ref<HTMLInputElement | null>(null);
 
 function focusSearch() {
   searchInput.value?.focus();
 }
 
+// expose metoden så andra komponenter kan anropa via ref
 defineExpose({ focusSearch });
 </script>
 <template>

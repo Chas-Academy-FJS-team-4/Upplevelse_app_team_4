@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import BaseModal from "../BaseModal.vue";
+
+defineEmits<{
+  close: [];
+}>();
+</script>
+
 <template>
   <BaseModal :show-close="true" @close="$emit('close')">
     <div
@@ -19,11 +27,3 @@
     </button>
   </BaseModal>
 </template>
-
-<script setup lang="ts">
-import BaseModal from "../BaseModal.vue";
-
-defineEmits<{
-  close: [];
-}>();
-</script>

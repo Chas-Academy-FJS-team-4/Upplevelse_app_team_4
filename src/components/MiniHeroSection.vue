@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import heroImg from "../assets/images/hero.jpg";
 </script>
 <template>
