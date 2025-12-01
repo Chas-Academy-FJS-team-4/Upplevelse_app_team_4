@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import experiencesData from "../../utils/experiences.json";
 
-const topExperiences = ref(experiencesData.topExperineces);
+const topExperiences = computed(() =>
+  experiencesData.filter((exp) => exp.isTop === true)
+);
 
 // Scrollref för horisontell scroll
 const carouselRef = ref(null);
