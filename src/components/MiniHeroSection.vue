@@ -8,6 +8,5 @@ import heroImg from "../assets/images/hero.jpg";
       :src="heroImg"
       style="object-position: 0px -135px"
     />
-    <SearchBar />
   </section>
 </template>
