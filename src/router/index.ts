@@ -10,7 +10,7 @@ export const router = createRouter({
     { path: "/", component: LandingPage },
     { path: "/cart", component: CartPage },
     { path: "/booking", name: "booking", component: BookingPage },
-    { path: "/experiences", component: ExperiencePage },
+    { path: "/experiences", name: "experiences", component: ExperiencePage },
     { path: "/experience/:id", name: "experience" },
   ],
 });
