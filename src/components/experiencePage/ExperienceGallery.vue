@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import data from "../../utils/experiences.json";
 import Card from "../experiencePage/ExperienceCard.vue";
-const allExperiences = Object.values(data).flat();
+// const allExperiences = Object.values(data).flat();
 </script>
 <template>
     <div class="grid grid-cols-[repeat(auto-fill,minmax(255px,1fr))] gap-4">
