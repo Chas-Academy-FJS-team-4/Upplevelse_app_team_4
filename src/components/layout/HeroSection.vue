@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import heroImg from "../assets/images/hero.jpg";
-import SearchBox from "./SearchBox.vue";
+import heroImg from "../../assets/images/hero.jpg";
+import SearchBox from "../SearchBox.vue";
 import { ref, defineExpose } from "vue";
 
 const searchBoxRef = ref<InstanceType<typeof SearchBox> | null>(null);

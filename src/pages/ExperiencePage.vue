@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import heroImg from "../assets/images/hero.jpg";
 import SearchBox from "../components/SearchBox.vue";
-import Header from "../components/Header.vue";
+import Header from "../components/layout/Header.vue";
 import Gallery from "../components/experiencePage/ExperienceGallery.vue";
 import { ref } from "vue";
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Header from "../components/Header.vue";
-import HeroSection from "../components/HeroSection.vue";
+import Header from "../components/layout/Header.vue";
+import HeroSection from "../components/layout/HeroSection.vue";
 import TopExperiences from "../components/Landingpage/TopExperiences.vue";
 import Articles from "../components/Landingpage/Articles.vue";
 import { ref } from "vue";
