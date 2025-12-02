@@ -1,6 +1,6 @@
-<script setup>
-import Header from "../components/Header.vue";
-import MiniHeroSection from "../components/MiniHeroSection.vue";
+<script setup lang="ts">
+import Header from "../components/layout/Header.vue";
+import MiniHeroSection from "../components/layout/MiniHeroSection.vue";
 import BookingCard from "../components/bookingCard.vue";
 </script>
 <template>

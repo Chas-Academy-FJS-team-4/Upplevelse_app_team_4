@@ -3,8 +3,8 @@ import { ref, computed } from "vue";
 import CartItem from "../components/Cart/CartItem.vue";
 import ConfirmationModal from "../components/Cart/ConfirmationModal.vue";
 import { useCart } from "../composables/useCart";
-import Header from "../components/Header.vue";
-import MiniHeroSection from "../components/MiniHeroSection.vue";
+import Header from "../components/layout/Header.vue";
+import MiniHeroSection from "../components/layout/MiniHeroSection.vue";
 
 const {
   cartItems,

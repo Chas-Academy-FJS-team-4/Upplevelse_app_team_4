@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 import experiencesData from "../../utils/experiences.json";
 import { useRouter } from "vue-router";
@@ -9,7 +9,7 @@ const newExperiences = computed(() =>
   experiencesData.filter((exp) => exp.isNew === true)
 );
 
-function goToBookingPage(id) {
+function goToBookingPage(id: number) {
   router.push({ name: "booking", params: { id } });
 }
 </script>

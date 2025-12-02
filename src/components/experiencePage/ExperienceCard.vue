@@ -7,7 +7,7 @@ interface Activities {
 }
 
 const props = defineProps<{
-    activity: Activities;
+  activity: Activities;
 }>();
 
 const { image, title, description } = props.activity;
@@ -33,4 +33,9 @@ const { image, title, description } = props.activity;
             >Läs mer...</router-link
         >
     </div>
+    <div class="mt-4">
+      <span class="text-xl font-extrabold">{{ title }}</span>
+      <p class="mt-2">{{ description }}</p>
+    </div>
+  </div>
 </template>
