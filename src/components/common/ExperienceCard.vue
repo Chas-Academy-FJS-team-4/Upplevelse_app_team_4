@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ExperienceType } from "../types/ExperienceType";
+import type { ExperienceType } from "../../types/ExperienceType";
 
 const { exp } = defineProps<{
   exp: ExperienceType;
