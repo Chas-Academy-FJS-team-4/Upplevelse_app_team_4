@@ -6,7 +6,7 @@
             <SearchBar />
         </div>
     </div>
-    <div class="px-24 mt-12 mb-12">
+    <div class="px-40 mt-12 mb-12">
         <h1 class="text-3xl mb-7 font-extrabold">Våra Aktiviteter</h1>
         <Gallery />
     </div>
