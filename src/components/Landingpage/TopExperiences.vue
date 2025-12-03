@@ -1,31 +1,34 @@
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { computed, ref } from "vue";
+import ExperienceCard from "../common/ExperienceCard.vue";
 import experiencesData from "../../utils/experiences.json";
 
-const topExperiences = ref(experiencesData.topExperineces);
+const topExperiences = computed(() =>
+  experiencesData.filter((exp) => exp.isTop === true)
+);
 
 // Scrollref för horisontell scroll
-const carouselRef = ref(null);
+const carouselRef = ref<HTMLElement | null>(null);
 
 // Funktioner för pilar
 const scrollLeft = () => {
   if (carouselRef.value)
-    carouselRef.value.scrollBy({ left: -300, behavior: "smooth" });
+    carouselRef.value.scrollBy({ left: -350, behavior: "smooth" });
 };
 
 const scrollRight = () => {
   if (carouselRef.value)
-    carouselRef.value.scrollBy({ left: 300, behavior: "smooth" });
+    carouselRef.value.scrollBy({ left: 350, behavior: "smooth" });
 };
 </script>
 
 <template>
-  <div class="mx-10 lg:mx-[90px] pt-20">
+  <div class="max-w-5xl mx-10 lg:mx-auto pt-10">
     <h2 class="">Mest bokade upplevelser</h2>
   </div>
 
-  <div class="pb-20 px-3 lg:px-[45px]">
-    <div class="relative h-96 my-5 sm:mx-5">
+  <div class="pb-20 px-0 lg:px-0 max-w-7xl mx-0 lg:mx-auto">
+    <div class="relative h-96 sm:mx-5">
       <!-- Fade-sidor -->
       <div
         class="absolute left-0 top-0 h-full w-20 pointer-events-none"
@@ -69,45 +72,18 @@ const scrollRight = () => {
       <!-- Carousel -->
       <div
         ref="carouselRef"
-        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full mr-6"
+        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full ml-5 mr-10 pt-8"
       >
         <div
           v-for="(exp, index) in topExperiences"
           :key="exp.id"
-          class="shrink-0 w-72 snap-start flex flex-col h-full"
+          class="shrink-0 w-80 snap-start flex flex-col h-full"
         >
           <div class="flex items-center">
-            <div class="text-8xl font-bold text-(--color-primary-light) pl-5">
+            <div class="text-9xl font-bold text-(--color-primary-light) pl-3">
               {{ index + 1 }}
             </div>
-
-            <div
-              class="flex-1 rounded-lg shadow-md border-[0.5px] border-gray-300 p-4 flex flex-col h-86 cursor-pointer bg-white transform duration-300 hover:shadow-xl"
-            >
-              <div class="w-full h-38 mb-2">
-                <img
-                  :src="exp.image"
-                  alt=""
-                  class="w-full h-38 object-cover rounded-t-lg mb-2"
-                />
-              </div>
-
-              <h4 class="mb-1">{{ exp.title }}</h4>
-              <p class="text-gray-600 text-sm h-full line-clamp-4">
-                {{ exp.description }}
-              </p>
-              <router-link
-                class="text-right text-xs text-(--color-accent-light) hover:text-(--color-accent)"
-                :to="{ name: 'experience', params: { id: exp.id } }"
-                >Läs mer...</router-link
-              >
-
-              <!-- <a
-                class="text-right text-xs text-(--color-accent-light) hover:text-(--color-accent)"
-                href="#"
-                >Läs mer...</a
-              > -->
-            </div>
+            <ExperienceCard :exp="exp" />
           </div>
         </div>
       </div>

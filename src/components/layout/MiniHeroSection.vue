@@ -1,5 +1,5 @@
-<script setup>
-import heroImg from "../assets/images/hero.jpg";
+<script setup lang="ts">
+import heroImg from "../../assets/images/hero.jpg";
 </script>
 <template>
   <section class="">
@@ -8,6 +8,5 @@ import heroImg from "../assets/images/hero.jpg";
       :src="heroImg"
       style="object-position: 0px -135px"
     />
-    <SearchBar />
   </section>
 </template>

@@ -1,31 +1,44 @@
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref, computed } from "vue";
 import experiencesData from "../../utils/experiences.json";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const newExperiences = ref(experiencesData.newExperiences);
+const newExperiences = computed(() =>
+  experiencesData.filter((exp) => exp.isNew === true)
+);
 
-function goToBookingPage(id) {
+function goToBookingPage(id: number) {
   router.push({ name: "booking", params: { id } });
 }
 </script>
 <template>
-  <section class="py-20 lg:px-0 bg-(--color-bg-secondary)">
-    <h2 class="lg:mx-[90px] mx-10 mb-10">Vi har upplevelser för alla åldrar</h2>
+  <section
+    class="pb-20 lg:px-0 flex flex-col items-center justify-center max-w-5xl mx-10 lg:mx-auto"
+  >
+    <h2 class="mb-10 w-full">Vi har upplevelser för alla åldrar</h2>
 
-    <div class="flex flex-col">
-      <article
-        class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0 mx-10 lg:mx-[90px]"
-      >
+    <div class="flex flex-col max-w-5xl">
+      <article class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0">
         <img
           :src="newExperiences[0].image"
           alt=""
-          class="lg:w-1/2 h-50 md:h-80 lg:h-80 object-cover object-[center_80%] rounded-lg mb-2 shadow-md"
+          class="lg:w-1/2 h-50 md:h-80 lg:h-80 object-cover object-[center_80%] rounded-lg shadow-md"
         />
         <div class="flex flex-col justify-center gap-5 lg:w-1/2">
-          <h3>{{ newExperiences[0].title }}</h3>
+          <div>
+            <h3 class="mb-2">{{ newExperiences[0].title }}</h3>
+            <div class="flex items-center gap-2 flex-wrap">
+              <p
+                v-for="tag in newExperiences[0].tags"
+                :key="tag"
+                class="bg-(--color-accent-light) px-2 py-1 border border-orange-600 rounded-xl text-orange-900 text-xs"
+              >
+                {{ tag }}
+              </p>
+            </div>
+          </div>
           <p>
             {{ newExperiences[0].longDescription }}
           </p>
@@ -121,14 +134,25 @@ function goToBookingPage(id) {
 
       <!-- <article class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0"> -->
 
-      <article class="flex flex-col md:flex-row lg:gap-15 mx-10 lg:mx-[90px]">
+      <article class="flex flex-col lg:flex-row lg:gap-15">
         <div class="flex flex-col justify-center gap-5 lg:w-1/2">
           <img
             :src="newExperiences[1].image"
             alt=""
-            class="object-cover rounded-lg mb-2 flex lg:hidden shadow-md h-50 md:h-80"
+            class="object-cover rounded-lg flex lg:hidden shadow-md h-50 md:h-80"
           />
-          <h3>{{ newExperiences[1].title }}</h3>
+          <div>
+            <h3 class="mb-2">{{ newExperiences[1].title }}</h3>
+            <div class="flex items-center gap-2 flex-wrap">
+              <p
+                v-for="tag in newExperiences[0].tags"
+                :key="tag"
+                class="bg-(--color-accent-light) px-2 py-1 border border-orange-600 rounded-xl text-orange-900 text-xs"
+              >
+                {{ tag }}
+              </p>
+            </div>
+          </div>
           <p>
             {{ newExperiences[1].longDescription }}
           </p>

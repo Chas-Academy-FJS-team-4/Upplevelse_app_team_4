@@ -1,12 +1,10 @@
-<script setup>
-import { ref } from "vue";
-import SearchBox from "./SearchBox.vue";
+<script setup lang="ts">
+import { defineEmits } from "vue";
+import { RouterLink } from "vue-router";
 
-const searchBoxRef = ref(null);
-
-function focusOnSearch() {
-  searchBoxRef.value?.focusSearch();
-}
+const emit = defineEmits<{
+  (e: "focus-search"): void;
+}>();
 </script>
 <template>
   <header
@@ -49,7 +47,7 @@ function focusOnSearch() {
       </li>
       <li
         class="flex flex-row items-center justify-center gap-2 pr-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
-        @click="focusOnSearch"
+        @click="$emit('focus-search')"
       >
         <span class="hidden sm:flex"
           ><svg
@@ -108,6 +106,4 @@ function focusOnSearch() {
       </li>
     </ul>
   </header>
-
-  <!-- <SearchBox ref="searchBoxRef" /> -->
 </template>

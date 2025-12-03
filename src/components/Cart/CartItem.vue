@@ -76,8 +76,8 @@ const handlePeopleBlur = (event: Event) => {
 
       <!-- <div class="text-right self-center">
       </div> -->
-      <div class="flex justify-between">
-        <div class="flex gap-5">
+      <div class="flex justify-between flex-col sm:flex-row gap-2 sm:gap-0">
+        <div class="flex gap-2 sm:gap-5">
           <!-- People count - editable or readonly -->
           <div class="flex items-center gap-1">
             <span class="text-sm"
@@ -143,7 +143,7 @@ const handlePeopleBlur = (event: Event) => {
             }}</span>
           </div>
         </div>
-        <p class="font-bold text-lg">{{ totalPrice }} SEK</p>
+        <p class="font-bold sm:text-lg text-right">{{ totalPrice }} SEK</p>
       </div>
     </div>
   </div>
