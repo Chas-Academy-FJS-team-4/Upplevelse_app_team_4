@@ -74,11 +74,11 @@ function formatAddonPrice(addon: Addon) {
       class="flex flex-col gap-4 p-4 rounded-lg shadow-md border-[0.5px] border-gray-300 bg-white w-full"
     >
       <div class="flex flex-col md:flex-row gap-3">
-        <div class="flex md:w-1/2 shrink-0 h-96 md:h-auto">
+        <div class="flex md:w-1/2 shrink-0 md:h-auto">
           <img
             src="/experiences/1.png"
             alt="Bild på en astronaut i rymden med månen i bakgrunden"
-            class="w-full max-h-[90vh] object-cover rounded-lg md:bg-fixed"
+            class="w-full object-cover rounded-lg md:bg-fixed max-h-[30vh] md:max-h-[75vh]"
           />
         </div>
         <div class="flex flex-col gap-4 ml-3 justify-center">
