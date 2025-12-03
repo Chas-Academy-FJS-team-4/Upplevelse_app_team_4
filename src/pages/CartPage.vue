@@ -85,7 +85,7 @@ function goHomeAfterOrder() {
         <div class="space-y-4 w-full">
         <template v-if="cartItems.length === 0">
           <div class="p-8 text-center border rounded bg-white">
-            <p class="text-lg mb-4">There is no experiences in cart yet, <router-link to="/experiences" class="text-purple-700 underline">click here</router-link> to view our experiences!</p>
+            <p class="text-lg mb-4">Du har inga upplevelser i kundkorgen, <router-link to="/experiences" class="text-purple-700 underline">Klicka här</router-link> för att välja upplevelser!</p>
           </div>
         </template>
 
