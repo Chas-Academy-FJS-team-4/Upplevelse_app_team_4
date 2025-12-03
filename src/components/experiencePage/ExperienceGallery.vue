@@ -11,6 +11,6 @@ import ExperienceCard from "../common/ExperienceCard.vue";
       :key="experience.id"
       :activity="experience"
     /> -->
-    <ExperienceCard :exp="exp" v-for="(exp, index) in data" :key="exp.id" />
+    <ExperienceCard :exp="exp" v-for="(exp) in data" :key="exp.id" />
   </div>
 </template>
