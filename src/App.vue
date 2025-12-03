@@ -1,5 +1,13 @@
-<script setup></script>
+<script setup>
+import Footer from "./components/Footer.vue";
+</script>
+
 <template>
-  <router-view />
+  <div class="min-h-screen flex flex-col">
+    <main class="flex-1">
+      <router-view />
+    </main>
+    <Footer />
+  </div>
 </template>
 
