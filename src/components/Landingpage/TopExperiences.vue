@@ -23,12 +23,12 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <div class="max-w-5xl mx-10 lg:mx-auto pt-20">
+  <div class="max-w-5xl mx-10 lg:mx-auto pt-10">
     <h2 class="">Mest bokade upplevelser</h2>
   </div>
 
   <div class="pb-20 px-0 lg:px-0 max-w-7xl mx-0 lg:mx-auto">
-    <div class="relative h-96 my-5 sm:mx-5">
+    <div class="relative h-96 sm:mx-5">
       <!-- Fade-sidor -->
       <div
         class="absolute left-0 top-0 h-full w-20 pointer-events-none"
@@ -72,7 +72,7 @@ const scrollRight = () => {
       <!-- Carousel -->
       <div
         ref="carouselRef"
-        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full ml-5 mr-10"
+        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide h-full ml-5 mr-10 pt-8"
       >
         <div
           v-for="(exp, index) in topExperiences"

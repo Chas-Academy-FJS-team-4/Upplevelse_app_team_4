@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import CartPage from "../pages/CartPage.vue";
 import LandingPage from "../pages/LandingPage.vue";
 import ExperiencePage from "../pages/ExperiencePage.vue";
-import ExperienceId from "../pages/ExperienceIDpage.vue"
+import ExperienceId from "../pages/ExperienceIDpage.vue";
 import BookingPage from "../pages/BookingPage.vue";
 
 export const router = createRouter({
@@ -10,7 +10,7 @@ export const router = createRouter({
   routes: [
     { path: "/", component: LandingPage },
     { path: "/cart", component: CartPage },
-    { path: "/booking", name: "booking", component: BookingPage },
+    { path: "/booking/:id", name: "booking", component: BookingPage },
     { path: "/experiences", name: "experiences", component: ExperiencePage },
     { path: "/experience/:id", name: "experience", component: ExperienceId },
   ],
