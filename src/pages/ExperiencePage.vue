@@ -16,13 +16,13 @@ defineExpose({ focusSearch });
 
 <template>
   <div class="">
-    <img class="h-120 w-full object-cover" :src="heroImg" />
-    <div class="absolute h-120 inset-0 flex justify-center items-center">
+    <img class="h-90 w-full object-cover" :src="heroImg" />
+    <div class="absolute h-105 inset-0 flex justify-center items-center">
       <Header class="self-start" @focus-search="focusSearch" />
       <SearchBox ref="searchBoxRef" />
     </div>
   </div>
-  <div class="px-24 pt-12 mb-12 bg-(--color-bg-primary)">
+  <div class="px-24 bg-(--color-bg-primary) pt-10">
     <h2 class="mb-8">Våra Aktiviteter</h2>
     <Gallery />
   </div>
