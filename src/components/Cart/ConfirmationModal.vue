@@ -14,7 +14,7 @@ defineEmits<{
       <span class="text-green-600 text-4xl">✔</span>
     </div>
 
-    <h2 class="text-lg font-semibold mb-4">Your order has been placed!</h2>
+    <h2 class="text-lg font-semibold mb-4">Vi har nu mottagit din beställning!</h2>
 
     <p class="text-gray-600 mb-6">
       Tack för ditt köp! Du får ett mail med bokningsbekräftelse inom kort.
