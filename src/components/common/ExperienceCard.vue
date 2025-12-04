@@ -13,10 +13,11 @@ const ageGroupTranslations: Record<string, string> = {
 
 const translatedAgeGroup = ageGroupTranslations[exp.ageGroup] || exp.ageGroup;
 
+//TODO - Bestämma färger här beroende på vårt färgschema
 const tagPalette = [
-  "bg-orange-300 text-orange-900 border-orange-800",
-  "bg-green-300 text-green-800 border-green-800",
-  "bg-blue-300 text-blue-800 border-blue-800",
+  "bg-orange-400/70 text-orange-900 border-orange-800",
+  "bg-green-400/70 text-green-900 border-green-800",
+  "bg-blue-400/70 text-blue-900 border-blue-800",
 ];
 </script>
 
@@ -36,7 +37,7 @@ const tagPalette = [
         />
 
         <!-- Taggar på bilden -->
-        <div class="absolute flex flex-col bottom-48 left-5 gap-1.5">
+        <div class="absolute flex flex-col bottom-47 left-5 gap-1.5">
           <div
             v-for="(tag, i) in exp.tags"
             :key="tag"

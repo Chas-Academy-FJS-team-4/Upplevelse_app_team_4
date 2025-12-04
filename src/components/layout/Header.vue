@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useCart } from "../../composables/useCart";
 import { defineEmits } from "vue";
 import { RouterLink } from "vue-router";
+import logo from "../../../public/WildLogo.png";
 
 const emit = defineEmits<{
   (e: "focus-search"): void;
@@ -13,11 +14,14 @@ const cartCount = computed(() => cartItems.value.length);
 </script>
 <template>
   <header
-    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center p-5 text-white z-100"
+    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center px-5 py-1 text-white z-100"
   >
-    <h1 class="text-2xl">
+    <!-- <h1 class="text-2xl">
       <router-link to="/">WildX</router-link>
-    </h1>
+    </h1> -->
+    <router-link to="/">
+      <img class="w-42" :src="logo" alt="" />
+    </router-link>
     <ul
       class="flex flex-row sm:gap-8 gap-3 text-sm md:text-[0.9rem] font-semibold"
     >
@@ -75,9 +79,13 @@ const cartCount = computed(() => cartItems.value.length);
                 stroke-linecap="round"
                 stroke-linejoin="round"
               ></path>
-            </g></svg></span>
+            </g></svg
+        ></span>
         <router-link to="/cart">Kundkorg</router-link>
-        <span v-if="cartCount > 0" class="absolute -top-2 -right-3 bg-orange-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">
+        <span
+          v-if="cartCount > 0"
+          class="absolute -top-2 -right-3 bg-orange-400 text-black text-xs font-bold px-2 py-0.5 rounded-full"
+        >
           {{ cartCount }}
         </span>
       </li>

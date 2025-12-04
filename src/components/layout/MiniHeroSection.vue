@@ -4,7 +4,7 @@ import heroImg from "../../assets/images/hero.jpg";
 <template>
   <section class="">
     <img
-      class="h-18 w-full object-cover"
+      class="h-17.5 w-full object-cover"
       :src="heroImg"
       style="object-position: 0px -135px"
     />
