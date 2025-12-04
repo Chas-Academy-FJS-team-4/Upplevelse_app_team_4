@@ -56,6 +56,41 @@ function goHomeAfterOrder() {
   lastOrder.value = null;
   router.push("/");
 }
+
+function printReceipt() {
+  if (!lastOrder.value) return;
+
+  const receiptEl = document.getElementById("receipt");
+  const printContents = receiptEl ? receiptEl.innerHTML : null;
+
+  const win = window.open("", "_blank", "width=800,height=600");
+  if (win) {
+    win.document.write(`
+      <html>
+        <head>
+          <title>Kvittens</title>
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <style>
+            body{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding:20px; color:#111}
+            h3{font-weight:600; margin-bottom:8px}
+            li{margin-bottom:6px}
+            .total{font-weight:700; margin-top:12px}
+            .no-print{display:none !important}
+          </style>
+        </head>
+        <body>
+          ${printContents ?? '<p>Innehåll saknas</p>'}
+        </body>
+      </html>
+    `);
+    win.document.close();
+    win.focus();
+    win.print();
+  } else {
+    // Fallback: kör vanlig print om popup blockerade
+    window.print();
+  }
+}
 </script>
 
 <template>
@@ -68,16 +103,17 @@ function goHomeAfterOrder() {
         <p class="text-sm text-gray-500 mb-10">Sammanfattning</p>
       </div>
 
-      <div v-if="lastOrder" class="mb-6 p-6 border rounded bg-white">
-        <h3 class="font-semibold mb-2">Orderöversikt</h3>
+      <div v-if="lastOrder" id="receipt" class="mb-6 p-6 border rounded bg-white">
+        <h3 class="font-semibold mb-2">Orderbekräftelse</h3>
         <ul class="text-sm text-gray-700 space-y-2">
           <li v-for="item in lastOrder.items" :key="item.id">
-            - {{ item.title }} — {{ item.peopleCount }} {{ item.peopleCount === 1 ? 'person' : 'personer' }} on {{ item.selectedDate || 'Inget datum' }} — {{ (item.peopleCount * item.pricePerPerson) }} SEK
+            - {{ item.title }} — {{ item.peopleCount }} {{ item.peopleCount === 1 ? 'person' : 'personer' }} den {{ item.selectedDate || 'Inget datum' }} — {{ (item.peopleCount * item.pricePerPerson) }} SEK
           </li>
         </ul>
         <p class="font-bold mt-4">Total: {{ lastOrder.total }} SEK</p>
         <div class="mt-4">
-          <button class="bg-gray-200 px-4 py-2 rounded mr-2" @click="goHomeAfterOrder">Stäng översikt</button>
+           <button class="bg-gray-200 px-4 py-2 rounded mr-2 no-print" @click="printReceipt">Skriv ut</button>
+          <button class="bg-gray-200 px-4 py-2 rounded mr-2 no-print" @click="goHomeAfterOrder">Till startsidan</button>
         </div>
       </div>
 
@@ -121,13 +157,13 @@ function goHomeAfterOrder() {
       <div v-if="isCheckoutMode && !lastOrder" class="mt-10 border rounded-lg p-6 shadow-sm">
         <h3 class="font-semibold mb-4">Bekräfta bokning</h3>
 
-        <p class="text-xl font-bold mb-4">Total price: {{ totalPrice }} SEK</p>
+        <p class="text-xl font-bold mb-4">Totalt: {{ totalPrice }} SEK</p>
 
         <ul class="space-y-2 text-sm text-gray-700 mb-6">
           <li v-for="item in cartItems" :key="item.id">
             - {{ item.peopleCount }}
-            {{ item.peopleCount === 1 ? "Person" : "Persons" }} will experience
-            {{ item.title }} on {{ item.selectedDate || "no date selected" }}.
+            {{ item.peopleCount === 1 ? "Person" : "Persons" }} kommer få uppleva
+            {{ item.title }} den {{ item.selectedDate || "no date selected" }}.
           </li>
         </ul>
 
@@ -151,3 +187,9 @@ function goHomeAfterOrder() {
     </div>
   </main>
 </template>
+
+<style>
+@media print {
+  .no-print { display: none !important; }
+}
+</style>
