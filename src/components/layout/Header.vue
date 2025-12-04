@@ -105,6 +105,7 @@ const cartCount = computed(() => cartItems.value.length);
                 stroke-linecap="round"
                 stroke-linejoin="round"
               ></path>
+            </g></svg></span>
             </g></svg>
           </span>
         <router-link to="/cart">Kundkorg</router-link>
