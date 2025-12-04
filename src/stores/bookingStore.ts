@@ -105,6 +105,15 @@ export const useBookingStore = defineStore('booking', {
         },
         clearAddons() {
             this.addons = [];
+        },
+        resetBooking(resetExperience = false) {
+            this.date=null;
+            this.people=1;
+            this.ageCategory = 'adult';
+            this.addons = [];
+            if(resetExperience) {
+                this.experience = null;
+            }
         }
     }
 })
