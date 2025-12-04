@@ -8,6 +8,15 @@ const router = useRouter();
 const ageCategory = ref("");
 const people = ref("");
 const date = ref("");
+// compute today's date in local timezone as YYYY-MM-DD to use as min for the date input
+function getTodayString() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+const minDate = ref(getTodayString());
 const search = ref("");
 
 // Function to send filters somewhere (later: to Pinia)
@@ -18,6 +27,12 @@ function applyFilters() {
     date: date.value,
     search: search.value,
   };
+
+  // Ensure date is not before today. If user somehow entered a past date, clamp it to today.
+  if (date.value && date.value < minDate.value) {
+    date.value = minDate.value;
+    filters.date = date.value;
+  }
 
   // TODO: Replace with Pinia store
   // const filterStore = useFilterStore();
@@ -79,6 +94,7 @@ defineExpose({ focusSearch });
       <!-- Datum -->
       <input
         type="date"
+        :min="minDate"
         class="p-4 rounded-md bg-white text-gray-500 w-1/3"
         v-model="date"
         @keydown.enter.prevent="applyFilters"
