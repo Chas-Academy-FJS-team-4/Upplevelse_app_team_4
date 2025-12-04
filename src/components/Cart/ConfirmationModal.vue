@@ -23,7 +23,7 @@ defineEmits<{
       class="mt-4 bg-purple-800 hover:bg-purple-700 text-white px-6 py-2 rounded"
       @click="$emit('close')"
     >
-      Tillbaka till orderöversikt
+      Visa orderbekräftelse
     </button>
   </BaseModal>
 </template>
