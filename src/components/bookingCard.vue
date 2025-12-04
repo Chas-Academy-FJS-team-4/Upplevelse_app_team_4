@@ -21,9 +21,15 @@ const router = useRouter();
 
 const showAddedModal = ref(false);
 
-// Minsta datum = idag
-const today = new Date();
-const minDateISO = today.toISOString().split("T")[0];
+// Minsta datum = idag (lokalt, i formatet YYYY-MM-DD)
+function getTodayLocalISO() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+const minDateISO = getTodayLocalISO();
 
 // Format på priset
 const priceFormatted = computed(() => {
@@ -123,6 +129,10 @@ function continueDiscovering(navigate = true) {
 
 // Emit för att skicka till parent (lägg till i varukorg) - men vi hanterar add direkt här
 function addToCart() {
+  // Ensure date is not before today
+  if (selectedDate.value && selectedDate.value < minDateISO) {
+    store.setDate(minDateISO);
+  }
   const exp = store.experience;
   const pricePerPerson = exp ? exp.price : fallbackPrice;
   addItem({

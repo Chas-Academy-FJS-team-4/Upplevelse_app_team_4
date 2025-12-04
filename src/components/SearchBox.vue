@@ -9,10 +9,28 @@ const route = useRoute();
 const ageCategory = ref("");
 const people = ref<number | null>(null);
 const date = ref("");
+// compute today's date in local timezone as YYYY-MM-DD to use as min for the date input
+function getTodayString() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+const minDate = ref(getTodayString());
 const search = ref("");
 
 const searchInput = ref<HTMLInputElement | null>(null);
 
+  // Ensure date is not before today. If user somehow entered a past date, clamp it to today.
+  if (date.value && date.value < minDate.value) {
+    date.value = minDate.value;
+    filters.date = date.value;
+  }
+
+  // TODO: Replace with Pinia store
+  // const filterStore = useFilterStore();
+  // filterStore.setFilters(filters);
 // Gör så att query uppdateras när fälten ändras (replace så vi inte spammar history)
 watch([search, people, date, ageCategory], () => {
   if((router.currentRoute.value.name as string) === "experiences") {
@@ -107,6 +125,7 @@ defineExpose({ focusSearch });
       <!-- Datum -->
       <input
         type="date"
+        :min="minDate"
         class="p-4 rounded-md bg-white text-gray-500 w-1/3"
         v-model="date"
         @keydown.enter.prevent="applyFilters"
