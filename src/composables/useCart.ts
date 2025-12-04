@@ -10,11 +10,7 @@ export interface CartItem {
   image: string;
 }
 
-const cartItems = ref<CartItem[]>([
-  { id: 1, title: "Åka skidor", description: "Upplev Sälen!", peopleCount: 1, selectedDate: "", pricePerPerson: 1200, image: "./assets/experiences/sälen.jpeg" },
-  { id: 2, title: "Fallskärm", description: "Hoppa fallskärm i världens finaste städer!", peopleCount: 1, selectedDate: "", pricePerPerson: 3500, image: "./assets/experiences/fallskärm.jpeg" },
-  { id: 3, title: "Klättra", description: "Klättra på riktiga berg!", peopleCount: 1, selectedDate: "", pricePerPerson: 890, image: "./assets/experiences/klättra.jpg" }
-]);
+const cartItems = ref<CartItem[]>([]);
 
 export function useCart() {
   const totalPrice = computed(() => {
@@ -53,6 +49,10 @@ export function useCart() {
     }
   };
 
+  const addItem = (item: CartItem) => {
+    cartItems.value.push(item);
+  };
+
   return {
     cartItems,
     totalPrice,
@@ -60,6 +60,7 @@ export function useCart() {
     increasePeople,
     decreasePeople,
     changePeopleCount,
-    changeDate
+    changeDate,
+    addItem
   };
 }

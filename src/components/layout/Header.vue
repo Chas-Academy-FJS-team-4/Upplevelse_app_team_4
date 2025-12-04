@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { computed } from "vue";
+import { useCart } from "../../composables/useCart";
 import { defineEmits } from "vue";
 import { RouterLink } from "vue-router";
 
 const emit = defineEmits<{
   (e: "focus-search"): void;
 }>();
+
+const { cartItems } = useCart();
+const cartCount = computed(() => cartItems.value.length);
 </script>
 <template>
   <header
@@ -18,7 +23,7 @@ const emit = defineEmits<{
     >
       <li
         class="flex flex-row items-center justify-center pr-1 gap-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
-        @click="focusOnSearch"
+        @click="emit('focus-search')"
       >
         <span class="hidden sm:flex">
           <svg
@@ -71,8 +76,8 @@ const emit = defineEmits<{
                 stroke-linecap="round"
                 stroke-linejoin="round"
               ></path>
-            </g></svg
-        ></span>
+            </g></svg>
+          </span>
         Sök
       </li>
       <li
@@ -100,9 +105,12 @@ const emit = defineEmits<{
                 stroke-linecap="round"
                 stroke-linejoin="round"
               ></path>
-            </g></svg
-        ></span>
+            </g></svg>
+          </span>
         <router-link to="/cart">Kundkorg</router-link>
+        <span v-if="cartCount > 0" class="absolute -top-2 -right-3 bg-orange-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">
+          {{ cartCount }}
+        </span>
       </li>
     </ul>
   </header>

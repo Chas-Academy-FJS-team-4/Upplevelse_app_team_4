@@ -1,37 +1,65 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 
 // Local refs — dessa kommer senare ersättas av en Pinia store
 const ageCategory = ref("");
-const people = ref("");
+const people = ref<number | null>(null);
 const date = ref("");
 const search = ref("");
 
+const searchInput = ref<HTMLInputElement | null>(null);
+
+// Gör så att query uppdateras när fälten ändras (replace så vi inte spammar history)
+watch([search, people, date, ageCategory], () => {
+  if((router.currentRoute.value.name as string) === "experiences") {
+    router.replace({
+      name: "experiences",
+      query: {
+        q: search.value || undefined,
+        people: people.value ? String(people.value) : undefined,
+        date: date.value || undefined,
+        age: ageCategory.value || undefined,
+      },
+    });
+  }
+});
+
 // Function to send filters somewhere (later: to Pinia)
 function applyFilters() {
-  const filters = {
-    ageCategory: ageCategory.value,
-    people: people.value,
-    date: date.value,
-    search: search.value,
-  };
-
-  // TODO: Replace with Pinia store
-  // const filterStore = useFilterStore();
-  // filterStore.setFilters(filters);
-
-  console.log("Filters to save:", filters);
-  router.push({ name: "experiences" });
+  router.push({
+    name: "experiences",
+    query: {
+      q: search.value || undefined,
+      people: people.value ? String(people.value) : undefined,
+      date: date.value || undefined,
+      age: ageCategory.value || undefined,
+    },
+  });
 }
-
-const searchInput = ref<HTMLInputElement | null>(null);
 
 function focusSearch() {
   searchInput.value?.focus();
 }
+
+// Om vi kommer med ?focus=1 => fokusera input direkt
+onMounted(() => {
+  if(route.query.focus) {
+    // timeout så elementet finns i DOM
+    setTimeout(() => focusSearch(), 50);
+  }
+})
+
+function focusExtern() {
+  focusSearch();
+}
+
+  // TODO: Replace with Pinia store
+  // const filterStore = useFilterStore();
+  // filterStore.setFilters(filters);
 
 // expose metoden så andra komponenter kan anropa via ref
 defineExpose({ focusSearch });
@@ -58,7 +86,7 @@ defineExpose({ focusSearch });
           min="1"
           placeholder="Antal personer"
           class="p-4 rounded-md bg-white w-1/3 flex-2"
-          v-model="people"
+          v-model.number="people"
           @keydown.enter.prevent="applyFilters"
         />
 
