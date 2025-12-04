@@ -5,8 +5,8 @@ const { exp } = defineProps<{
 }>();
 
 const ageGroupTranslations: Record<string, string> = {
-  kids: "Barn",
-  adults: "Vuxna",
+  kids: "Barn (0-17)",
+  adults: "18+",
   seniors: "Seniorer",
   any: "Familj",
 };
