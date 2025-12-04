@@ -25,7 +25,6 @@ const searchInput = ref<HTMLInputElement | null>(null);
   // Ensure date is not before today. If user somehow entered a past date, clamp it to today.
   if (date.value && date.value < minDate.value) {
     date.value = minDate.value;
-    filters.date = date.value;
   }
 
   // TODO: Replace with Pinia store
@@ -70,10 +69,6 @@ onMounted(() => {
     setTimeout(() => focusSearch(), 50);
   }
 })
-
-function focusExtern() {
-  focusSearch();
-}
 
   // TODO: Replace with Pinia store
   // const filterStore = useFilterStore();

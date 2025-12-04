@@ -106,8 +106,6 @@ const cartCount = computed(() => cartItems.value.length);
                 stroke-linejoin="round"
               ></path>
             </g></svg></span>
-            </g></svg>
-          </span>
         <router-link to="/cart">Kundkorg</router-link>
         <span v-if="cartCount > 0" class="absolute -top-2 -right-3 bg-orange-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">
           {{ cartCount }}
