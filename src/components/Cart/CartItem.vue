@@ -1,13 +1,18 @@
 <script lang="ts" setup>
-import { defineProps, withDefaults, ref } from "vue";
+import { defineProps, withDefaults, ref, computed } from "vue";
 import BaseModal from "../common/BaseModal.vue";
+import type { Addon } from "../../stores/bookingStore";
 
 interface CartItem {
   id: number;
   title: string;
   description: string;
   image: string;
+  pricePerPerson?: number;
+  addons?: Addon[];
 }
+type PriceRange = { min: number; max: number };
+type PriceValue = number | PriceRange;
 
 interface Props {
   item: CartItem;
@@ -30,9 +35,28 @@ const emit = defineEmits<{
   remove: [id: number];
   increasePeople: [id: number];
   decreasePeople: [id: number];
+  'remove-addon': [itemId: number, addonId: number];
 }>();
 
 const showRemoveModal = ref(false);
+
+function addonPriceValue(add: Addon, base: number) {
+  if (add.priceType === "fixed") return add.priceValue as number;
+  if (add.priceType === "percentage") return (base * (add.priceValue as number)) / 100;
+  const range = add.priceValue as PriceRange;
+  return range.min;
+}
+const itemTotal = computed(() => {
+  const people = props.peopleCount ?? 1;
+  const pricePerPerson = (props.item.pricePerPerson ?? props.totalPrice ?? 0);
+  const base = pricePerPerson * people;
+  const addonsSum = (props.item.addons ?? []).reduce((sum, a) => {
+    return sum + addonPriceValue(a, base);
+  }, 0)
+  return base + addonsSum;
+});
+
+const itemTotalFormatted = computed(() => `${itemTotal.value.toLocaleString("sv-SE")}`);
 
 const confirmRemove = () => {
   emit("remove", props.item.id);
@@ -56,19 +80,33 @@ const handlePeopleBlur = (event: Event) => {
   // Force the input to show the correct value
   (event.target as HTMLInputElement).value = String(validValue);
 };
+
+const formatAddonPriceValue = (priceType: string, priceValue: PriceValue) => {
+  if(priceType === "fixed") {
+    return `${priceValue as number} kr`;
+  }
+  if(priceType === "percentage") {
+    return `${priceValue as number} %`;
+  }
+  const range = priceValue as PriceRange;
+  return `${range.min} - ${range.max} kr`;
+}
+function formatAddonPrice(addon: Addon) {
+  return formatAddonPriceValue(addon.priceType, addon.priceValue);
+}
 </script>
 
 <template>
   <div
-    class="flex gap-4 p-4 shadow-md border-[0.5px] border-gray-300 rounded-lg bg-white"
+    class="flex flex-col md:flex-row gap-4 p-4 shadow-md border-[0.5px] border-gray-300 rounded-lg bg-white"
   >
     <img
       :src="item.image"
       :alt="item.title"
-      class="w-30 h-30 object-cover rounded"
+      class="w-full h-70 md:w-40 md:h-auto object-cover rounded"
     />
 
-    <div class="flex flex-col justify-between w-full">
+    <div class="flex flex-col justify-between w-full gap-5">
       <div class="flex">
         <div class="w-full">
           <div class="flex justify-between">
@@ -83,6 +121,22 @@ const handlePeopleBlur = (event: Event) => {
             </button>
           </div>
           <p class="text-sm text-gray-600">{{ item.description }}</p>
+          <div v-if="item.addons && item.addons.length"
+            class="mt-2 mb-2">
+          <p class="text-md text-gray-700 mb-1 font-semibold">Tillval:</p>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li v-for="a in item.addons" :key="a.id"
+              class="flex justify-between text-sm">
+            <span>{{ a.title }}</span>
+            <div class="flex items-center gap-3">
+              <span class="ml-4 text-gray-500">
+                {{ formatAddonPrice(a) }}
+              </span>
+              <button @click="$emit('remove-addon', item.id, a.id)" class="text-red-600 text-xs">Ta bort</button>
+            </div>
+          </li>
+          </ul>
+          </div>
         </div>
       </div>
 
@@ -155,7 +209,7 @@ const handlePeopleBlur = (event: Event) => {
             }}</span>
           </div>
         </div>
-        <p class="font-bold sm:text-lg text-right">{{ totalPrice }} SEK</p>
+        <p class="font-bold sm:text-lg text-right">{{ itemTotalFormatted }} SEK</p>
       </div>
     </div>
   </div>
