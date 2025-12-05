@@ -67,12 +67,12 @@ function addActiveAddonToBooking() {
     </div>
 
     <BaseModal v-if="activeAddon" showClose @close="closeModal">
-      <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex flex-col md:flex-row gap-6">
         <img
           v-if="activeAddon.imageUrl"
           :src="activeAddon.imageUrl"
           alt="Addon bild"
-          class="w-full md:w-1/2 object-cover md:object-contain max-h-60 md:max-h-80 rounded-md mx-auto"
+          class="w-full md:w-fit object-cover md:object-contain max-h-60 md:max-h-80 rounded-md mx-auto"
         />
         <div class="flex flex-col gap-3 items-center justify-center">
           <h2 class="text-xl font-bold mb-3">{{ activeAddon.title }}</h2>

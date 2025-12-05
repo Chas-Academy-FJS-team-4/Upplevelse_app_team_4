@@ -22,7 +22,7 @@ defineExpose({ focusSearch });
       <SearchBox ref="searchBoxRef" />
     </div>
   </div>
-  <div class="px-24 bg-(--color-bg-primary) pt-10">
+  <div class="bg-(--color-bg-primary) pt-10 max-w-5xl m-auto">
     <h2 class="mb-8">Våra Aktiviteter</h2>
     <Gallery />
   </div>
