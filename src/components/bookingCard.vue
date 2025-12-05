@@ -135,6 +135,8 @@ function addToCart() {
   }
   const exp = store.experience;
   const pricePerPerson = exp ? exp.price : fallbackPrice;
+
+  const addonsSnapshot = JSON.parse(JSON.stringify(store.addons || []));
   addItem({
     id: exp ? exp.id : Date.now(),
     title: exp ? exp.title : fallbackTitle,
@@ -143,6 +145,7 @@ function addToCart() {
     selectedDate: store.date || "",
     pricePerPerson,
     image: displayImage.value,
+    addons: addonsSnapshot
   });
   showAddedModal.value = true;
 }

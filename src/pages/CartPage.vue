@@ -15,6 +15,7 @@ const {
   decreasePeople,
   changePeopleCount,
   changeDate,
+  removeAddonFromItem
 } = useCart();
 const isCheckoutMode = ref(false);
 const showModal = ref(false);
@@ -27,6 +28,8 @@ const allDatesSelected = computed(() => {
   );
 });
 
+const itemTotalprice = computed(() => `${totalPrice.value.toLocaleString("sv-SE")}`);
+
 function goToCheckout() {
   if (!allDatesSelected.value) {
     return;
@@ -36,6 +39,10 @@ function goToCheckout() {
 
 function cancelCheckout() {
   isCheckoutMode.value = false;
+}
+
+function onRemoveAddonFromItem(itemId:number, addonId:number) {
+  removeAddonFromItem(itemId, addonId);
 }
 
 function confirmPurchase() {
@@ -134,6 +141,7 @@ function printReceipt() {
           :selected-date="item.selectedDate"
           :total-price="item.peopleCount * item.pricePerPerson"
           :readonly="isCheckoutMode"
+          @remove-addon="onRemoveAddonFromItem" 
           @remove="removeItem"
           @increase-people="increasePeople"
           @decrease-people="decreasePeople"
@@ -157,7 +165,7 @@ function printReceipt() {
       <div v-if="isCheckoutMode && !lastOrder" class="mt-10 border rounded-lg p-6 shadow-sm">
         <h3 class="font-semibold mb-4">Bekräfta bokning</h3>
 
-        <p class="text-xl font-bold mb-4">Totalt: {{ totalPrice }} SEK</p>
+        <p class="text-xl font-bold mb-4">Totalt: {{ itemTotalprice }} SEK</p>
 
         <ul class="space-y-2 text-sm text-gray-700 mb-6">
           <li v-for="item in cartItems" :key="item.id">
