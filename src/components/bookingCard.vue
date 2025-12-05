@@ -22,6 +22,7 @@ const route = useRoute();
 const router = useRouter();
 
 const showAddedModal = ref(false);
+const showDateError = ref(false);
 
 // Minsta datum = idag (lokalt, i formatet YYYY-MM-DD)
 function getTodayLocalISO() {
@@ -121,14 +122,7 @@ watch(
         (e: any) => Number(e.id) === idNum
       );
       if (found) {
-        store.setExperience({
-          id: found.id,
-          title: found.title,
-          description: found.description,
-          price: found.price,
-          image: found.image,
-          tags: found.tags,
-        });
+        store.setExperience(found as ExperienceType);
       }
     }
   }
@@ -144,6 +138,12 @@ function continueDiscovering(navigate = true) {
 
 // Emit för att skicka till parent (lägg till i varukorg) - men vi hanterar add direkt här
 function addToCart() {
+  if (!selectedDate.value) {
+    showDateError.value = true;
+    return;
+  }
+
+  showDateError.value = false;
   // Ensure date is not before today
   if (selectedDate.value && selectedDate.value < minDateISO) {
     store.setDate(minDateISO);
@@ -191,7 +191,7 @@ function formatAddonPrice(addon: Addon) {
           <img
             :src="displayImage"
             alt="Bild på upplevelsen"
-            class="w-full object-cover rounded-lg md:bg-fixed max-h-[30vh] md:max-h-[75vh]"
+            class="w-full object-cover rounded-lg md:bg-fixed max-h-[30vh] md:max-h-[90vh]"
           />
         </div>
         <div class="flex flex-col gap-4 ml-3 justify-center">
@@ -216,6 +216,9 @@ function formatAddonPrice(addon: Addon) {
               v-model="selectedDate"
               class="border p-2 rounded-md text-sm"
               aria-label="Välj Datum för upplevelsen"
+              :class="{
+                'border-red-500 bg-red-50': showDateError && !selectedDate,
+              }"
             />
 
             <label for="personer" class="sr-only">Antal personer</label>
@@ -241,7 +244,7 @@ function formatAddonPrice(addon: Addon) {
               <option value="teen">Tonår (13-17)</option>
               <option value="adult">Vuxen (18+)</option>
             </select> -->
-            <p class="text-sm text-zinc-700">
+            <p class="text-sm border border-black rounded-md py-[8.2px] px-2">
               Åldersgrupp: <strong>{{ translatedAgeGroup }}</strong>
             </p>
           </div>
@@ -307,6 +310,12 @@ function formatAddonPrice(addon: Addon) {
           >
             Lägg till upplevelse i varukorg
           </button>
+          <p
+            v-if="showDateError && !selectedDate"
+            class="text-red-500 text-sm text-center italic"
+          >
+            Du måste välja ett datum innan du kan fortsätta.
+          </p>
         </div>
       </div>
     </article>
