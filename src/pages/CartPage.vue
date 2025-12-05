@@ -66,6 +66,16 @@ function goHomeAfterOrder() {
   router.push("/");
 }
 
+function formatAddonPrice(addon: {
+  priceType: string;
+  priceValue: number | { min: number; max: number };
+}) {
+  if (addon.priceType === "fixed") return `${addon.priceValue} SEK`;
+  if (addon.priceType === "percentage") return `${addon.priceValue}%`;
+  const range = addon.priceValue as { min: number; max: number };
+  return `${range.min} - ${range.max} SEK`;
+}
+
 function printReceipt() {
   if (!lastOrder.value) return;
 
@@ -119,29 +129,40 @@ function printReceipt() {
       >
         <h3 class="font-semibold mb-2">Orderbekräftelse</h3>
 
-        <div class="space-y-2 text-sm text-gray-700 mb-6">
+        <div class="space-y-2 text-sm text-gray-600 mb-6">
           <div v-for="item in cartItems" :key="item.id">
-            <p>
-              - {{ item.title }} — {{ item.peopleCount }}
-              {{ item.peopleCount === 1 ? "Person" : "Personer" }} —
-              {{ item.selectedDate || "Inget datum" }}
+            <p class="flex flex-row justify-between">
+              <span>
+                - {{ item.peopleCount }}
+                {{ item.peopleCount === 1 ? "Person" : "Personer" }} kommer få
+                uppleva {{ item.title }} den
+                {{ item.selectedDate || "Inget datum angett" }}</span
+              >
+              <span
+                >{{
+                  (item.peopleCount * item.pricePerPerson).toLocaleString(
+                    "sv-SE"
+                  )
+                }}
+                SEK</span
+              >
             </p>
             <ul
               v-if="item.addons && item.addons.length"
-              class="text-sm text-gray-700 ml-4"
+              class="text-sm text-gray-600 ml-4 my-1 flex flex-col gap-1"
             >
               <li
                 v-for="a in item.addons"
                 :key="a.id"
                 class="flex justify-between text-sm"
               >
-                - {{ a.title }}
+                - {{ a.title }}<span>{{ formatAddonPrice(a) }}</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <p class="font-bold mt-4">Total: {{ lastOrder.total }} SEK</p>
+        <p class="font-bold mt-4">Total: {{ itemTotalprice }} SEK</p>
         <div class="mt-4">
           <button
             class="bg-gray-200 px-4 py-2 rounded mr-2 no-print"
@@ -210,24 +231,35 @@ function printReceipt() {
 
         <p class="text-xl font-bold mb-4">Totalt: {{ itemTotalprice }} SEK</p>
 
-        <div class="space-y-2 text-sm text-gray-700 mb-6">
+        <div class="space-y-2 text-sm text-gray-600 mb-6">
           <div v-for="item in cartItems" :key="item.id">
-            <p>
-              - {{ item.peopleCount }}
-              {{ item.peopleCount === 1 ? "Person" : "Personer" }} kommer få
-              uppleva {{ item.title }} den
-              {{ item.selectedDate || "no date selected" }}.
+            <p class="flex justify-between">
+              <span>
+                - {{ item.peopleCount }}
+                {{ item.peopleCount === 1 ? "Person" : "Personer" }} kommer få
+                uppleva {{ item.title }} den
+                {{ item.selectedDate || "Inget datum angett" }}</span
+              >
+              <span
+                >{{
+                  (item.peopleCount * item.pricePerPerson).toLocaleString(
+                    "sv-SE"
+                  )
+                }}
+                SEK</span
+              >
             </p>
+
             <ul
               v-if="item.addons && item.addons.length"
-              class="text-sm text-gray-700 ml-4"
+              class="text-sm text-gray-600 ml-4 my-1 flex flex-col gap-1"
             >
               <li
                 v-for="a in item.addons"
                 :key="a.id"
                 class="flex justify-between text-sm"
               >
-                - {{ a.title }}
+                - {{ a.title }} <span>{{ formatAddonPrice(a) }}</span>
               </li>
             </ul>
           </div>
