@@ -8,7 +8,7 @@ const ageGroupTranslations: Record<string, string> = {
   kids: "Barn (0-17)",
   adults: "18+",
   seniors: "Seniorer",
-  any: "Familj",
+  any: "Alla åldrar",
 };
 
 const translatedAgeGroup = ageGroupTranslations[exp.ageGroup] || exp.ageGroup;
