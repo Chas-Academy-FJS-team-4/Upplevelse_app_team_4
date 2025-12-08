@@ -15,7 +15,7 @@ const {
   decreasePeople,
   changePeopleCount,
   changeDate,
-  removeAddonFromItem
+  removeAddonFromItem,
 } = useCart();
 const isCheckoutMode = ref(false);
 const showModal = ref(false);
@@ -28,7 +28,9 @@ const allDatesSelected = computed(() => {
   );
 });
 
-const itemTotalprice = computed(() => `${totalPrice.value.toLocaleString("sv-SE")}`);
+const itemTotalprice = computed(
+  () => `${totalPrice.value.toLocaleString("sv-SE")}`
+);
 
 function goToCheckout() {
   if (!allDatesSelected.value) {
@@ -41,7 +43,7 @@ function cancelCheckout() {
   isCheckoutMode.value = false;
 }
 
-function onRemoveAddonFromItem(itemId:number, addonId:number) {
+function onRemoveAddonFromItem(itemId: number, addonId: number) {
   removeAddonFromItem(itemId, addonId);
 }
 
@@ -62,6 +64,16 @@ function handleConfirmationClose() {
 function goHomeAfterOrder() {
   lastOrder.value = null;
   router.push("/");
+}
+
+function formatAddonPrice(addon: {
+  priceType: string;
+  priceValue: number | { min: number; max: number };
+}) {
+  if (addon.priceType === "fixed") return `${addon.priceValue} SEK`;
+  if (addon.priceType === "percentage") return `${addon.priceValue}%`;
+  const range = addon.priceValue as { min: number; max: number };
+  return `${range.min} - ${range.max} SEK`;
 }
 
 function printReceipt() {
@@ -86,7 +98,7 @@ function printReceipt() {
           </style>
         </head>
         <body>
-          ${printContents ?? '<p>Innehåll saknas</p>'}
+          ${printContents ?? "<p>Innehåll saknas</p>"}
         </body>
       </html>
     `);
@@ -110,44 +122,93 @@ function printReceipt() {
         <p class="text-sm text-gray-500 mb-10">Sammanfattning</p>
       </div>
 
-      <div v-if="lastOrder" id="receipt" class="mb-6 p-6 border rounded bg-white">
+      <div
+        v-if="lastOrder"
+        id="receipt"
+        class="mb-6 p-6 border rounded bg-white"
+      >
         <h3 class="font-semibold mb-2">Orderbekräftelse</h3>
-        <ul class="text-sm text-gray-700 space-y-2">
-          <li v-for="item in lastOrder.items" :key="item.id">
-            - {{ item.title }} — {{ item.peopleCount }} {{ item.peopleCount === 1 ? 'person' : 'personer' }} den {{ item.selectedDate || 'Inget datum' }} — {{ (item.peopleCount * item.pricePerPerson) }} SEK
-          </li>
-        </ul>
-        <p class="font-bold mt-4">Total: {{ lastOrder.total }} SEK</p>
+
+        <div class="space-y-2 text-sm text-gray-600 mb-6">
+          <div v-for="item in cartItems" :key="item.id">
+            <p class="flex flex-row justify-between">
+              <span>
+                - {{ item.peopleCount }}
+                {{ item.peopleCount === 1 ? "Person" : "Personer" }} kommer få
+                uppleva {{ item.title }} den
+                {{ item.selectedDate || "Inget datum angett" }}</span
+              >
+              <span
+                >{{
+                  (item.peopleCount * item.pricePerPerson).toLocaleString(
+                    "sv-SE"
+                  )
+                }}
+                SEK</span
+              >
+            </p>
+            <ul
+              v-if="item.addons && item.addons.length"
+              class="text-sm text-gray-600 ml-4 my-1 flex flex-col gap-1"
+            >
+              <li
+                v-for="a in item.addons"
+                :key="a.id"
+                class="flex justify-between text-sm"
+              >
+                - {{ a.title }}<span>{{ formatAddonPrice(a) }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="font-bold mt-4">Total: {{ itemTotalprice }} SEK</p>
         <div class="mt-4">
-           <button class="bg-gray-200 px-4 py-2 rounded mr-2 no-print" @click="printReceipt">Skriv ut</button>
-          <button class="bg-gray-200 px-4 py-2 rounded mr-2 no-print" @click="goHomeAfterOrder">Till startsidan</button>
+          <button
+            class="bg-gray-200 px-4 py-2 rounded mr-2 no-print"
+            @click="printReceipt"
+          >
+            Skriv ut
+          </button>
+          <button
+            class="bg-gray-200 px-4 py-2 rounded mr-2 no-print"
+            @click="goHomeAfterOrder"
+          >
+            Till startsidan
+          </button>
         </div>
       </div>
 
       <template v-if="!lastOrder">
         <div class="space-y-4 w-full">
-        <template v-if="cartItems.length === 0">
-          <div class="p-8 text-center border rounded bg-white">
-            <p class="text-lg mb-4">Du har inga upplevelser i kundkorgen, <router-link to="/experiences" class="text-purple-700 underline">Klicka här</router-link> för att välja upplevelser!</p>
-          </div>
-        </template>
+          <template v-if="cartItems.length === 0">
+            <div class="p-8 text-center border rounded bg-white">
+              <p class="text-lg mb-4">
+                Du har inga upplevelser i kundkorgen,
+                <router-link to="/experiences" class="text-purple-700 underline"
+                  >Klicka här</router-link
+                >
+                för att välja upplevelser!
+              </p>
+            </div>
+          </template>
 
-        <CartItem
-          v-else
-          v-for="item in cartItems"
-          :key="item.id"
-          :item="item"
-          :people-count="item.peopleCount"
-          :selected-date="item.selectedDate"
-          :total-price="item.peopleCount * item.pricePerPerson"
-          :readonly="isCheckoutMode"
-          @remove-addon="onRemoveAddonFromItem" 
-          @remove="removeItem"
-          @increase-people="increasePeople"
-          @decrease-people="decreasePeople"
-          @change-people-count="changePeopleCount"
-          @change-date="changeDate"
-        />
+          <CartItem
+            v-else
+            v-for="item in cartItems"
+            :key="item.id"
+            :item="item"
+            :people-count="item.peopleCount"
+            :selected-date="item.selectedDate"
+            :total-price="item.peopleCount * item.pricePerPerson"
+            :readonly="isCheckoutMode"
+            @remove-addon="onRemoveAddonFromItem"
+            @remove="removeItem"
+            @increase-people="increasePeople"
+            @decrease-people="decreasePeople"
+            @change-people-count="changePeopleCount"
+            @change-date="changeDate"
+          />
         </div>
       </template>
 
@@ -162,18 +223,47 @@ function printReceipt() {
         </button>
       </div>
 
-      <div v-if="isCheckoutMode && !lastOrder" class="mt-10 border rounded-lg p-6 shadow-sm">
+      <div
+        v-if="isCheckoutMode && !lastOrder"
+        class="mt-10 border rounded-lg p-6 shadow-sm"
+      >
         <h3 class="font-semibold mb-4">Bekräfta bokning</h3>
 
         <p class="text-xl font-bold mb-4">Totalt: {{ itemTotalprice }} SEK</p>
 
-        <ul class="space-y-2 text-sm text-gray-700 mb-6">
-          <li v-for="item in cartItems" :key="item.id">
-            - {{ item.peopleCount }}
-            {{ item.peopleCount === 1 ? "Person" : "Persons" }} kommer få uppleva
-            {{ item.title }} den {{ item.selectedDate || "no date selected" }}.
-          </li>
-        </ul>
+        <div class="space-y-2 text-sm text-gray-600 mb-6">
+          <div v-for="item in cartItems" :key="item.id">
+            <p class="flex justify-between">
+              <span>
+                - {{ item.peopleCount }}
+                {{ item.peopleCount === 1 ? "Person" : "Personer" }} kommer få
+                uppleva {{ item.title }} den
+                {{ item.selectedDate || "Inget datum angett" }}</span
+              >
+              <span
+                >{{
+                  (item.peopleCount * item.pricePerPerson).toLocaleString(
+                    "sv-SE"
+                  )
+                }}
+                SEK</span
+              >
+            </p>
+
+            <ul
+              v-if="item.addons && item.addons.length"
+              class="text-sm text-gray-600 ml-4 my-1 flex flex-col gap-1"
+            >
+              <li
+                v-for="a in item.addons"
+                :key="a.id"
+                class="flex justify-between text-sm"
+              >
+                - {{ a.title }} <span>{{ formatAddonPrice(a) }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
 
         <div class="flex gap-4">
           <button
@@ -198,6 +288,8 @@ function printReceipt() {
 
 <style>
 @media print {
-  .no-print { display: none !important; }
+  .no-print {
+    display: none !important;
+  }
 }
 </style>

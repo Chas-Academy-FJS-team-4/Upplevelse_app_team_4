@@ -6,9 +6,11 @@ import { useRoute, useRouter } from "vue-router";
 import experienceData from "../utils/experiences.json";
 import BaseModal from "./common/BaseModal.vue";
 import { useCart } from "../composables/useCart";
+import type { ExperienceType } from "../types/ExperienceType";
 
 const fallbackTitle = "Sky diving from the moon";
-const fallbackDescription = "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.";
+const fallbackDescription =
+  "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.";
 const fallbackPrice = 12000000;
 const currency = "Kr";
 const fallbackTags = ["Rökgalet", "Rymd", "Fallskärm"];
@@ -20,6 +22,7 @@ const route = useRoute();
 const router = useRouter();
 
 const showAddedModal = ref(false);
+const showDateError = ref(false);
 
 // Minsta datum = idag (lokalt, i formatet YYYY-MM-DD)
 function getTodayLocalISO() {
@@ -35,8 +38,7 @@ const minDateISO = getTodayLocalISO();
 const priceFormatted = computed(() => {
   const p = store.experience ? store.experience.price : fallbackPrice;
   return `${p.toLocaleString("sv-SE")} ${currency}`;
-  }
-);
+});
 
 // Computed bindings mot pinia-store så ändringar sparas centralt
 const selectedDate = computed({
@@ -54,46 +56,58 @@ const ageCategory = computed({
 
 // Visningsvärden som fallback till hårdkodat om store.experience saknas
 const displayTitle = computed(() => store.experience?.title ?? fallbackTitle);
-const displayDescription = computed(() => store.experience?.description ?? fallbackDescription);
+const displayDescription = computed(
+  () => store.experience?.description ?? fallbackDescription
+);
 const displayTags = computed(() => store.experience?.tags ?? fallbackTags);
-const displayImage = computed(() => store.experience?.image ?? "/experiences/1.png");
+const displayImage = computed(
+  () => store.experience?.image ?? "/experiences/1.png"
+);
+
+const ageGroupTranslations: Record<string, string> = {
+  kids: "Barn (0-17)",
+  adults: "18+",
+  seniors: "Seniorer",
+  any: "Alla åldrar",
+};
+
+const translatedAgeGroup = computed(() => {
+  const key = store.experience?.ageGroup || "any";
+  return ageGroupTranslations[key] || "Alla åldrar";
+});
 
 // Läs route params / query och sätt experience + initiala värden
 onMounted(() => {
   store.resetBooking(false);
-  
+
   const id = Number(route.params.id || route.query.id || 1);
   const found = (experienceData as any[]).find((e: any) => Number(e.id) === id);
-  if(found) {
-    store.setExperience({
-      id: found.id,
-      title: found.title,
-      description: found.description,
-      price: found.price,
-      image: found.image,
-      tags: found.tags,
-    })
+  if (found) {
+    store.setExperience(found as ExperienceType);
   }
   // init från query om present
-  if(route.query.people) store.updatePeople(Number(route.query.people));
-  if(route.query.date) store.setDate(String(route.query.date));
-  if(route.query.age) store.setAgeCategory(String(route.query.age));
-
+  if (route.query.people) store.updatePeople(Number(route.query.people));
+  if (route.query.date) store.setDate(String(route.query.date));
+  if (route.query.age) store.setAgeCategory(String(route.query.age));
 });
 
 // Synka query när användaren ändrar people/date/age
 watch(
   () => [store.people, store.date, store.ageCategory],
   () => {
-    const newQuery: Record<string, any> = { ...route.query};
-    if(store.people) newQuery.people = String(store.people);
+    const newQuery: Record<string, any> = { ...route.query };
+    if (store.people) newQuery.people = String(store.people);
     else delete newQuery.people;
-    if(store.date) newQuery.date = store.date;
+    if (store.date) newQuery.date = store.date;
     else delete newQuery.date;
-    if(store.ageCategory) newQuery.age = store.ageCategory;
+    if (store.ageCategory) newQuery.age = store.ageCategory;
     else delete newQuery.age;
 
-    router.replace({ name: (route.name as string) || "booking", params: route.params, query: newQuery });
+    router.replace({
+      name: (route.name as string) || "booking",
+      params: route.params,
+      query: newQuery,
+    });
   }
 );
 // reset och ladda ny experience när route.params.id ändras
@@ -104,16 +118,11 @@ watch(
       // nollställ bokningsfälten (behåll eller ta bort experience beroende på vad du vill:)
       store.resetBooking(false); // false = behåll inte experience? här väljer vi att inte nollställa experience automatiskt
       const idNum = Number(newId || route.query.id || 1);
-      const found = (experienceData as any[]).find((e: any) => Number(e.id) === idNum);
+      const found = (experienceData as any[]).find(
+        (e: any) => Number(e.id) === idNum
+      );
       if (found) {
-        store.setExperience({
-          id: found.id,
-          title: found.title,
-          description: found.description,
-          price: found.price,
-          image: found.image,
-          tags: found.tags,
-        });
+        store.setExperience(found as ExperienceType);
       }
     }
   }
@@ -122,13 +131,19 @@ watch(
 function continueDiscovering(navigate = true) {
   store.resetBooking(true);
   showAddedModal.value = false;
-  if(navigate) {
+  if (navigate) {
     router.push({ name: "experiences" });
   }
 }
 
 // Emit för att skicka till parent (lägg till i varukorg) - men vi hanterar add direkt här
 function addToCart() {
+  if (!selectedDate.value) {
+    showDateError.value = true;
+    return;
+  }
+
+  showDateError.value = false;
   // Ensure date is not before today
   if (selectedDate.value && selectedDate.value < minDateISO) {
     store.setDate(minDateISO);
@@ -145,7 +160,7 @@ function addToCart() {
     selectedDate: store.date || "",
     pricePerPerson,
     image: displayImage.value,
-    addons: addonsSnapshot
+    addons: addonsSnapshot,
   });
   showAddedModal.value = true;
 }
@@ -176,7 +191,7 @@ function formatAddonPrice(addon: Addon) {
           <img
             :src="displayImage"
             alt="Bild på upplevelsen"
-            class="w-full object-cover rounded-lg md:bg-fixed max-h-[30vh] md:max-h-[75vh]"
+            class="w-full object-cover rounded-lg md:bg-fixed max-h-[30vh] md:max-h-[90vh]"
           />
         </div>
         <div class="flex flex-col gap-4 ml-3 justify-center">
@@ -201,6 +216,9 @@ function formatAddonPrice(addon: Addon) {
               v-model="selectedDate"
               class="border p-2 rounded-md text-sm"
               aria-label="Välj Datum för upplevelsen"
+              :class="{
+                'border-red-500 bg-red-50': showDateError && !selectedDate,
+              }"
             />
 
             <label for="personer" class="sr-only">Antal personer</label>
@@ -215,7 +233,7 @@ function formatAddonPrice(addon: Addon) {
               </option>
             </select>
 
-            <label for="alderskategori" class="sr-only">Ålderskategori</label>
+            <!-- <label for="alderskategori" class="sr-only">Ålderskategori</label>
             <select
               id="alderskategori"
               v-model="ageCategory"
@@ -225,7 +243,10 @@ function formatAddonPrice(addon: Addon) {
               <option value="child">Barn (0-12)</option>
               <option value="teen">Tonår (13-17)</option>
               <option value="adult">Vuxen (18+)</option>
-            </select>
+            </select> -->
+            <p class="text-sm border border-black rounded-md py-[8.2px] px-2">
+              Åldersgrupp: <strong>{{ translatedAgeGroup }}</strong>
+            </p>
           </div>
 
           <div class="mt-3">
@@ -289,19 +310,39 @@ function formatAddonPrice(addon: Addon) {
           >
             Lägg till upplevelse i varukorg
           </button>
+          <p
+            v-if="showDateError && !selectedDate"
+            class="text-red-500 text-sm text-center italic"
+          >
+            Du måste välja ett datum innan du kan fortsätta.
+          </p>
         </div>
       </div>
     </article>
   </section>
-  <BaseModal v-if="showAddedModal" :show-close="true" @close="showAddedModal = false">
+  <BaseModal
+    v-if="showAddedModal"
+    :show-close="true"
+    @close="showAddedModal = false"
+  >
     <div class="space-y-5">
       <h3 class="text-lg font-semibold">Tillagd i kundkorg</h3>
-      <p class="text-sm text-gray-600">Upplevelsen har lagts till i din kundkorg!</p>
+      <p class="text-sm text-gray-600">
+        Upplevelsen har lagts till i din kundkorg!
+      </p>
       <div class="flex gap-3 justify-center">
-        <button @click="continueDiscovering(true)"
-          class="bg-gray-100 px-4 py-2 rounded-md">Fortsätt upptäcka</button>
-          <button @click="$router.push('/cart')"
-            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md">Gå till kundkorg</button>
+        <button
+          @click="continueDiscovering(true)"
+          class="bg-gray-100 px-4 py-2 rounded-md"
+        >
+          Fortsätt upptäcka
+        </button>
+        <button
+          @click="$router.push('/cart')"
+          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+        >
+          Gå till kundkorg
+        </button>
       </div>
     </div>
   </BaseModal>
