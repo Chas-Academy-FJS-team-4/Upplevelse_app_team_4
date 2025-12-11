@@ -1,9 +1,19 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import data from "../utils/experiences.json"
 const router = useRouter();
 const route = useRoute();
+
+// tag selector style and variables
+const showTagsStyling = 'p-4 rounded-md bg-white w-1/3 mt-1 w-[10rem] bg-white border rounded shadow-lg z-10 max-h-60 overflow-auto'
+const hideTagsStyling = 'p-4 rounded-md bg-white w-[10rem] rounded shadow-lg'
+const isOpen = ref(false)
+const selectedTags = ref<string[]>([])
+const allTags = computed(() => {
+  const tagList = data.flatMap(item => item.tags)
+  return [... new Set(tagList)]
+})
 
 // Local refs — dessa kommer senare ersättas av en Pinia store
 const ageCategory = ref("");
@@ -27,16 +37,13 @@ if (date.value && date.value < minDate.value) {
   date.value = minDate.value;
 }
 
-// TODO: Replace with Pinia store
-// const filterStore = useFilterStore();
-// filterStore.setFilters(filters);
 // Gör så att query uppdateras när fälten ändras (replace så vi inte spammar history)
 watch([search, people, date, ageCategory], () => {
   if ((router.currentRoute.value.name as string) === "experiences") {
     router.replace({
       name: "experiences",
       query: {
-        q: search.value || undefined,
+        q: selectedTags.value || undefined,
         people: people.value ? String(people.value) : undefined,
         date: date.value || undefined,
         age: ageCategory.value || undefined,
@@ -50,7 +57,7 @@ function applyFilters() {
   router.push({
     name: "experiences",
     query: {
-      q: search.value || undefined,
+      q: selectedTags.value || undefined,
       people: people.value ? String(people.value) : undefined,
       date: date.value || undefined,
       age: ageCategory.value || undefined,
@@ -70,12 +77,20 @@ onMounted(() => {
   }
 });
 
-// TODO: Replace with Pinia store
-// const filterStore = useFilterStore();
-// filterStore.setFilters(filters);
-
 // expose metoden så andra komponenter kan anropa via ref
 defineExpose({ focusSearch });
+
+const toggleBtn = () => {
+isOpen.value = !isOpen.value
+}
+
+const addTagToList = (tag:string) => {
+    if (selectedTags.value.includes(tag)) {
+        selectedTags.value = selectedTags.value.filter(i => i != tag)
+    } else {
+        selectedTags.value = [...selectedTags.value, tag]
+    }
+}
 </script>
 <template>
   <form
@@ -83,16 +98,36 @@ defineExpose({ focusSearch });
     class="bg-black/30 min-h-32 flex items-center justify-center gap-2 flex-col md:flex-row p-5 md:px-6 w-6/7 max-w-5xl"
   >
     <!-- Sökfält -->
+
+    <div class="flex">
+<div
+  :class="isOpen ? showTagsStyling : hideTagsStyling"
+>
+  <div
+  v-show="isOpen"
+    v-for="(item, index) in allTags"
+    class="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer"
+    :key="index"
+    >
     <input
-      type="text"
-      placeholder="Sök upplevelse..."
-      class="flex-1 p-4 rounded-lg bg-white w-full min-w-42"
-      v-model="search"
-      ref="searchInput"
-      @keydown.enter.prevent="applyFilters"
-    />
+     type="checkbox"
+     class="mr-2"
+     :checked="selectedTags.includes(item)"
+     @change="addTagToList(item)"
+      />
+    <span>{{item }}</span>
+  </div>
+  <div v-if="data.length === 0" class="px-3 py-2 text-gray-500">
+    No items found
+  </div>
+  select tag
+</div>
+<button @click="toggleBtn" class="flex place-self-start mt-1 bg-(--color-primary) text- "> Select </button>
+</div>
+
     <div class="flex flex-row gap-2">
       <div class="flex flex-row gap-2 w-full md:w-fit">
+
         <!-- Antal personer -->
         <input
           type="number"
