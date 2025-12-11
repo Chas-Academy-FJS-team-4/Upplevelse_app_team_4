@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { useBookingStore, type Addon } from "../stores/bookingStore";
+import { useBookingStore, type Addon, type PriceRange } from "../stores/bookingStore";
 import Addons from "./addons/Addons.vue";
 import { useRoute, useRouter } from "vue-router";
 import experienceData from "../utils/experiences.json";
@@ -166,15 +166,18 @@ function addToCart() {
 }
 
 function formatAddonPrice(addon: Addon) {
-  if (addon.priceType === "fixed") {
-    return `${addon.priceValue} Kr`;
-  } else if (addon.priceType === "percentage") {
-    return `${addon.priceValue} %`;
-  } else {
-    return `${(addon.priceValue as any).min} - ${
-      (addon.priceValue as any).max
-    } Kr`;
+  if (addon.finalPrice !== undefined) {
+    return `${addon.finalPrice.toLocaleString("sv-SE")} Kr `;
   }
+  if (addon.priceType === "fixed") {
+    return `${addon.priceValue as number} Kr`;
+  }
+  if (addon.priceType === "percentage") {
+    return `${addon.priceValue as number} % på upplevelsepriset`;
+  }
+  // range
+  const range = addon.priceValue as PriceRange;
+  return `${range.min} - ${range.max} Kr`;
 }
 </script>
 

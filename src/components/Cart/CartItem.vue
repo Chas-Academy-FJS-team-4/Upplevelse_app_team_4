@@ -41,6 +41,9 @@ const emit = defineEmits<{
 const showRemoveModal = ref(false);
 
 function addonPriceValue(add: Addon, base: number) {
+  if (add.finalPrice !== undefined) {
+    return add.finalPrice;
+  }
   if (add.priceType === "fixed") return add.priceValue as number;
   if (add.priceType === "percentage") return (base * (add.priceValue as number)) / 100;
   const range = add.priceValue as PriceRange;
@@ -86,12 +89,15 @@ const formatAddonPriceValue = (priceType: string, priceValue: PriceValue) => {
     return `${priceValue as number} kr`;
   }
   if(priceType === "percentage") {
-    return `${priceValue as number} %`;
+    return `${priceValue as number} % på upplevelsepriset`;
   }
   const range = priceValue as PriceRange;
   return `${range.min} - ${range.max} kr`;
 }
 function formatAddonPrice(addon: Addon) {
+  if (addon.finalPrice !== undefined) {
+    return `${addon.finalPrice.toLocaleString("sv-SE")} kr`;
+  }
   return formatAddonPriceValue(addon.priceType, addon.priceValue);
 }
 </script>

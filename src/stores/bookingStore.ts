@@ -1,17 +1,8 @@
 import { defineStore } from "pinia";
 import type { ExperienceType } from "../types/ExperienceType";
 
-// interface Experience {
-//     id: number;
-//     title: string;
-//     description: string;
-//     price: number;
-//     image: string;
-//     tags: string[];
-// };
-
-type PriceRange = { min: number; max: number };
-type PriceValue = number | PriceRange;
+export type PriceRange = { min: number; max: number };
+export type PriceValue = number | PriceRange;
 
 export interface Addon {
   id: number;
@@ -20,6 +11,7 @@ export interface Addon {
   image: string;
   priceType: "fixed" | "percentage" | "range";
   priceValue: PriceValue;
+  finalPrice?: number;
 }
 
 interface BookingState {
@@ -40,47 +32,42 @@ export const useBookingStore = defineStore("booking", {
   }),
 
   getters: {
-    // Basspris (per person)
     basePrice: (state) => (state.experience ? state.experience.price : 0),
 
-    // totalpris för upplevelsen beroende på antal personer
     totalExperiencePrice: (state) => {
       const base = state.experience ? state.experience.price : 0;
       return base * state.people;
     },
 
     addonsTotal: (state): number => {
-      const baseTotal = state.experience
-        ? state.experience.price * state.people
-        : 0;
-      let total = 0;
-      for (const add of state.addons) {
-        if (add.priceType === "fixed") {
-          total += add.priceValue as number;
-        } else if (add.priceType === "percentage") {
-          total += (baseTotal * (add.priceValue as number)) / 100;
-        } else if (add.priceType === "range") {
-          const range = add.priceValue as PriceRange;
-          total += range.min;
+      const baseTotal = state.experience ? state.experience.price * state.people : 0;
+      return state.addons.reduce((sum, add) => {
+        if (add.finalPrice !== undefined) {
+          return sum + add.finalPrice;
         }
-      }
-      return total;
+        if (add.priceType === "fixed") {
+          return sum + (add.priceValue as number);
+        }
+        if (add.priceType === "percentage") {
+          return sum + (baseTotal * (add.priceValue as number)) / 100;
+        }
+        // range
+        const range = add.priceValue as PriceRange;
+        return sum + range.min;
+      }, 0);
     },
 
     totalPrice: (state): number => {
       const exp = state.experience ? state.experience.price * state.people : 0;
-      // note: we access the computed addonsTotal via this (Pinia gör getters till properties)
-      // In TS context inside this getter 'this' refers to the store instance; keep calculation consistent by recomputing addonsTotal here:
-      let addonsSum = 0;
-      for (const add of state.addons) {
-        if (add.priceType === "fixed") {
-          addonsSum += add.priceValue as number;
-        } else if (add.priceType === "percentage") {
-          addonsSum += (exp * (add.priceValue as number)) / 100;
-        } else if (add.priceType === "range") {
-          addonsSum += (add.priceValue as PriceRange).min;
-        }
-      }
+      // beräkna addons samma sätt som ovan
+      const addonsSum = state.addons.reduce((sum, add) => {
+        if (add.finalPrice !== undefined) return sum + add.finalPrice;
+        if (add.priceType === "fixed") return sum + (add.priceValue as number);
+        if (add.priceType === "percentage")
+          return sum + ((state.experience ? state.experience.price * state.people : 0) * (add.priceValue as number)) / 100;
+        const range = add.priceValue as PriceRange;
+        return sum + range.min;
+      }, 0);
       return exp + addonsSum;
     },
   },
@@ -98,17 +85,65 @@ export const useBookingStore = defineStore("booking", {
     setAgeCategory(cat: string) {
       this.ageCategory = cat;
     },
+
     addAddon(addon: Addon) {
-      if (!this.addons.find((a) => a.id === addon.id)) {
-        this.addons.push(addon);
+      // lägg bara till om det inte redan finns
+      if (this.addons.find((a) => a.id === addon.id)) return;
+
+      let finalPrice: number | undefined;
+
+      if (this.experience?.addons) {
+        const expAddons = this.experience.addons as Record<string, any>;
+
+        // 1) Försök hitta via addon-id (rekommenderat schema)
+        const idKey = String(addon.id);
+        const byId = expAddons[idKey];
+        if (typeof byId === "number") {
+          finalPrice = byId;
+        } else {
+          // 2) Fallback: normaliserad titel-nyckel (bakåtkompatibilitet)
+          const normalize = (s: string) =>
+            String(s)
+              .replace(/\s+/g, "")
+              .replace(/upgrade/i, "price")
+              .replace(/[^a-z0-9]/gi, "")
+              .toLowerCase();
+
+          const desired = normalize(addon.title);
+          for (const [k, v] of Object.entries(expAddons)) {
+            if (normalize(k) === desired && typeof v === "number") {
+              finalPrice = v;
+              break;
+            }
+          }
+
+          // 3) Enkel fallbacks (utan normalisering)
+          if (finalPrice === undefined) {
+            const noSpaceKey = addon.title.replace(/\s+/g, "");
+            const v1 = expAddons[noSpaceKey];
+            const v2 = expAddons[addon.title];
+            if (typeof v1 === "number") finalPrice = v1;
+            else if (typeof v2 === "number") finalPrice = v2;
+          }
+        }
       }
+      // temporär debug — ta bort när du är klar
+    console.debug("[addAddon] addon:", addon.id, addon.title, "expAddonsKeys:", Object.keys(this.experience?.addons || {}), "finalPriceFound:", finalPrice);
+
+      const pushObj: Addon = { ...addon };
+      if (finalPrice !== undefined) pushObj.finalPrice = finalPrice;
+
+      this.addons.push(pushObj);
     },
+
     removeAddon(id: number) {
       this.addons = this.addons.filter((a) => a.id !== id);
     },
+
     clearAddons() {
       this.addons = [];
     },
+
     resetBooking(resetExperience = false) {
       this.date = null;
       this.people = 1;
