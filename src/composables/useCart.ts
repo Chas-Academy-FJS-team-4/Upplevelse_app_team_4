@@ -11,6 +11,7 @@ export interface CartItem {
   image: string;
   addons: Addon[];
   ageGroup?: "kids" | "adults" | "seniors" | "any";
+  finalPrice?: number
 }
 
 const cartItems = ref<CartItem[]>([]);
@@ -22,7 +23,10 @@ export function useCart() {
 
       // räkna addons för just detta item
       const addonSum = (item.addons || []).reduce((aSum, add) => {
-        if (add.priceType === "fixed") {
+        if (add.finalPrice !== undefined) {
+          return aSum + add.finalPrice;
+        }
+        if(add.priceType === 'fixed') {
           return aSum + (add.priceValue as number);
         } else if (add.priceType === "percentage") {
           return aSum + (base * (add.priceValue as number)) / 100;
