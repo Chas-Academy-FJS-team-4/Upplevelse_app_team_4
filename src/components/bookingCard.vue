@@ -161,6 +161,13 @@ function addToCart() {
     selectedDate: store.date || "",
     pricePerPerson,
     image: displayImage.value,
+    ageGroup: exp?.ageGroup as
+      | "kids"
+      | "adults"
+      | "seniors"
+      | "any"
+      | undefined,
+
     addons: addonsSnapshot,
   });
   showAddedModal.value = true;
@@ -240,17 +247,6 @@ function formatAddonPrice(addon: Addon) {
               </option>
             </select>
 
-            <!-- <label for="alderskategori" class="sr-only">Ålderskategori</label>
-            <select
-              id="alderskategori"
-              v-model="ageCategory"
-              class="border p-2 rounded-md text-sm"
-              aria-label="Välj ålderskategori"
-            >
-              <option value="child">Barn (0-12)</option>
-              <option value="teen">Tonår (13-17)</option>
-              <option value="adult">Vuxen (18+)</option>
-            </select> -->
             <p class="text-sm border border-black rounded-md py-[8.2px] px-2">
               Åldersgrupp: <strong>{{ translatedAgeGroup }}</strong>
             </p>
@@ -346,7 +342,7 @@ function formatAddonPrice(addon: Addon) {
         </button>
         <button
           @click="$router.push('/cart')"
-          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+          class="bg-(--color-primary) hover:bg-(--color-primary-hover) text-white px-4 py-2 rounded-md"
         >
           Gå till kundkorg
         </button>

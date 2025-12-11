@@ -1,5 +1,5 @@
-import { ref, computed } from 'vue';
-import type { Addon } from '../stores/bookingStore';
+import { ref, computed } from "vue";
+import type { Addon } from "../stores/bookingStore";
 
 export interface CartItem {
   id: number;
@@ -10,6 +10,7 @@ export interface CartItem {
   pricePerPerson: number;
   image: string;
   addons: Addon[];
+  ageGroup?: "kids" | "adults" | "seniors" | "any";
   finalPrice?: number
 }
 
@@ -27,15 +28,15 @@ export function useCart() {
         }
         if(add.priceType === 'fixed') {
           return aSum + (add.priceValue as number);
-        } else if(add.priceType === 'percentage') {
+        } else if (add.priceType === "percentage") {
           return aSum + (base * (add.priceValue as number)) / 100;
         } else {
           const range = add.priceValue as { min: number; max: number };
           return aSum + range.min;
         }
       }, 0);
-      return sum + base + addonSum
-    }, 0)
+      return sum + base + addonSum;
+    }, 0);
   });
 
   const removeItem = (id: number) => {
@@ -75,10 +76,14 @@ export function useCart() {
   };
 
   const removeAddonFromItem = (itemId: number, addonId: number) => {
-    const item = cartItems.value.find(i => i.id === itemId);
+    const item = cartItems.value.find((i) => i.id === itemId);
     if (!item || !item.addons) return;
-    item.addons = item.addons.filter(a => a.id !== addonId);
-};
+    item.addons = item.addons.filter((a) => a.id !== addonId);
+  };
+
+  const clearCart = () => {
+    cartItems.value = [];
+  };
 
   return {
     cartItems,
@@ -89,6 +94,7 @@ export function useCart() {
     changePeopleCount,
     changeDate,
     addItem,
-    removeAddonFromItem
+    removeAddonFromItem,
+    clearCart,
   };
 }

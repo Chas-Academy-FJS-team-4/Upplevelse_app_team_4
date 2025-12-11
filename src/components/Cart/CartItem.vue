@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, withDefaults, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import BaseModal from "../common/BaseModal.vue";
 import type { Addon } from "../../stores/bookingStore";
 
@@ -10,6 +10,7 @@ interface CartItem {
   image: string;
   pricePerPerson?: number;
   addons?: Addon[];
+  ageGroup?: "kids" | "adults" | "seniors" | "any";
 }
 type PriceRange = { min: number; max: number };
 type PriceValue = number | PriceRange;
@@ -35,7 +36,7 @@ const emit = defineEmits<{
   remove: [id: number];
   increasePeople: [id: number];
   decreasePeople: [id: number];
-  'remove-addon': [itemId: number, addonId: number];
+  "remove-addon": [itemId: number, addonId: number];
 }>();
 
 const showRemoveModal = ref(false);
@@ -45,21 +46,24 @@ function addonPriceValue(add: Addon, base: number) {
     return add.finalPrice;
   }
   if (add.priceType === "fixed") return add.priceValue as number;
-  if (add.priceType === "percentage") return (base * (add.priceValue as number)) / 100;
+  if (add.priceType === "percentage")
+    return (base * (add.priceValue as number)) / 100;
   const range = add.priceValue as PriceRange;
   return range.min;
 }
 const itemTotal = computed(() => {
   const people = props.peopleCount ?? 1;
-  const pricePerPerson = (props.item.pricePerPerson ?? props.totalPrice ?? 0);
+  const pricePerPerson = props.item.pricePerPerson ?? props.totalPrice ?? 0;
   const base = pricePerPerson * people;
   const addonsSum = (props.item.addons ?? []).reduce((sum, a) => {
     return sum + addonPriceValue(a, base);
-  }, 0)
+  }, 0);
   return base + addonsSum;
 });
 
-const itemTotalFormatted = computed(() => `${itemTotal.value.toLocaleString("sv-SE")}`);
+const itemTotalFormatted = computed(
+  () => `${itemTotal.value.toLocaleString("sv-SE")}`
+);
 
 const confirmRemove = () => {
   emit("remove", props.item.id);
@@ -85,7 +89,7 @@ const handlePeopleBlur = (event: Event) => {
 };
 
 const formatAddonPriceValue = (priceType: string, priceValue: PriceValue) => {
-  if(priceType === "fixed") {
+  if (priceType === "fixed") {
     return `${priceValue as number} kr`;
   }
   if(priceType === "percentage") {
@@ -93,13 +97,23 @@ const formatAddonPriceValue = (priceType: string, priceValue: PriceValue) => {
   }
   const range = priceValue as PriceRange;
   return `${range.min} - ${range.max} kr`;
-}
+};
 function formatAddonPrice(addon: Addon) {
   if (addon.finalPrice !== undefined) {
     return `${addon.finalPrice.toLocaleString("sv-SE")} kr`;
   }
   return formatAddonPriceValue(addon.priceType, addon.priceValue);
 }
+
+const ageGroupTranslations: Record<string, string> = {
+  kids: "Barn (0-17)",
+  adults: "18+",
+  seniors: "Seniorer",
+  any: "Alla åldrar",
+};
+
+const translatedAgeGroup =
+  ageGroupTranslations[props.item.ageGroup || "any"] || "Alla åldrar";
 </script>
 
 <template>
@@ -127,104 +141,141 @@ function formatAddonPrice(addon: Addon) {
             </button>
           </div>
           <p class="text-sm text-gray-600">{{ item.description }}</p>
-          <div v-if="item.addons && item.addons.length"
-            class="mt-2 mb-2">
-          <p class="text-md text-gray-700 mb-1 font-semibold">Tillval:</p>
-          <ul class="text-sm text-gray-700 space-y-2">
-            <li v-for="a in item.addons" :key="a.id"
-              class="flex justify-between text-sm">
-            <span>{{ a.title }}</span>
-            <div class="flex items-center gap-3">
-              <span class="ml-4 text-gray-500">
-                {{ formatAddonPrice(a) }}
-              </span>
-              <button @click="$emit('remove-addon', item.id, a.id)" class="text-red-600 text-xs">Ta bort</button>
-            </div>
-          </li>
-          </ul>
+          <div v-if="item.addons && item.addons.length" class="mt-2 mb-2">
+            <p class="text-md text-gray-700 mb-1 font-semibold">Tillval:</p>
+            <ul class="text-sm text-gray-700 space-y-2">
+              <li
+                v-for="a in item.addons"
+                :key="a.id"
+                class="flex justify-between text-sm"
+              >
+                <span>{{ a.title }}</span>
+                <div class="flex items-center gap-3">
+                  <span class="ml-4 text-gray-500">
+                    {{ formatAddonPrice(a) }}
+                  </span>
+                  <button
+                    @click="$emit('remove-addon', item.id, a.id)"
+                    class="text-red-600 text-xs"
+                  >
+                    Ta bort
+                  </button>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
       <!-- <div class="text-right self-center">
       </div> -->
-      <div class="flex justify-between flex-col sm:flex-row gap-2 sm:gap-0">
-        <div class="flex gap-2 sm:gap-5">
-          <!-- People count - editable or readonly -->
-          <div class="flex items-center gap-1">
-            <span class="text-sm"
-              ><span class="">
-                <svg
-                  width="20px"
-                  height="20px"
-                  viewBox="0 0 64 64"
-                  xmlns="http://www.w3.org/2000/svg"
-                  stroke-width="3"
-                  stroke="#000"
-                  fill="none"
-                >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    <circle cx="32" cy="18.14" r="11.14"></circle>
-                    <path
-                      d="M54.55,56.85A22.55,22.55,0,0,0,32,34.3h0A22.55,22.55,0,0,0,9.45,56.85Z"
-                    ></path>
-                  </g></svg></span
-            ></span>
-            <input
-              v-if="!readonly"
-              type="number"
-              :key="`people-${item.id}-${peopleCount}`"
-              :value="peopleCount"
-              @input="handlePeopleInput"
-              @blur="handlePeopleBlur"
-              min="1"
-              max="99"
-              class="px-2 py-1 text-xs border rounded w-14"
-            />
-            <span v-else class="text-sm font-medium">{{ peopleCount }}</span>
-          </div>
+      <div class="mt-auto">
+        <div class="flex justify-between flex-col sm:flex-row gap-2 sm:gap-0">
+          <div class="flex gap-2 sm:gap-4">
+            <!-- People count - editable or readonly -->
+            <div class="flex items-center gap-1">
+              <span class="text-sm"
+                ><span class="">
+                  <svg
+                    width="20px"
+                    height="20px"
+                    viewBox="0 0 64 64"
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke-width="3"
+                    stroke="#000"
+                    fill="none"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <circle cx="32" cy="18.14" r="11.14"></circle>
+                      <path
+                        d="M54.55,56.85A22.55,22.55,0,0,0,32,34.3h0A22.55,22.55,0,0,0,9.45,56.85Z"
+                      ></path>
+                    </g></svg></span
+              ></span>
+              <input
+                v-if="!readonly"
+                type="number"
+                :key="`people-${item.id}-${peopleCount}`"
+                :value="peopleCount"
+                @input="handlePeopleInput"
+                @blur="handlePeopleBlur"
+                min="1"
+                max="99"
+                class="px-2 py-1.5 text-xs border rounded w-14"
+              />
+              <span v-else class="text-sm font-medium">{{ peopleCount }}</span>
+            </div>
 
-          <!-- Date - editable or readonly -->
-          <div class="flex items-center gap-1">
-            <input
-              v-if="!readonly"
-              type="date"
-              :value="selectedDate"
-              :min="new Date().toISOString().split('T')[0]"
-              @change="
-                $emit(
-                  'changeDate',
-                  item.id,
-                  ($event.target as HTMLInputElement).value
-                )
-              "
+            <!-- Date - editable or readonly -->
+            <div class="flex items-center gap-1">
+              <input
+                v-if="!readonly"
+                type="date"
+                :value="selectedDate"
+                :min="new Date().toISOString().split('T')[0]"
+                @change="
+                  $emit(
+                    'changeDate',
+                    item.id,
+                    ($event.target as HTMLInputElement).value
+                  )
+                "
+                :class="[
+                  'px-2 py-1.5 text-xs border rounded',
+                  !selectedDate ? 'border-red-500 border' : '',
+                ]"
+                required
+              />
+              <span v-else class="text-sm font-medium">{{
+                selectedDate || "Inget datum valt"
+              }}</span>
+            </div>
+
+            <p
               :class="[
-                'px-2 py-1 text-xs border rounded',
-                !selectedDate ? 'border-red-500 border' : '',
+                'text-xs rounded-sm px-2 height-4 flex items-center leading-none gap-1',
+                !readonly ? 'border border-black' : 'border-transparent',
               ]"
-              required
-            />
-            <span v-else class="text-sm font-medium">{{
-              selectedDate || "Inget datum valt"
-            }}</span>
+            >
+              Åldersgrupp: <strong>{{ translatedAgeGroup }}</strong>
+            </p>
           </div>
+          <p class="font-bold sm:text-lg text-right">
+            {{ itemTotalFormatted }} SEK
+          </p>
         </div>
-        <p class="font-bold sm:text-lg text-right">{{ itemTotalFormatted }} SEK</p>
+        <p
+          :class="[
+            !readonly ? 'hidden' : 'flex',
+            'text-xs text-gray-600 mt-2 italic ',
+          ]"
+        >
+          OBS: Denna aktivitet är endast för {{ translatedAgeGroup }}
+        </p>
       </div>
     </div>
   </div>
   <BaseModal v-if="showRemoveModal" :show-close="true" @close="cancelRemove">
     <h3 class="text-lg font-semibold mb-4">Är du säker?</h3>
-    <p class="text-gray-600 mb-6">Är du säker på att du vill ta bort denna upplevelse från din kundkorg?</p>
+    <p class="text-gray-600 mb-6">
+      Är du säker på att du vill ta bort denna upplevelse från din kundkorg?
+    </p>
     <div class="flex justify-center gap-4">
-      <button class="px-4 py-2 rounded bg-gray-300" @click="cancelRemove">Avbryt</button>
-      <button class="px-4 py-2 rounded bg-red-600 text-white" @click="confirmRemove">Ja</button>
+      <button class="px-4 py-2 rounded bg-gray-300" @click="cancelRemove">
+        Avbryt
+      </button>
+      <button
+        class="px-4 py-2 rounded bg-red-600 text-white"
+        @click="confirmRemove"
+      >
+        Ja
+      </button>
     </div>
   </BaseModal>
 </template>
