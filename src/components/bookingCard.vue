@@ -7,7 +7,7 @@ import experienceData from "../utils/experiences.json";
 import BaseModal from "./common/BaseModal.vue";
 import { useCart } from "../composables/useCart";
 import type { ExperienceType } from "../types/ExperienceType";
-import goBackButton from "./common/goBackButton.vue";
+import goBackButton from "./common/GoBackButton.vue";
 
 const fallbackTitle = "Sky diving from the moon";
 const fallbackDescription =

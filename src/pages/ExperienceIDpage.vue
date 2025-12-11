@@ -4,7 +4,7 @@ import data from "../utils/experiences.json";
 import heroImg from "../assets/images/hero.jpg";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
-import goBackButton from "../components/common/goBackButton.vue";
+import goBackButton from "../components/common/GoBackButton.vue";
 
 const route = useRoute();
 const router = useRouter();
