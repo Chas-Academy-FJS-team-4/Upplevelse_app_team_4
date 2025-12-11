@@ -1,26 +1,45 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useBookingStore } from "../stores/bookingStore";
-import type { Addon } from "../stores/bookingStore";
+import { computed, onMounted, ref, watch } from "vue";
+import { useBookingStore, type Addon, type PriceRange } from "../stores/bookingStore";
 import Addons from "./addons/Addons.vue";
+import { useRoute, useRouter } from "vue-router";
+import experienceData from "../utils/experiences.json";
+import BaseModal from "./common/BaseModal.vue";
+import { useCart } from "../composables/useCart";
+import type { ExperienceType } from "../types/ExperienceType";
+import goBackButton from "./common/goBackButton.vue";
 
-const title = "Sky diving from the moon";
-const description =
+const fallbackTitle = "Sky diving from the moon";
+const fallbackDescription =
   "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.";
-const price = 12000000;
+const fallbackPrice = 12000000;
 const currency = "Kr";
-const tags = ["Rökgalet", "Rymd", "Fallskärm"];
+const fallbackTags = ["Rökgalet", "Rymd", "Fallskärm"];
 
 const store = useBookingStore();
+const { addItem } = useCart();
 
-// Minsta datum = idag
-const today = new Date();
-const minDateISO = today.toISOString().split("T")[0];
+const route = useRoute();
+const router = useRouter();
+
+const showAddedModal = ref(false);
+const showDateError = ref(false);
+
+// Minsta datum = idag (lokalt, i formatet YYYY-MM-DD)
+function getTodayLocalISO() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+const minDateISO = getTodayLocalISO();
 
 // Format på priset
-const priceFormatted = computed(
-  () => `${price.toLocaleString("sv-SE")} ${currency}`
-);
+const priceFormatted = computed(() => {
+  const p = store.experience ? store.experience.price : fallbackPrice;
+  return `${p.toLocaleString("sv-SE")} ${currency}`;
+});
 
 // Computed bindings mot pinia-store så ändringar sparas centralt
 const selectedDate = computed({
@@ -36,32 +55,130 @@ const ageCategory = computed({
   set: (c: string) => store.setAgeCategory(c),
 });
 
-// Emit för att skicka till parent (lägga i varukorg)
-const emit = defineEmits<{
-  (
-    e: "add-to-cart",
-    payload: { date: string | null; people: number; ageCategory: string }
-  ): void;
-}>();
+// Visningsvärden som fallback till hårdkodat om store.experience saknas
+const displayTitle = computed(() => store.experience?.title ?? fallbackTitle);
+const displayDescription = computed(
+  () => store.experience?.description ?? fallbackDescription
+);
+const displayTags = computed(() => store.experience?.tags ?? fallbackTags);
+const displayImage = computed(
+  () => store.experience?.image ?? "/experiences/1.png"
+);
 
+const ageGroupTranslations: Record<string, string> = {
+  kids: "Barn (0-17)",
+  adults: "18+",
+  seniors: "Seniorer",
+  any: "Alla åldrar",
+};
+
+const translatedAgeGroup = computed(() => {
+  const key = store.experience?.ageGroup || "any";
+  return ageGroupTranslations[key] || "Alla åldrar";
+});
+
+// Läs route params / query och sätt experience + initiala värden
+onMounted(() => {
+  store.resetBooking(false);
+
+  const id = Number(route.params.id || route.query.id || 1);
+  const found = (experienceData as any[]).find((e: any) => Number(e.id) === id);
+  if (found) {
+    store.setExperience(found as ExperienceType);
+  }
+  // init från query om present
+  if (route.query.people) store.updatePeople(Number(route.query.people));
+  if (route.query.date) store.setDate(String(route.query.date));
+  if (route.query.age) store.setAgeCategory(String(route.query.age));
+});
+
+// Synka query när användaren ändrar people/date/age
+watch(
+  () => [store.people, store.date, store.ageCategory],
+  () => {
+    const newQuery: Record<string, any> = { ...route.query };
+    if (store.people) newQuery.people = String(store.people);
+    else delete newQuery.people;
+    if (store.date) newQuery.date = store.date;
+    else delete newQuery.date;
+    if (store.ageCategory) newQuery.age = store.ageCategory;
+    else delete newQuery.age;
+
+    router.replace({
+      name: (route.name as string) || "booking",
+      params: route.params,
+      query: newQuery,
+    });
+  }
+);
+// reset och ladda ny experience när route.params.id ändras
+watch(
+  () => route.params.id,
+  (newId, oldId) => {
+    if (String(newId) !== String(oldId)) {
+      // nollställ bokningsfälten (behåll eller ta bort experience beroende på vad du vill:)
+      store.resetBooking(false); // false = behåll inte experience? här väljer vi att inte nollställa experience automatiskt
+      const idNum = Number(newId || route.query.id || 1);
+      const found = (experienceData as any[]).find(
+        (e: any) => Number(e.id) === idNum
+      );
+      if (found) {
+        store.setExperience(found as ExperienceType);
+      }
+    }
+  }
+);
+
+function continueDiscovering(navigate = true) {
+  store.resetBooking(true);
+  showAddedModal.value = false;
+  if (navigate) {
+    router.push({ name: "experiences" });
+  }
+}
+
+// Emit för att skicka till parent (lägg till i varukorg) - men vi hanterar add direkt här
 function addToCart() {
-  emit("add-to-cart", {
-    date: selectedDate.value,
-    people: people.value,
-    ageCategory: ageCategory.value,
+  if (!selectedDate.value) {
+    showDateError.value = true;
+    return;
+  }
+
+  showDateError.value = false;
+  // Ensure date is not before today
+  if (selectedDate.value && selectedDate.value < minDateISO) {
+    store.setDate(minDateISO);
+  }
+  const exp = store.experience;
+  const pricePerPerson = exp ? exp.price : fallbackPrice;
+
+  const addonsSnapshot = JSON.parse(JSON.stringify(store.addons || []));
+  addItem({
+    id: exp ? exp.id : Date.now(),
+    title: exp ? exp.title : fallbackTitle,
+    description: exp ? exp.description : fallbackDescription,
+    peopleCount: store.people,
+    selectedDate: store.date || "",
+    pricePerPerson,
+    image: displayImage.value,
+    addons: addonsSnapshot,
   });
+  showAddedModal.value = true;
 }
 
 function formatAddonPrice(addon: Addon) {
-  if (addon.priceType === "fixed") {
-    return `${addon.priceValue} Kr`;
-  } else if (addon.priceType === "percentage") {
-    return `${addon.priceValue} %`;
-  } else {
-    return `${(addon.priceValue as any).min} - ${
-      (addon.priceValue as any).max
-    } Kr`;
+  if (addon.finalPrice !== undefined) {
+    return `${addon.finalPrice.toLocaleString("sv-SE")} Kr `;
   }
+  if (addon.priceType === "fixed") {
+    return `${addon.priceValue as number} Kr`;
+  }
+  if (addon.priceType === "percentage") {
+    return `${addon.priceValue as number} % på upplevelsepriset`;
+  }
+  // range
+  const range = addon.priceValue as PriceRange;
+  return `${range.min} - ${range.max} Kr`;
 }
 </script>
 
@@ -69,6 +186,9 @@ function formatAddonPrice(addon: Addon) {
   <section
     class="flex flex-col items-center pt-20 gap-6 max-w-5xl mx-10 lg:mx-auto"
   >
+  <div class="self-start">
+    <goBackButton />
+    </div>
     <h2 class="w-full">Boka din upplevelse:</h2>
     <article
       class="flex flex-col gap-4 p-4 rounded-lg shadow-md border-[0.5px] border-gray-300 bg-white w-full"
@@ -76,16 +196,16 @@ function formatAddonPrice(addon: Addon) {
       <div class="flex flex-col md:flex-row gap-3">
         <div class="flex md:w-1/2 shrink-0 md:h-auto">
           <img
-            src="/experiences/1.png"
-            alt="Bild på en astronaut i rymden med månen i bakgrunden"
-            class="w-full object-cover rounded-lg md:bg-fixed max-h-[30vh] md:max-h-[75vh]"
+            :src="displayImage"
+            alt="Bild på upplevelsen"
+            class="w-full object-cover rounded-lg md:bg-fixed max-h-[30vh] md:max-h-[90vh]"
           />
         </div>
         <div class="flex flex-col gap-4 ml-3 justify-center">
-          <h2 class="text-zinc-800 text-2xl font-bold">{{ title }}</h2>
+          <h2 class="text-zinc-800 text-2xl font-bold">{{ displayTitle }}</h2>
           <div class="flex items-center gap-2 flex-wrap">
             <p
-              v-for="tag in tags"
+              v-for="tag in displayTags"
               :key="tag"
               class="bg-(--color-accent-light) px-2 py-1 border border-orange-600 rounded-xl text-orange-900 text-xs"
             >
@@ -93,7 +213,7 @@ function formatAddonPrice(addon: Addon) {
             </p>
           </div>
           <p class="text-black font-extrabold text-lg">{{ priceFormatted }}</p>
-          <p class="text-zinc-600">{{ description }}</p>
+          <p class="text-zinc-600">{{ displayDescription }}</p>
           <div class="flex gap-4 items-center flex-wrap">
             <label for="datum" class="sr-only">Datum</label>
             <input
@@ -103,12 +223,15 @@ function formatAddonPrice(addon: Addon) {
               v-model="selectedDate"
               class="border p-2 rounded-md text-sm"
               aria-label="Välj Datum för upplevelsen"
+              :class="{
+                'border-red-500 bg-red-50': showDateError && !selectedDate,
+              }"
             />
 
             <label for="personer" class="sr-only">Antal personer</label>
             <select
               id="personer"
-              v-model="people"
+              v-model.number="people"
               class="border p-2 rounded-md text-sm"
               aria-label="Välj antal personer för upplevelsen"
             >
@@ -117,7 +240,7 @@ function formatAddonPrice(addon: Addon) {
               </option>
             </select>
 
-            <label for="alderskategori" class="sr-only">Ålderskategori</label>
+            <!-- <label for="alderskategori" class="sr-only">Ålderskategori</label>
             <select
               id="alderskategori"
               v-model="ageCategory"
@@ -127,7 +250,10 @@ function formatAddonPrice(addon: Addon) {
               <option value="child">Barn (0-12)</option>
               <option value="teen">Tonår (13-17)</option>
               <option value="adult">Vuxen (18+)</option>
-            </select>
+            </select> -->
+            <p class="text-sm border border-black rounded-md py-[8.2px] px-2">
+              Åldersgrupp: <strong>{{ translatedAgeGroup }}</strong>
+            </p>
           </div>
 
           <div class="mt-3">
@@ -191,10 +317,42 @@ function formatAddonPrice(addon: Addon) {
           >
             Lägg till upplevelse i varukorg
           </button>
+          <p
+            v-if="showDateError && !selectedDate"
+            class="text-red-500 text-sm text-center italic"
+          >
+            Du måste välja ett datum innan du kan fortsätta.
+          </p>
         </div>
       </div>
     </article>
   </section>
+  <BaseModal
+    v-if="showAddedModal"
+    :show-close="true"
+    @close="showAddedModal = false"
+  >
+    <div class="space-y-5">
+      <h3 class="text-lg font-semibold">Tillagd i kundkorg</h3>
+      <p class="text-sm text-gray-600">
+        Upplevelsen har lagts till i din kundkorg!
+      </p>
+      <div class="flex gap-3 justify-center">
+        <button
+          @click="continueDiscovering(true)"
+          class="bg-gray-100 px-4 py-2 rounded-md"
+        >
+          Fortsätt upptäcka
+        </button>
+        <button
+          @click="$router.push('/cart')"
+          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+        >
+          Gå till kundkorg
+        </button>
+      </div>
+    </div>
+  </BaseModal>
   <section class="mx-10 mb-20 mt-10">
     <Addons />
   </section>

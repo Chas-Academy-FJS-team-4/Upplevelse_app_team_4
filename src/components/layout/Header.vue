@@ -1,24 +1,33 @@
 <script setup lang="ts">
+import { computed } from "vue";
+import { useCart } from "../../composables/useCart";
 import { defineEmits } from "vue";
 import { RouterLink } from "vue-router";
+import logo from "../../../public/WildLogo.png";
 
 const emit = defineEmits<{
   (e: "focus-search"): void;
 }>();
+
+const { cartItems } = useCart();
+const cartCount = computed(() => cartItems.value.length);
 </script>
 <template>
   <header
-    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center p-5 text-white z-100"
+    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center px-5 py-1 text-white z-100"
   >
-    <h1 class="text-2xl">
+    <!-- <h1 class="text-2xl">
       <router-link to="/">WildX</router-link>
-    </h1>
+    </h1> -->
+    <router-link to="/">
+      <img class="w-42" :src="logo" alt="" />
+    </router-link>
     <ul
       class="flex flex-row sm:gap-8 gap-3 text-sm md:text-[0.9rem] font-semibold"
     >
       <li
         class="flex flex-row items-center justify-center pr-1 gap-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
-        @click="focusOnSearch"
+        @click="emit('focus-search')"
       >
         <span class="hidden sm:flex">
           <svg
@@ -44,36 +53,6 @@ const emit = defineEmits<{
           </svg>
         </span>
         <router-link to="/experiences">Våra upplevelser</router-link>
-      </li>
-      <li
-        class="flex flex-row items-center justify-center gap-2 pr-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
-        @click="$emit('focus-search')"
-      >
-        <span class="hidden sm:flex"
-          ><svg
-            width="18px"
-            height="18px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              <path
-                d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-                stroke="#fff"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </g></svg
-        ></span>
-        Sök
       </li>
       <li
         class="flex flex-row items-center justify-center gap-2 pr-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
@@ -103,6 +82,12 @@ const emit = defineEmits<{
             </g></svg
         ></span>
         <router-link to="/cart">Kundkorg</router-link>
+        <span
+          v-if="cartCount > 0"
+          class="absolute -top-2 -right-3 bg-orange-400 text-black text-xs font-bold px-2 py-0.5 rounded-full"
+        >
+          {{ cartCount }}
+        </span>
       </li>
     </ul>
   </header>

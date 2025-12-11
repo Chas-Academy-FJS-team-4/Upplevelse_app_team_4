@@ -1,37 +1,78 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 
 // Local refs — dessa kommer senare ersättas av en Pinia store
 const ageCategory = ref("");
-const people = ref("");
+const people = ref<number | null>(null);
 const date = ref("");
+// compute today's date in local timezone as YYYY-MM-DD to use as min for the date input
+function getTodayString() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+const minDate = ref(getTodayString());
 const search = ref("");
 
-// Function to send filters somewhere (later: to Pinia)
-function applyFilters() {
-  const filters = {
-    ageCategory: ageCategory.value,
-    people: people.value,
-    date: date.value,
-    search: search.value,
-  };
+const searchInput = ref<HTMLInputElement | null>(null);
+
+  // Ensure date is not before today. If user somehow entered a past date, clamp it to today.
+  if (date.value && date.value < minDate.value) {
+    date.value = minDate.value;
+  }
 
   // TODO: Replace with Pinia store
   // const filterStore = useFilterStore();
   // filterStore.setFilters(filters);
+// Gör så att query uppdateras när fälten ändras (replace så vi inte spammar history)
+watch([search, people, date, ageCategory], () => {
+  if((router.currentRoute.value.name as string) === "experiences") {
+    router.replace({
+      name: "experiences",
+      query: {
+        q: search.value || undefined,
+        people: people.value ? String(people.value) : undefined,
+        date: date.value || undefined,
+        age: ageCategory.value || undefined,
+      },
+    });
+  }
+});
 
-  console.log("Filters to save:", filters);
-  router.push({ name: "experiences" });
+// Function to send filters somewhere (later: to Pinia)
+function applyFilters() {
+  router.push({
+    name: "experiences",
+    query: {
+      q: search.value || undefined,
+      people: people.value ? String(people.value) : undefined,
+      date: date.value || undefined,
+      age: ageCategory.value || undefined,
+    },
+  });
 }
-
-const searchInput = ref<HTMLInputElement | null>(null);
 
 function focusSearch() {
   searchInput.value?.focus();
 }
+
+// Om vi kommer med ?focus=1 => fokusera input direkt
+onMounted(() => {
+  if(route.query.focus) {
+    // timeout så elementet finns i DOM
+    setTimeout(() => focusSearch(), 50);
+  }
+})
+
+  // TODO: Replace with Pinia store
+  // const filterStore = useFilterStore();
+  // filterStore.setFilters(filters);
 
 // expose metoden så andra komponenter kan anropa via ref
 defineExpose({ focusSearch });
@@ -58,7 +99,7 @@ defineExpose({ focusSearch });
           min="1"
           placeholder="Antal personer"
           class="p-4 rounded-md bg-white w-1/3 flex-2"
-          v-model="people"
+          v-model.number="people"
           @keydown.enter.prevent="applyFilters"
         />
 
@@ -79,6 +120,7 @@ defineExpose({ focusSearch });
       <!-- Datum -->
       <input
         type="date"
+        :min="minDate"
         class="p-4 rounded-md bg-white text-gray-500 w-1/3"
         v-model="date"
         @keydown.enter.prevent="applyFilters"

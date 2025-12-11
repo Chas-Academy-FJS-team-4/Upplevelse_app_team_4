@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue';
+import type { Addon } from '../stores/bookingStore';
 
 export interface CartItem {
   id: number;
@@ -8,17 +9,33 @@ export interface CartItem {
   selectedDate: string;
   pricePerPerson: number;
   image: string;
+  addons: Addon[];
+  finalPrice?: number
 }
 
-const cartItems = ref<CartItem[]>([
-  { id: 1, title: "Åka skidor", description: "Upplev Sälen!", peopleCount: 1, selectedDate: "", pricePerPerson: 1200, image: "./assets/experiences/sälen.jpeg" },
-  { id: 2, title: "Fallskärm", description: "Hoppa fallskärm i världens finaste städer!", peopleCount: 1, selectedDate: "", pricePerPerson: 3500, image: "./assets/experiences/fallskärm.jpeg" },
-  { id: 3, title: "Klättra", description: "Klättra på riktiga berg!", peopleCount: 1, selectedDate: "", pricePerPerson: 890, image: "./assets/experiences/klättra.jpg" }
-]);
+const cartItems = ref<CartItem[]>([]);
 
 export function useCart() {
   const totalPrice = computed(() => {
-    return cartItems.value.reduce((sum, item) => sum + (item.peopleCount * item.pricePerPerson), 0);
+    return cartItems.value.reduce((sum, item) => {
+      const base = item.peopleCount * item.pricePerPerson;
+
+      // räkna addons för just detta item
+      const addonSum = (item.addons || []).reduce((aSum, add) => {
+        if (add.finalPrice !== undefined) {
+          return aSum + add.finalPrice;
+        }
+        if(add.priceType === 'fixed') {
+          return aSum + (add.priceValue as number);
+        } else if(add.priceType === 'percentage') {
+          return aSum + (base * (add.priceValue as number)) / 100;
+        } else {
+          const range = add.priceValue as { min: number; max: number };
+          return aSum + range.min;
+        }
+      }, 0);
+      return sum + base + addonSum
+    }, 0)
   });
 
   const removeItem = (id: number) => {
@@ -53,6 +70,16 @@ export function useCart() {
     }
   };
 
+  const addItem = (item: CartItem) => {
+    cartItems.value.push(item);
+  };
+
+  const removeAddonFromItem = (itemId: number, addonId: number) => {
+    const item = cartItems.value.find(i => i.id === itemId);
+    if (!item || !item.addons) return;
+    item.addons = item.addons.filter(a => a.id !== addonId);
+};
+
   return {
     cartItems,
     totalPrice,
@@ -60,6 +87,8 @@ export function useCart() {
     increasePeople,
     decreasePeople,
     changePeopleCount,
-    changeDate
+    changeDate,
+    addItem,
+    removeAddonFromItem
   };
 }
