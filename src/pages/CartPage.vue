@@ -118,7 +118,7 @@ function printReceipt() {
   <Header />
   <MiniHeroSection />
   <main>
-    <div class="py-20 flex flex-col max-w-5xl mx-10 lg:mx-auto">
+    <div class="py-10 flex flex-col max-w-5xl mx-10 lg:mx-auto">
       <div v-if="!lastOrder">
         <h2 class="text-left w-full">Kundkorg</h2>
         <p class="text-sm text-gray-500 mb-10">Sammanfattning</p>
@@ -275,7 +275,7 @@ function printReceipt() {
             Ändra order
           </button>
           <button
-            class="flex-1 bg-purple-800 hover:bg-purple-700 text-white py-2 rounded"
+            class="flex-1 bg-(--color-primary) hover:bg-(--color-primary-hover) text-white py-2 rounded"
             @click="confirmPurchase"
           >
             Bekräfta köp

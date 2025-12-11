@@ -335,7 +335,7 @@ function formatAddonPrice(addon: Addon) {
         </button>
         <button
           @click="$router.push('/cart')"
-          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+          class="bg-(--color-primary) hover:bg-(--color-primary-hover) text-white px-4 py-2 rounded-md"
         >
           Gå till kundkorg
         </button>

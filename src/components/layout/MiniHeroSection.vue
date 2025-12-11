@@ -2,11 +2,11 @@
 import heroImg from "/HeroimgExp.png";
 </script>
 <template>
-  <!-- <section class="">
+  <section class="">
     <img
       class="h-17.5 w-full object-cover"
       :src="heroImg"
       style="object-position: 0px -135px"
     />
-  </section> -->
+  </section>
 </template>
