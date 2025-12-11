@@ -16,6 +16,7 @@ const {
   changePeopleCount,
   changeDate,
   removeAddonFromItem,
+  clearCart,
 } = useCart();
 const isCheckoutMode = ref(false);
 const showModal = ref(false);
@@ -64,6 +65,7 @@ function handleConfirmationClose() {
 function goHomeAfterOrder() {
   lastOrder.value = null;
   router.push("/");
+  clearCart();
 }
 
 function formatAddonPrice(addon: {
