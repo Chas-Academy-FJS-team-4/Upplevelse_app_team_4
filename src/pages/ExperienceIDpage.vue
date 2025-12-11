@@ -4,6 +4,7 @@ import data from "../utils/experiences.json";
 import heroImg from "../assets/images/hero.jpg";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
+import goBackButton from "../components/common/goBackButton.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -97,8 +98,11 @@ const translatedAgeGroup = ageGroupTranslations[ageGroup];
       </div>
     </div>
     <section
-      class="flex flex-col items-center pt-10 pb-20 gap-6 max-w-5xl mx-10 lg:mx-auto"
+      class="flex flex-col items-center pt-10 pb-20 gap-2 max-w-5xl mx-10 lg:mx-auto"
     >
+    <div class="mt-5 self-start">
+    <goBackButton />
+    </div>
       <article
         class="flex flex-col gap-4 p-4 rounded-lg shadow-md border-[0.5px] border-gray-300 bg-white w-full"
       >
