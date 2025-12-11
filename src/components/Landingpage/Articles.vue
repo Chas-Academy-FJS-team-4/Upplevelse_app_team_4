@@ -22,16 +22,16 @@ function goToBookingPage(id: number) {
     <div class="flex flex-col max-w-5xl">
       <article class="flex flex-col lg:flex-row gap-5 lg:gap-15 mb-30 lg:pt-0">
         <img
-          :src="newExperiences[0].image"
+          :src="newExperiences[0]?.image"
           alt=""
           class="lg:w-1/2 h-50 md:h-80 lg:h-80 object-cover object-[center_80%] rounded-lg shadow-md"
         />
         <div class="flex flex-col justify-center gap-5 lg:w-1/2">
           <div>
-            <h3 class="mb-2">{{ newExperiences[0].title }}</h3>
+            <h3 class="mb-2">{{ newExperiences[0]?.title }}</h3>
             <div class="flex items-center gap-2 flex-wrap">
               <p
-                v-for="tag in newExperiences[0].tags"
+                v-for="tag in newExperiences[0]?.tags"
                 :key="tag"
                 class="bg-(--color-accent-light) px-2 py-1 border border-orange-600 rounded-xl text-orange-900 text-xs"
               >
@@ -40,7 +40,7 @@ function goToBookingPage(id: number) {
             </div>
           </div>
           <p>
-            {{ newExperiences[0].longDescription }}
+            {{ newExperiences[0]?.longDescription }}
           </p>
           <div class="flex justify-between mt-5 lg:m-0">
             <div class="text-(--color-accent-light)">
@@ -91,7 +91,7 @@ function goToBookingPage(id: number) {
                   </svg>
                 </span>
 
-                {{ newExperiences[0].location }}
+                {{ newExperiences[0]?.location }}
               </p>
               <p class="flex items-center gap-2">
                 <span class="">
@@ -117,16 +117,16 @@ function goToBookingPage(id: number) {
                       ></path>
                     </g></svg
                 ></span>
-                {{ newExperiences[0].ageGroup }}
+                {{ newExperiences[0]?.ageGroup }}
               </p>
             </div>
 
             <!-- TODO - Länk till boka upplevelse med id-->
             <button
-              @click="goToBookingPage(newExperiences[0].id)"
+              @click="goToBookingPage(newExperiences[0]?.id as number)"
               class="bg-(--color-primary) text-white px-6 py-2 rounded-md hover:bg-(--color-primary-hover) shadow-sm hover:shadow-md"
             >
-              Boka nu
+              Läs mer...
             </button>
           </div>
         </div>
@@ -137,15 +137,15 @@ function goToBookingPage(id: number) {
       <article class="flex flex-col lg:flex-row lg:gap-15">
         <div class="flex flex-col justify-center gap-5 lg:w-1/2">
           <img
-            :src="newExperiences[1].image"
+            :src="newExperiences[1]?.image"
             alt=""
             class="object-cover rounded-lg flex lg:hidden shadow-md h-50 md:h-80"
           />
           <div>
-            <h3 class="mb-2">{{ newExperiences[1].title }}</h3>
+            <h3 class="mb-2">{{ newExperiences[1]?.title }}</h3>
             <div class="flex items-center gap-2 flex-wrap">
               <p
-                v-for="tag in newExperiences[0].tags"
+                v-for="tag in newExperiences[0]?.tags"
                 :key="tag"
                 class="bg-(--color-accent-light) px-2 py-1 border border-orange-600 rounded-xl text-orange-900 text-xs"
               >
@@ -154,7 +154,7 @@ function goToBookingPage(id: number) {
             </div>
           </div>
           <p>
-            {{ newExperiences[1].longDescription }}
+            {{ newExperiences[1]?.longDescription }}
           </p>
           <div class="flex justify-between mt-5 lg:m-0">
             <div class="text-(--color-accent-light)">
@@ -205,7 +205,7 @@ function goToBookingPage(id: number) {
                   </svg>
                 </span>
 
-                {{ newExperiences[0].location }}
+                {{ newExperiences[0]?.location }}
               </p>
               <p class="flex items-center gap-2">
                 <span class="">
@@ -232,21 +232,21 @@ function goToBookingPage(id: number) {
                     </g>
                   </svg>
                 </span>
-                {{ newExperiences[1].ageGroup }}
+                {{ newExperiences[1]?.ageGroup }}
               </p>
             </div>
 
             <!-- TODO - Länk till boka upplevelse med id-->
             <button
-              @click="goToBookingPage(newExperiences[1].id)"
+              @click="goToBookingPage(newExperiences[1]?.id as number)"
               class="bg-(--color-primary) text-white px-6 py-2 rounded-md hover:bg-(--color-primary-hover) shadow-sm hover:shadow-md"
             >
-              Boka nu
+              Läs mer...
             </button>
           </div>
         </div>
         <img
-          :src="newExperiences[1].image"
+          :src="newExperiences[1]?.image"
           alt=""
           class="w-1/2 h-80 object-cover rounded-lg mb-2 hidden lg:flex shadow-md"
         />

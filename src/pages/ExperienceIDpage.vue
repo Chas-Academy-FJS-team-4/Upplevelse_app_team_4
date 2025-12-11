@@ -55,7 +55,7 @@ const translatedAgeGroup = ageGroupTranslations[ageGroup];
 <template>
   <div class="flex flex-col min-h-screen bg-(--color-bg-primary)">
     <div class="">
-      <img class="h-90 w-full object-cover blur-md" :src="heroImg" />
+      <img class="h-90 w-full object-cover blur-md" :src="image" />
       <div class="absolute h-105 inset-0 flex justify-center items-center">
         <Header class="self-start" @focus-search="focusSearch"></Header>
         <div
