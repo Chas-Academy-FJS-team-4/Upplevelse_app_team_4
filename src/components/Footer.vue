@@ -4,7 +4,7 @@
       class="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8"
     >
       <div>
-        <h4 class="text-lg font-semibold mb-3">Upplevelse</h4>
+        <h4 class="text-lg font-semibold mb-3">WildX</h4>
         <p class="text-sm text-gray-300">
           Upptäck och boka lokala upplevelser enkelt — för alla sinnen.
         </p>
@@ -33,7 +33,7 @@
         <p class="text-sm text-gray-300">
           E-post:
           <a
-            class="text-orange-400 hover:underline"
+            class="text-(--color-accent) hover:underline"
             href="mailto:info@upplevelse.example"
             >info@upplevelse.com</a
           >
@@ -100,8 +100,5 @@
 }
 .text-gray-400 {
   color: #94a3b8;
-}
-.text-orange-400 {
-  color: #fb923c;
 }
 </style>

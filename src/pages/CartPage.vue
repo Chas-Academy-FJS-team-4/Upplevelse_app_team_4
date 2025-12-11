@@ -187,7 +187,9 @@ function printReceipt() {
             <div class="p-8 text-center border rounded bg-white">
               <p class="text-lg mb-4">
                 Du har inga upplevelser i kundkorgen,
-                <router-link to="/experiences" class="text-purple-700 underline"
+                <router-link
+                  to="/experiences"
+                  class="text-(--color-primary) underline font-semibold"
                   >Klicka här</router-link
                 >
                 för att välja upplevelser!
