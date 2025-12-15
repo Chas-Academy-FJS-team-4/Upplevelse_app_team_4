@@ -6,6 +6,12 @@ import Gallery from "../components/experiencePage/ExperienceGallery.vue";
 import { ref } from "vue";
 
 const searchBoxRef = ref<InstanceType<typeof SearchBox> | null>(null);
+const experienceFilter = ref({})
+
+function searchProps(value:object) {
+  experienceFilter.value = value
+  console.log(value)
+ }
 
 function focusSearch() {
   searchBoxRef.value?.focusSearch();
@@ -19,11 +25,11 @@ defineExpose({ focusSearch });
     <img class="h-90 w-full object-cover" :src="heroImg" />
     <div class="absolute h-105 inset-0 flex justify-center items-center">
       <Header class="self-start" @focus-search="focusSearch" />
-      <SearchBox ref="searchBoxRef" />
+      <SearchBox ref="searchBoxRef" @change="searchProps"/>
     </div>
   </div>
   <div class="bg-(--color-bg-primary) pt-10 max-w-5xl m-auto">
     <h2 class="mb-8">Våra Aktiviteter</h2>
-    <Gallery />
+    <Gallery :filter="experienceFilter"/>
   </div>
 </template>
