@@ -14,6 +14,7 @@ const allTags = computed(() => {
   const tagList = data.flatMap(item => item.tags)
   return [... new Set(tagList)]
 })
+const propsData = ref({})
 
 // Local refs — dessa kommer senare ersättas av en Pinia store
 const ageCategory = ref("");
@@ -28,7 +29,7 @@ function getTodayString() {
   return `${yyyy}-${mm}-${dd}`;
 }
 const minDate = ref(getTodayString());
-const search = ref("");
+
 
 const searchInput = ref<HTMLInputElement | null>(null);
 
@@ -38,8 +39,8 @@ if (date.value && date.value < minDate.value) {
 }
 
 // Gör så att query uppdateras när fälten ändras (replace så vi inte spammar history)
-watch([search, people, date, ageCategory], () => {
-  if ((router.currentRoute.value.name as string) === "experiences") {
+watch([selectedTags, people, date, ageCategory], () => {
+  if((router.currentRoute.value.name as string) === "experiences") {
     router.replace({
       name: "experiences",
       query: {
@@ -52,6 +53,19 @@ watch([search, people, date, ageCategory], () => {
   }
 });
 
+const emit = defineEmits(['change']);
+function handleProps() {
+  emit("change", propsData.value)
+}
+
+
+const addAsProps = () => {
+  propsData.value= {
+    tags: selectedTags.value,
+    ageGroup: ageCategory.value
+  }
+}
+
 // Function to send filters somewhere (later: to Pinia)
 function applyFilters() {
   router.push({
@@ -63,6 +77,8 @@ function applyFilters() {
       age: ageCategory.value || undefined,
     },
   });
+  addAsProps()
+handleProps()
 }
 
 function focusSearch() {
@@ -97,7 +113,6 @@ const addTagToList = (tag:string) => {
     @submit.prevent="applyFilters"
     class="bg-black/30 min-h-32 flex items-center justify-center gap-2 flex-col md:flex-row p-5 md:px-6 w-6/7 max-w-5xl"
   >
-    <!-- Sökfält -->
 
     <div class="flex">
 <div
