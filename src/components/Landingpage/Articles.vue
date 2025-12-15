@@ -120,7 +120,7 @@ function goToBookingPage(id: number) {
                         ></path>
                       </g></svg
                   ></span>
-                  {{ newExperiences[0]?.ageGroup }}
+                  Seniorer
                 </p>
               </div>
 
@@ -148,7 +148,7 @@ function goToBookingPage(id: number) {
               <h3 class="mb-2">{{ newExperiences[1]?.title }}</h3>
               <div class="flex items-center gap-2 flex-wrap">
                 <p
-                  v-for="tag in newExperiences[0]?.tags"
+                  v-for="tag in newExperiences[1]?.tags"
                   :key="tag"
                   class="bg-(--color-accent-light) px-2 py-1 border border-orange-600 rounded-xl text-orange-900 text-xs"
                 >
@@ -208,7 +208,7 @@ function goToBookingPage(id: number) {
                     </svg>
                   </span>
 
-                  {{ newExperiences[0]?.location }}
+                  {{ newExperiences[1]?.location }}
                 </p>
                 <p class="flex items-center gap-2">
                   <span class="">
@@ -235,7 +235,7 @@ function goToBookingPage(id: number) {
                       </g>
                     </svg>
                   </span>
-                  {{ newExperiences[1]?.ageGroup }}
+                  Barn (0-17 år)
                 </p>
               </div>
 
