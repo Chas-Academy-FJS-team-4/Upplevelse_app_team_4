@@ -27,7 +27,7 @@ const tagPalette = [
     :to="{ name: 'experience', params: { id: exp.id } }"
   >
     <div
-      class="flex-1 rounded-lg shadow-md border-[0.5px] border-gray-300 p-4 flex flex-col h-86 cursor-pointer bg-white transform duration-300 hover:shadow-[0_0_10px_rgba(255,165,100)] w-60"
+      class="flex-1 rounded-lg shadow-md border-[0.5px] border-gray-300 p-4 flex flex-col h-86 cursor-pointer bg-white transform duration-300 hover:shadow-[0_0_10px_rgba(255,165,100)]"
     >
       <div class="w-full h-36 mb-2">
         <img

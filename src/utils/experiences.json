@@ -11,7 +11,11 @@
     "image": "/experiences/1.png",
     "category": "spaceAdventures",
     "isTop": true,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 10000
+    }
   },
   {
     "id": 2,
@@ -25,7 +29,11 @@
     "image": "/experiences/2.png",
     "category": "spaceAdventures",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 10000
+    }
   },
   {
     "id": 3,
@@ -39,7 +47,11 @@
     "image": "/experiences/3.png",
     "category": "spaceAdventures",
     "isTop": true,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 10000
+    }
   },
   {
     "id": 4,
@@ -53,7 +65,11 @@
     "image": "/experiences/4.png",
     "category": "timeTravelAndHistory",
     "isTop": true,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 8000
+    }
   },
   {
     "id": 5,
@@ -67,7 +83,11 @@
     "image": "/experiences/5.png",
     "category": "timeTravelAndHistory",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 6000
+    }
   },
   {
     "id": 6,
@@ -81,7 +101,11 @@
     "image": "/experiences/6.png",
     "category": "fantasyWorlds",
     "isTop": true,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 6000
+    }
   },
   {
     "id": 7,
@@ -95,7 +119,11 @@
     "image": "/experiences/7.png",
     "category": "fantasyWorlds",
     "isTop": true,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 3000
+    }
   },
   {
     "id": 8,
@@ -109,7 +137,11 @@
     "image": "/experiences/8.png",
     "category": "extremeScienceAndPhysics",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 5000
+    }
   },
   {
     "id": 9,
@@ -123,7 +155,11 @@
     "image": "/experiences/9.png",
     "category": "extremeScienceAndPhysics",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 8000
+    }
   },
   {
     "id": 10,
@@ -137,7 +173,11 @@
     "image": "/experiences/10.png",
     "category": "extremeScienceAndPhysics",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 2000
+    }
   },
   {
     "id": 11,
@@ -151,7 +191,11 @@
     "image": "/experiences/11.png",
     "category": "extremeScienceAndPhysics",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 2000
+    }
   },
   {
     "id": 12,
@@ -165,7 +209,11 @@
     "image": "/experiences/12.png",
     "category": "megaCreaturesAndMonsters",
     "isTop": true,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 7000
+    }
   },
   {
     "id": 13,
@@ -179,7 +227,11 @@
     "image": "/experiences/13.png",
     "category": "highTechSportsAndChallenges",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 3000
+    }
   },
   {
     "id": 14,
@@ -193,7 +245,11 @@
     "image": "/experiences/14.png",
     "category": "highTechSportsAndChallenges",
     "isTop": false,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 4000
+    }
   },
   {
     "id": 15,
@@ -207,7 +263,11 @@
     "image": "/experiences/15.png",
     "category": "highTechSportsAndChallenges",
     "isTop": true,
-    "isNew": false
+    "isNew": false,
+    "addons": {
+      "2": 1499,
+      "3": 5000
+    }
   },
   {
     "id": 16,
@@ -221,7 +281,11 @@
     "image": "/experiences/16.png",
     "category": "sciFiWellness",
     "isTop": false,
-    "isNew": true
+    "isNew": true,
+    "addons": {
+      "2": 1499,
+      "3": 4000
+    }
   },
   {
     "id": 17,
@@ -235,6 +299,10 @@
     "image": "/experiences/17.png",
     "category": "techAdventures",
     "isTop": false,
-    "isNew": true
+    "isNew": true,
+    "addons": {
+      "2": 1499,
+      "3": 1500
+    }
   }
 ]

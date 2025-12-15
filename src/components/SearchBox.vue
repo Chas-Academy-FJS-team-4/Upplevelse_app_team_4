@@ -33,10 +33,10 @@ const minDate = ref(getTodayString());
 
 const searchInput = ref<HTMLInputElement | null>(null);
 
-  // Ensure date is not before today. If user somehow entered a past date, clamp it to today.
-  if (date.value && date.value < minDate.value) {
-    date.value = minDate.value;
-  }
+// Ensure date is not before today. If user somehow entered a past date, clamp it to today.
+if (date.value && date.value < minDate.value) {
+  date.value = minDate.value;
+}
 
 // Gör så att query uppdateras när fälten ändras (replace så vi inte spammar history)
 watch([selectedTags, people, date, ageCategory], () => {
@@ -87,11 +87,11 @@ function focusSearch() {
 
 // Om vi kommer med ?focus=1 => fokusera input direkt
 onMounted(() => {
-  if(route.query.focus) {
+  if (route.query.focus) {
     // timeout så elementet finns i DOM
     setTimeout(() => focusSearch(), 50);
   }
-})
+});
 
 // expose metoden så andra komponenter kan anropa via ref
 defineExpose({ focusSearch });
@@ -111,7 +111,7 @@ const addTagToList = (tag:string) => {
 <template>
   <form
     @submit.prevent="applyFilters"
-    class="bg-purple-900/40 min-h-32 flex items-center justify-center gap-2 flex-col md:flex-row p-5 md:px-6 w-6/7 max-w-5xl"
+    class="bg-black/30 min-h-32 flex items-center justify-center gap-2 flex-col md:flex-row p-5 md:px-6 w-6/7 max-w-5xl"
   >
 
     <div class="flex">

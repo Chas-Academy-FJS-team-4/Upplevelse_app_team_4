@@ -11,4 +11,5 @@ export interface ExperienceType {
   category: string;
   isTop: boolean;
   isNew: boolean;
+  addons: Record<string, number>;
 }

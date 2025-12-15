@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useCart } from "../../composables/useCart";
-import { defineEmits } from "vue";
+// import { defineEmits } from "vue";
 import { RouterLink } from "vue-router";
-import logo from "../../../public/WildLogo.png";
+import logo from "/WildLogo.png";
+// import logo from "/wildXLogo.png";
 
 const emit = defineEmits<{
   (e: "focus-search"): void;
@@ -14,11 +15,8 @@ const cartCount = computed(() => cartItems.value.length);
 </script>
 <template>
   <header
-    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center px-5 py-1 text-white z-100"
+    class="absolute w-full flex flex-row justify-between items-center px-5 py-1 text-white z-100 bg-black/30"
   >
-    <!-- <h1 class="text-2xl">
-      <router-link to="/">WildX</router-link>
-    </h1> -->
     <router-link to="/">
       <img class="w-42" :src="logo" alt="" />
     </router-link>

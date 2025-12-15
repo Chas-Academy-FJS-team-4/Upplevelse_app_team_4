@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { useBookingStore, type Addon } from "../stores/bookingStore";
+import { useBookingStore, type Addon, type PriceRange } from "../stores/bookingStore";
 import Addons from "./addons/Addons.vue";
 import { useRoute, useRouter } from "vue-router";
 import experienceData from "../utils/experiences.json";
 import BaseModal from "./common/BaseModal.vue";
 import { useCart } from "../composables/useCart";
 import type { ExperienceType } from "../types/ExperienceType";
+import goBackButton from "./common/GoBackButton.vue";
 
 const fallbackTitle = "Sky diving from the moon";
 const fallbackDescription =
@@ -160,21 +161,31 @@ function addToCart() {
     selectedDate: store.date || "",
     pricePerPerson,
     image: displayImage.value,
+    ageGroup: exp?.ageGroup as
+      | "kids"
+      | "adults"
+      | "seniors"
+      | "any"
+      | undefined,
+
     addons: addonsSnapshot,
   });
   showAddedModal.value = true;
 }
 
 function formatAddonPrice(addon: Addon) {
-  if (addon.priceType === "fixed") {
-    return `${addon.priceValue} Kr`;
-  } else if (addon.priceType === "percentage") {
-    return `${addon.priceValue} %`;
-  } else {
-    return `${(addon.priceValue as any).min} - ${
-      (addon.priceValue as any).max
-    } Kr`;
+  if (addon.finalPrice !== undefined) {
+    return `${addon.finalPrice.toLocaleString("sv-SE")} Kr `;
   }
+  if (addon.priceType === "fixed") {
+    return `${addon.priceValue as number} Kr`;
+  }
+  if (addon.priceType === "percentage") {
+    return `${addon.priceValue as number} % på upplevelsepriset`;
+  }
+  // range
+  const range = addon.priceValue as PriceRange;
+  return `${range.min} - ${range.max} Kr`;
 }
 </script>
 
@@ -182,6 +193,9 @@ function formatAddonPrice(addon: Addon) {
   <section
     class="flex flex-col items-center pt-20 gap-6 max-w-5xl mx-10 lg:mx-auto"
   >
+  <div class="self-start">
+    <goBackButton />
+    </div>
     <h2 class="w-full">Boka din upplevelse:</h2>
     <article
       class="flex flex-col gap-4 p-4 rounded-lg shadow-md border-[0.5px] border-gray-300 bg-white w-full"
@@ -233,17 +247,6 @@ function formatAddonPrice(addon: Addon) {
               </option>
             </select>
 
-            <!-- <label for="alderskategori" class="sr-only">Ålderskategori</label>
-            <select
-              id="alderskategori"
-              v-model="ageCategory"
-              class="border p-2 rounded-md text-sm"
-              aria-label="Välj ålderskategori"
-            >
-              <option value="child">Barn (0-12)</option>
-              <option value="teen">Tonår (13-17)</option>
-              <option value="adult">Vuxen (18+)</option>
-            </select> -->
             <p class="text-sm border border-black rounded-md py-[8.2px] px-2">
               Åldersgrupp: <strong>{{ translatedAgeGroup }}</strong>
             </p>
@@ -339,7 +342,7 @@ function formatAddonPrice(addon: Addon) {
         </button>
         <button
           @click="$router.push('/cart')"
-          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+          class="bg-(--color-primary) hover:bg-(--color-primary-hover) text-white px-4 py-2 rounded-md"
         >
           Gå till kundkorg
         </button>
