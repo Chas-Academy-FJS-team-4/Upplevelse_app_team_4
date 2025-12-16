@@ -149,6 +149,7 @@ const translatedAgeGroup =
                 v-for="a in item.addons"
                 :key="a.id"
                 class="flex justify-between text-sm"
+                style="cursor: default !important;"
               >
                 <span>{{ a.title }}</span>
                 <div class="flex items-center gap-3">
@@ -156,8 +157,9 @@ const translatedAgeGroup =
                     {{ formatAddonPrice(a) }}
                   </span>
                   <button
-                              @click="$emit('remove-addon', item.instanceId ?? String(item.id), a.id)"
-                    class="text-red-600 text-xs"
+                    v-if="!readonly"
+                    @click="$emit('remove-addon', item.instanceId ?? String(item.id), a.id)"
+                    class="text-red-600 text-xs cursor-pointer hover:underline"
                   >
                     Ta bort
                   </button>
