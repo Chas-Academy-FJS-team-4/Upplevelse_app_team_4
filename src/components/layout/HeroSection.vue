@@ -1,17 +1,17 @@
 <script setup lang="ts">
 // import heroImg from "../../assets/images/hero.jpg";
-import SearchBox from "../SearchBox.vue";
-import { ref } from "vue";
+// import SearchBox from "../SearchBox.vue";
+// import { ref } from "vue";
 import heroImg from "/HeroimgExp.png";
 
-const searchBoxRef = ref<InstanceType<typeof SearchBox> | null>(null);
+// const searchBoxRef = ref<InstanceType<typeof SearchBox> | null>(null);
 
-function focusSearch() {
-  searchBoxRef.value?.focusSearch();
-}
+// function focusSearch() {
+//   searchBoxRef.value?.focusSearch();
+// }
 
 // expose metoden så Header kan kalla den via ref
-defineExpose({ focusSearch });
+// defineExpose({ focusSearch });
 </script>
 <template>
   <div class="">
