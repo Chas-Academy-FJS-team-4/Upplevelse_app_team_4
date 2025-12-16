@@ -85,7 +85,7 @@ const translatedAgeGroup = computed(() => {
 onMounted(() => {
   store.resetBooking(false);
 
-  const id = Number(route.params.id || route.query.id || 1);
+  const id = Number(route.params.id);
   const found = (experienceData as any[]).find((e: any) => Number(e.id) === id);
   if (found) {
     store.setExperience(found as ExperienceType);

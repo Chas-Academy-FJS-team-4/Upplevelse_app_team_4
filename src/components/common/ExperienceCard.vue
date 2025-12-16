@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { ExperienceType } from "../../types/ExperienceType";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const { exp } = defineProps<{
   exp: ExperienceType;
 }>();
@@ -24,7 +26,11 @@ const tagPalette = [
 <template>
   <router-link
     class="text-right text-xs text-(--color-accent-light) hover:text-(--color-accent) relative group"
-    :to="{ name: 'experience', params: { id: exp.id } }"
+    :to="{ 
+      name: 'experience', 
+      params: { id: exp.id },
+      query: route.query 
+    }"
   >
     <div
       class="flex-1 rounded-lg shadow-md border-[0.5px] border-gray-300 p-4 flex flex-col h-86 cursor-pointer bg-white transform duration-300 hover:shadow-[0_0_10px_rgba(255,165,100)]"

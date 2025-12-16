@@ -69,13 +69,24 @@ function goHomeAfterOrder() {
 }
 
 function formatAddonPrice(addon: {
-  priceType: string;
-  priceValue: number | { min: number; max: number };
+  priceType?: string;
+  priceValue?: number | { min: number; max: number };
+  finalPrice?: number;
 }) {
-  if (addon.priceType === "fixed") return `${addon.priceValue} SEK`;
-  if (addon.priceType === "percentage") return `${addon.priceValue}%`;
-  const range = addon.priceValue as { min: number; max: number };
-  return `${range.min} - ${range.max} SEK`;
+  if(addon.finalPrice !== undefined) {
+    return `${addon.finalPrice.toLocaleString("sv-SE")} SEK`;
+  }
+  if(addon.priceType === "fixed") {
+    return `${(addon.priceValue as number).toLocaleString("sv-SE")} SEK`;
+  }
+  if(addon.priceType === "percentage") {
+    return `${addon.priceValue} % av upplevelsepriset`;
+  }
+  if(addon.priceType === "range") {
+    const range = addon.priceValue as { min: number; max: number };
+    return `${range.min.toLocaleString("sv-SE")} - ${range.max.toLocaleString("sv-SE")} SEK`;
+  }
+  return "";
 }
 
 function printReceipt() {
