@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
-import BaseModal from "../common/BaseModal.vue";
+import BaseModal from "../Common/BaseModal.vue";
 import type { Addon } from "../../stores/bookingStore";
 
 interface CartItem {
   id: number;
+  instanceId?: string;
   title: string;
   description: string;
   image: string;
@@ -31,12 +32,12 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  changePeopleCount: [id: number, count: number];
-  changeDate: [id: number, date: string];
-  remove: [id: number];
-  increasePeople: [id: number];
-  decreasePeople: [id: number];
-  "remove-addon": [itemId: number, addonId: number];
+  changePeopleCount: [instanceId: string, count: number];
+  changeDate: [instanceId: string, date: string];
+  remove: [instanceId: string];
+  increasePeople: [instanceId: string];
+  decreasePeople: [instanceId: string];
+  "remove-addon": [instanceId: string, addonId: number];
 }>();
 
 const showRemoveModal = ref(false);
@@ -66,7 +67,7 @@ const itemTotalFormatted = computed(
 );
 
 const confirmRemove = () => {
-  emit("remove", props.item.id);
+  emit("remove", props.item.instanceId ?? String(props.item.id));
   showRemoveModal.value = false;
 };
 
@@ -77,13 +78,13 @@ const cancelRemove = () => {
 const handlePeopleInput = (event: Event) => {
   const value = Number((event.target as HTMLInputElement).value);
   const validValue = Math.max(1, value || 1);
-  emit("changePeopleCount", props.item.id, validValue);
+  emit("changePeopleCount", props.item.instanceId ?? String(props.item.id), validValue);
 };
 
 const handlePeopleBlur = (event: Event) => {
   const value = Number((event.target as HTMLInputElement).value);
   const validValue = Math.max(1, value || 1);
-  emit("changePeopleCount", props.item.id, validValue);
+  emit("changePeopleCount", props.item.instanceId ?? String(props.item.id), validValue);
   // Force the input to show the correct value
   (event.target as HTMLInputElement).value = String(validValue);
 };
@@ -155,7 +156,7 @@ const translatedAgeGroup =
                     {{ formatAddonPrice(a) }}
                   </span>
                   <button
-                    @click="$emit('remove-addon', item.id, a.id)"
+                              @click="$emit('remove-addon', item.instanceId ?? String(item.id), a.id)"
                     class="text-red-600 text-xs"
                   >
                     Ta bort
@@ -201,7 +202,7 @@ const translatedAgeGroup =
               <input
                 v-if="!readonly"
                 type="number"
-                :key="`people-${item.id}-${peopleCount}`"
+                :key="`people-${item.instanceId ?? item.id}-${peopleCount}`"
                 :value="peopleCount"
                 @input="handlePeopleInput"
                 @blur="handlePeopleBlur"
@@ -222,7 +223,7 @@ const translatedAgeGroup =
                 @change="
                   $emit(
                     'changeDate',
-                    item.id,
+                    item.instanceId ?? String(item.id),
                     ($event.target as HTMLInputElement).value
                   )
                 "

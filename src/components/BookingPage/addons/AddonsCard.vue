@@ -27,7 +27,7 @@ const emit = defineEmits<{
         class="w-full h-full object-cover filter blur-sm scale-105"
       />
       <div
-        class="absolute inset-0 bg-gradient-to-tr from-purple-700/25 via-orange-400/10 to-teal-400/10"
+        class="absolute inset-0 bg-linear-to-tr from-purple-700/25 via-orange-400/10 to-teal-400/10"
       ></div>
     </div>
 

@@ -1,4 +1,14 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+import { useCart } from "../composables/useCart";
+
+const { clearCart } = useCart();
+
+onMounted(() => {
+  // Empty the cart when arriving on the confirmation page
+  clearCart();
+});
+
 function goHome() {
   window.location.href = "/";
 }

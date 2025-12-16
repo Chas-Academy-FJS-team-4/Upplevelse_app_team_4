@@ -2,7 +2,7 @@
 // import heroImg from "../assets/images/hero.jpg";
 import heroImg from "/HeroimgExp.png";
 import SearchBox from "../components/ExperiencePage/SearchBox.vue";
-import Header from "../components/layout/Header.vue";
+import Header from "../components/Layout/Header.vue";
 import Gallery from "../components/ExperiencePage/ExperienceGallery.vue";
 import goBackButton from "../components/Common/GoBackButton.vue";
 import { ref, onMounted } from "vue";

@@ -3,8 +3,8 @@ import { ref, computed } from "vue";
 import CartItem from "../components/Cart/CartItem.vue";
 import ConfirmationModal from "../components/Cart/ConfirmationModal.vue";
 import { useCart } from "../composables/useCart";
-import Header from "../components/layout/Header.vue";
-import MiniHeroSection from "../components/layout/MiniHeroSection.vue";
+import Header from "../components/Layout/Header.vue";
+import MiniHeroSection from "../components/Layout/MiniHeroSection.vue";
 import { useRouter } from "vue-router";
 
 const {
@@ -44,8 +44,8 @@ function cancelCheckout() {
   isCheckoutMode.value = false;
 }
 
-function onRemoveAddonFromItem(itemId: number, addonId: number) {
-  removeAddonFromItem(itemId, addonId);
+function onRemoveAddonFromItem(instanceId: string, addonId: number) {
+  removeAddonFromItem(instanceId, addonId);
 }
 
 function confirmPurchase() {
@@ -60,6 +60,8 @@ function handleConfirmationClose() {
   };
   showModal.value = false;
   isCheckoutMode.value = false;
+  // clear the cart now that we've saved the receipt snapshot
+  clearCart();
 }
 
 function goHomeAfterOrder() {
@@ -135,15 +137,11 @@ function printReceipt() {
         <p class="text-sm text-gray-500 mb-10">Sammanfattning</p>
       </div>
 
-      <div
-        v-if="lastOrder"
-        id="receipt"
-        class="mb-6 p-6 border rounded bg-white"
-      >
+      <div v-if="lastOrder" id="receipt" class="mb-6 p-6 border rounded bg-white">
         <h3 class="font-semibold mb-2">Orderbekräftelse</h3>
 
         <div class="space-y-2 text-sm text-gray-600 mb-6">
-          <div v-for="item in cartItems" :key="item.id">
+          <div v-for="item in lastOrder.items" :key="item.instanceId">
             <p class="flex flex-row justify-between">
               <span>
                 - {{ item.peopleCount }}
@@ -153,9 +151,7 @@ function printReceipt() {
               >
               <span
                 >{{
-                  (item.peopleCount * item.pricePerPerson).toLocaleString(
-                    "sv-SE"
-                  )
+                  (item.peopleCount * item.pricePerPerson).toLocaleString("sv-SE")
                 }}
                 SEK</span
               >
@@ -175,7 +171,7 @@ function printReceipt() {
           </div>
         </div>
 
-        <p class="font-bold mt-4">Total: {{ itemTotalprice }} SEK</p>
+        <p class="font-bold mt-4">Total: {{ lastOrder.total.toLocaleString("sv-SE") }} SEK</p>
         <div class="mt-4">
           <button
             class="bg-gray-200 px-4 py-2 rounded mr-2 no-print"
@@ -211,7 +207,7 @@ function printReceipt() {
           <CartItem
             v-else
             v-for="item in cartItems"
-            :key="item.id"
+            :key="item.instanceId"
             :item="item"
             :people-count="item.peopleCount"
             :selected-date="item.selectedDate"
@@ -247,7 +243,7 @@ function printReceipt() {
         <p class="text-xl font-bold mb-4">Totalt: {{ itemTotalprice }} SEK</p>
 
         <div class="space-y-2 text-sm text-gray-600 mb-6">
-          <div v-for="item in cartItems" :key="item.id">
+          <div v-for="item in cartItems" :key="item.instanceId">
             <p class="flex justify-between">
               <span>
                 - {{ item.peopleCount }}

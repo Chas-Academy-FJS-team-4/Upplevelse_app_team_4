@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import AddonsCard from "./AddonsCard.vue";
-import BaseModal from "../../common/BaseModal.vue";
+import BaseModal from "../../Common/BaseModal.vue";
 import addonsJson from "../../../utils/addons.json";
 import { useBookingStore } from "../../../stores/bookingStore";
 

@@ -39,7 +39,8 @@ const tagPalette = [
         <img
           :src="exp.image"
           :alt="exp.title"
-          class="w-full h-36 object-cover rounded-t-lg mb-2"
+          :style="{ objectPosition: exp.imagePosition ?? 'center' }"
+          class="w-full h-full object-cover rounded-t-lg mb-2"
         />
 
         <!-- Taggar på bilden -->
