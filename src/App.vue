@@ -1,5 +1,5 @@
 <script setup>
-import Footer from "./components/Footer.vue";
+import Footer from "./components/layout/Footer.vue";
 </script>
 
 <template>
@@ -10,4 +10,3 @@ import Footer from "./components/Footer.vue";
     <Footer />
   </div>
 </template>
-

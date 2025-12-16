@@ -1,10 +1,10 @@
 <script setup lang="ts">
 // import heroImg from "../assets/images/hero.jpg";
 import heroImg from "/HeroimgExp.png";
-import SearchBox from "../components/SearchBox.vue";
+import SearchBox from "../components/ExperiencePage/SearchBox.vue";
 import Header from "../components/layout/Header.vue";
-import Gallery from "../components/experiencePage/ExperienceGallery.vue";
-import goBackButton from "../components/common/GoBackButton.vue";
+import Gallery from "../components/ExperiencePage/ExperienceGallery.vue";
+import goBackButton from "../components/Common/GoBackButton.vue";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useBookingStore } from "../stores/bookingStore";

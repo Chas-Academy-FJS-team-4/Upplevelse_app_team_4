@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import data from "../../utils/experiences.json";
-import ExperienceCard from "../common/ExperienceCard.vue";
+import ExperienceCard from "../Common/ExperienceCard.vue";
 import { computed } from "vue";
 
 type Filter = {

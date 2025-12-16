@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount, computed } from "vue";
 import { useRouter } from "vue-router";
-import data from "../utils/experiences.json";
+import data from "../../utils/experiences.json";
 
 const router = useRouter();
 

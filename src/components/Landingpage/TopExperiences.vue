@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import ExperienceCard from "../common/ExperienceCard.vue";
+import ExperienceCard from "../Common/ExperienceCard.vue";
 import experiencesData from "../../utils/experiences.json";
 
 const topExperiences = computed(() =>

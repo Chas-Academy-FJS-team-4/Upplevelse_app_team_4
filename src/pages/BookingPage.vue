@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Header from "../components/layout/Header.vue";
 import MiniHeroSection from "../components/layout/MiniHeroSection.vue";
-import BookingCard from "../components/bookingCard.vue";
+import BookingCard from "../components/BookingPage/BookingCard.vue";
 </script>
 <template>
   <Header />

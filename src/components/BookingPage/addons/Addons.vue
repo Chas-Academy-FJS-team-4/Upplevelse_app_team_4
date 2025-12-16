@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import AddonsCard from "./AddonsCard.vue";
-import BaseModal from "../common/BaseModal.vue";
-import addonsJson from "../../utils/addons.json";
-import { useBookingStore } from "../../stores/bookingStore";
+import BaseModal from "../../common/BaseModal.vue";
+import addonsJson from "../../../utils/addons.json";
+import { useBookingStore } from "../../../stores/bookingStore";
 
 interface RawAddon {
   id: number;
@@ -26,8 +26,10 @@ const activeAddon = ref<ResolvedAddon | null>(null);
 // Ladda in JSON data
 onMounted(() => {
   addons.value = (addonsJson.addons as RawAddon[]).map((a) => {
-    const imageUrl = new URL(`../../assets/addons/${a.image}`, import.meta.url)
-      .href;
+    const imageUrl = new URL(
+      `../../../assets/addons/${a.image}`,
+      import.meta.url
+    ).href;
     return { ...a, imageUrl } as ResolvedAddon;
   });
 });

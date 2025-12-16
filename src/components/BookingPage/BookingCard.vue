@@ -4,14 +4,14 @@ import {
   useBookingStore,
   type Addon,
   type PriceRange,
-} from "../stores/bookingStore";
+} from "../../stores/bookingStore";
 import Addons from "./addons/Addons.vue";
 import { useRoute, useRouter } from "vue-router";
-import experienceData from "../utils/experiences.json";
-import BaseModal from "./common/BaseModal.vue";
-import { useCart } from "../composables/useCart";
-import type { ExperienceType } from "../types/ExperienceType";
-import goBackButton from "./common/GoBackButton.vue";
+import experienceData from "../../utils/experiences.json";
+import BaseModal from "../common/BaseModal.vue";
+import { useCart } from "../../composables/useCart";
+import type { ExperienceType } from "../../types/ExperienceType";
+import goBackButton from "../Common/GoBackButton.vue";
 
 const fallbackTitle = "Fallback Upplevelse";
 const fallbackDescription =
