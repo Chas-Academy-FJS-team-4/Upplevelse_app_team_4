@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { useBookingStore, type Addon, type PriceRange } from "../stores/bookingStore";
+import {
+  useBookingStore,
+  type Addon,
+  type PriceRange,
+} from "../stores/bookingStore";
 import Addons from "./addons/Addons.vue";
 import { useRoute, useRouter } from "vue-router";
 import experienceData from "../utils/experiences.json";
@@ -9,9 +13,9 @@ import { useCart } from "../composables/useCart";
 import type { ExperienceType } from "../types/ExperienceType";
 import goBackButton from "./common/GoBackButton.vue";
 
-const fallbackTitle = "Sky diving from the moon";
+const fallbackTitle = "Fallback Upplevelse";
 const fallbackDescription =
-  "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.";
+  "Fallback beskrivning av upplevelsen. Detta är en hårdkodad text som visas när ingen upplevelse är vald i bokningsflödet.";
 const fallbackPrice = 12000000;
 const currency = "Kr";
 const fallbackTags = ["Rökgalet", "Rymd", "Fallskärm"];
@@ -129,12 +133,12 @@ watch(
   }
 );
 
-function continueDiscovering(navigate = true) {
-  store.resetBooking(true);
+function continueDiscovering() {
+  // store.resetBooking(false);
   showAddedModal.value = false;
-  if (navigate) {
-    router.push({ name: "experiences" });
-  }
+  // if (navigate) {
+  router.push({ name: "experiences" });
+  // }
 }
 
 // Emit för att skicka till parent (lägg till i varukorg) - men vi hanterar add direkt här
@@ -191,10 +195,11 @@ function formatAddonPrice(addon: Addon) {
 
 <template>
   <section
+    v-if="store.experience"
     class="flex flex-col items-center pt-20 gap-6 max-w-5xl mx-10 lg:mx-auto"
   >
-  <div class="self-start">
-    <goBackButton />
+    <div class="self-start">
+      <goBackButton />
     </div>
     <h2 class="w-full">Boka din upplevelse:</h2>
     <article
@@ -335,7 +340,7 @@ function formatAddonPrice(addon: Addon) {
       </p>
       <div class="flex gap-3 justify-center">
         <button
-          @click="continueDiscovering(true)"
+          @click="continueDiscovering()"
           class="bg-gray-100 px-4 py-2 rounded-md"
         >
           Fortsätt upptäcka

@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap");
+
 @import "tailwindcss";
 
 :root {
   /* Primär färg för knappar, headers, highlights */
-  --color-primary: #6618c6;
+  /* --color-primary: #6618c6; */
   --color-primary: #163952;
 
   /* --color-primary-hover: #6719c8e6; */
@@ -58,3 +60,12 @@ button {
 .hero {
   background-image: url("@/assets/images/hero.jpg");
 }
+
+/* .bungee-spice-regular {
+  font-family: "Londrina Outline", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 5rem;
+  color: #fc4c01;
+  text-shadow: 2px 4px 10px rgb(0, 0, 0);
+} */

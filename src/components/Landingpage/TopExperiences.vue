@@ -99,7 +99,7 @@ const scrollRight = () => {
             >
               {{ index + 1 }}
             </div>
-            <ExperienceCard :exp="exp" />
+            <ExperienceCard :exp="exp" class="w-60" />
           </div>
         </div>
       </div>
