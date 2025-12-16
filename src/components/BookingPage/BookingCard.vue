@@ -8,7 +8,7 @@ import {
 import Addons from "./addons/Addons.vue";
 import { useRoute, useRouter } from "vue-router";
 import experienceData from "../../utils/experiences.json";
-import BaseModal from "../common/BaseModal.vue";
+import BaseModal from "../Common/BaseModal.vue";
 import { useCart } from "../../composables/useCart";
 import type { ExperienceType } from "../../types/ExperienceType";
 import goBackButton from "../Common/GoBackButton.vue";

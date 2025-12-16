@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseModal from "../common/BaseModal.vue";
+import BaseModal from "../Common/BaseModal.vue";
 
 defineEmits<{
   close: [];

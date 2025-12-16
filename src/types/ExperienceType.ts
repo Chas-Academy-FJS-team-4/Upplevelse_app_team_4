@@ -8,6 +8,7 @@ export interface ExperienceType {
   tags: string[];
   ageGroup: string;
   image: string;
+  imagePosition?: string;
   category: string;
   isTop: boolean;
   isNew: boolean;

@@ -3,6 +3,7 @@ import type { Addon } from "../stores/bookingStore";
 
 export interface CartItem {
   id: number;
+  instanceId?: string;
   title: string;
   description: string;
   peopleCount: number;
@@ -39,44 +40,46 @@ export function useCart() {
     }, 0);
   });
 
-  const removeItem = (id: number) => {
-    cartItems.value = cartItems.value.filter((item) => item.id !== id);
+  const removeItem = (instanceId: string) => {
+    cartItems.value = cartItems.value.filter((item) => item.instanceId !== instanceId);
   };
 
-  const increasePeople = (id: number) => {
-    const item = cartItems.value.find((item) => item.id === id);
+  const increasePeople = (instanceId: string) => {
+    const item = cartItems.value.find((item) => item.instanceId === instanceId);
     if (item) {
       item.peopleCount++;
     }
   };
 
-  const decreasePeople = (id: number) => {
-    const item = cartItems.value.find((item) => item.id === id);
+  const decreasePeople = (instanceId: string) => {
+    const item = cartItems.value.find((item) => item.instanceId === instanceId);
     if (item && item.peopleCount > 1) {
       item.peopleCount--;
     }
   };
 
-  const changePeopleCount = (id: number, count: number) => {
-    const item = cartItems.value.find((item) => item.id === id);
+  const changePeopleCount = (instanceId: string, count: number) => {
+    const item = cartItems.value.find((item) => item.instanceId === instanceId);
     if (item) {
       item.peopleCount = Math.max(1, count);
     }
   };
 
-  const changeDate = (id: number, date: string) => {
-    const item = cartItems.value.find((item) => item.id === id);
+  const changeDate = (instanceId: string, date: string) => {
+    const item = cartItems.value.find((item) => item.instanceId === instanceId);
     if (item) {
       item.selectedDate = date;
     }
   };
 
   const addItem = (item: CartItem) => {
-    cartItems.value.push(item);
+    // Ensure each pushed item has a unique instanceId for distinguishing duplicates
+    const iid = item.instanceId ?? String(Date.now()) + "-" + Math.random().toString(36).slice(2, 9);
+    cartItems.value.push({ ...item, instanceId: iid });
   };
 
-  const removeAddonFromItem = (itemId: number, addonId: number) => {
-    const item = cartItems.value.find((i) => i.id === itemId);
+  const removeAddonFromItem = (instanceId: string, addonId: number) => {
+    const item = cartItems.value.find((i) => i.instanceId === instanceId);
     if (!item || !item.addons) return;
     item.addons = item.addons.filter((a) => a.id !== addonId);
   };

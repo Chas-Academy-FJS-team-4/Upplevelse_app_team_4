@@ -95,7 +95,7 @@ const scrollRight = () => {
         >
           <div class="flex items-center">
             <div
-              class="text-9xl font-bold pl-3 bg-gradient-to-r from-(--color-primary) via(--color-primary) to-(--color-primary)/70 bg-clip-text text-transparent"
+              class="text-9xl font-bold pl-3 bg-linear-to-r from-(--color-primary) via(--color-primary) to-(--color-primary)/70 bg-clip-text text-transparent"
             >
               {{ index + 1 }}
             </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Header from "../components/layout/Header.vue";
+import Header from "../components/Layout/Header.vue";
 import data from "../utils/experiences.json";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
