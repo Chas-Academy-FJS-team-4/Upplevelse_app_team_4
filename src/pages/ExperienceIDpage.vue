@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import Header from "../components/layout/Header.vue";
 import data from "../utils/experiences.json";
-import heroImg from "../assets/images/hero.jpg";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
-import goBackButton from "../components/common/GoBackButton.vue";
+import goBackButton from "../components/Common/GoBackButton.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -33,7 +32,7 @@ function focusSearch() {
   router.push({ name: "experiences", query: { focus: "1" } });
 }
 
-const { title, image, location, longDescription, price, tags, ageGroup } =
+const { title, image, location, longDescription, tags, ageGroup } =
   selectedExperience ?? {
     title: "",
     image: "",
@@ -100,9 +99,9 @@ const translatedAgeGroup = ageGroupTranslations[ageGroup];
     <section
       class="flex flex-col items-center pt-10 pb-20 gap-2 max-w-5xl mx-10 lg:mx-auto"
     >
-    <div class="mt-5 self-start">
-    <goBackButton />
-    </div>
+      <div class="mt-5 self-start">
+        <goBackButton />
+      </div>
       <article
         class="flex flex-col gap-4 p-4 rounded-lg shadow-md border-[0.5px] border-gray-300 bg-white w-full"
       >

@@ -54,10 +54,6 @@ const people = computed({
   get: () => store.people,
   set: (n: number) => store.updatePeople(n),
 });
-const ageCategory = computed({
-  get: () => store.ageCategory,
-  set: (c: string) => store.setAgeCategory(c),
-});
 
 // Visningsvärden som fallback till hårdkodat om store.experience saknas
 const displayTitle = computed(() => store.experience?.title ?? fallbackTitle);
