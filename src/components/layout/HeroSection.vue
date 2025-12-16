@@ -1,17 +1,5 @@
 <script setup lang="ts">
-// import heroImg from "../../assets/images/hero.jpg";
-// import SearchBox from "../SearchBox.vue";
-// import { ref } from "vue";
 import heroImg from "/HeroimgExp.png";
-
-// const searchBoxRef = ref<InstanceType<typeof SearchBox> | null>(null);
-
-// function focusSearch() {
-//   searchBoxRef.value?.focusSearch();
-// }
-
-// expose metoden så Header kan kalla den via ref
-// defineExpose({ focusSearch });
 </script>
 <template>
   <div class="">
@@ -20,10 +8,10 @@ import heroImg from "/HeroimgExp.png";
       class="absolute flex justify-center items-end inset-0 mb-15 md:mb-20 md:justify-start"
     >
       <div
-        class="flex flex-col gap-40 sm:gap-65 md:gap-30 items-center md:items-start"
+        class="flex flex-col gap-40 sm:gap-65 md:gap-60 lg:gap-25 items-center md:items-start"
       >
         <p
-          class="mx-5 md:mx-10 text-5xl md:text-7xl leading-16 sm:leading-16 md:leading-22 text-white text-shadow-lg text-shadow-orange-950"
+          class="orbitron-hero mx-3 md:mx-10 text-5xl md:text-6xl lg:text-7xl leading-18 sm:leading-16 md:leading-24 text-white text-shadow-lg text-shadow-orange-950"
         >
           Try the Wildest <br />
           Experiences Today!
