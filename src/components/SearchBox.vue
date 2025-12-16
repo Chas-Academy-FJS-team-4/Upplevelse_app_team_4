@@ -182,7 +182,7 @@ function applyFilters() {
           type="number"
           min="1"
           placeholder="Antal personer"
-          class="p-4 rounded-md bg-white w-1/3 flex-2 text-gray-500"
+          class="p-4 rounded-md bg-white w-1/3 flex-2"
           v-model.number="people"
           @keydown.enter.prevent="applyFilters"
         />
