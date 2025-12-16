@@ -16,6 +16,7 @@ const {
   changePeopleCount,
   changeDate,
   removeAddonFromItem,
+  clearCart,
 } = useCart();
 const isCheckoutMode = ref(false);
 const showModal = ref(false);
@@ -64,16 +65,28 @@ function handleConfirmationClose() {
 function goHomeAfterOrder() {
   lastOrder.value = null;
   router.push("/");
+  clearCart();
 }
 
 function formatAddonPrice(addon: {
-  priceType: string;
-  priceValue: number | { min: number; max: number };
+  priceType?: string;
+  priceValue?: number | { min: number; max: number };
+  finalPrice?: number;
 }) {
-  if (addon.priceType === "fixed") return `${addon.priceValue} SEK`;
-  if (addon.priceType === "percentage") return `${addon.priceValue}%`;
-  const range = addon.priceValue as { min: number; max: number };
-  return `${range.min} - ${range.max} SEK`;
+  if(addon.finalPrice !== undefined) {
+    return `${addon.finalPrice.toLocaleString("sv-SE")} SEK`;
+  }
+  if(addon.priceType === "fixed") {
+    return `${(addon.priceValue as number).toLocaleString("sv-SE")} SEK`;
+  }
+  if(addon.priceType === "percentage") {
+    return `${addon.priceValue} % av upplevelsepriset`;
+  }
+  if(addon.priceType === "range") {
+    const range = addon.priceValue as { min: number; max: number };
+    return `${range.min.toLocaleString("sv-SE")} - ${range.max.toLocaleString("sv-SE")} SEK`;
+  }
+  return "";
 }
 
 function printReceipt() {
@@ -116,7 +129,7 @@ function printReceipt() {
   <Header />
   <MiniHeroSection />
   <main>
-    <div class="py-20 flex flex-col max-w-5xl mx-10 lg:mx-auto">
+    <div class="py-10 flex flex-col max-w-5xl mx-10 lg:mx-auto">
       <div v-if="!lastOrder">
         <h2 class="text-left w-full">Kundkorg</h2>
         <p class="text-sm text-gray-500 mb-10">Sammanfattning</p>
@@ -185,7 +198,9 @@ function printReceipt() {
             <div class="p-8 text-center border rounded bg-white">
               <p class="text-lg mb-4">
                 Du har inga upplevelser i kundkorgen,
-                <router-link to="/experiences" class="text-purple-700 underline"
+                <router-link
+                  to="/experiences"
+                  class="text-(--color-primary) underline font-semibold"
                   >Klicka här</router-link
                 >
                 för att välja upplevelser!
@@ -273,7 +288,7 @@ function printReceipt() {
             Ändra order
           </button>
           <button
-            class="flex-1 bg-purple-800 hover:bg-purple-700 text-white py-2 rounded"
+            class="flex-1 bg-(--color-primary) hover:bg-(--color-primary-hover) text-white py-2 rounded"
             @click="confirmPurchase"
           >
             Bekräfta köp

@@ -1,10 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+
 @import "tailwindcss";
 
 :root {
   /* Primär färg för knappar, headers, highlights */
-  --color-primary: #6618c6;
-  --color-primary-hover: #6719c8e6;
-  --color-primary-light: #8a4fd2;
+  /* --color-primary: #6618c6; */
+  --color-primary: #163952;
+
+  /* --color-primary-hover: #6719c8e6; */
+  --color-primary-hover: #163952f3;
+
+  /* --color-primary-light: #8a4fd2; */
+  --color-primary-light: #2a5975;
+  --color-primary-dark: #071b2a;
 
   /* Accentfärg för små detaljer och text */
   --color-accent: #f96a1d;
@@ -14,7 +22,10 @@
 
   /* Bakgrundsfärger */
   --color-bg-primary: #fffcf9;
-  --color-bg-secondary: #fdf2f9;
+  --color-bg-secondary: #fdf8e1;
+  /* --color-bg-secondary: #a497aa; */
+  /* --color-bg-secondary: #e7e4eb; */
+  /* --color-bg-secondary: #8eacd2; */
 }
 
 main {
@@ -24,11 +35,13 @@ main {
 h2 {
   font-size: 1.7rem;
   font-weight: 500;
+  color: var(--color-primary-dark);
 }
 
 h3 {
   font-size: 1.3rem;
   font-weight: 500;
+  /* color: var(--color-primary-dark); */
 }
 
 h4 {
@@ -46,4 +59,11 @@ button {
 
 .hero {
   background-image: url("@/assets/images/hero.jpg");
+}
+
+.orbitron-hero {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }

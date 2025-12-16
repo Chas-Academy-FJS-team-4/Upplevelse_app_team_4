@@ -1,38 +1,29 @@
 <script setup lang="ts">
-import heroImg from "../../assets/images/hero.jpg";
-import SearchBox from "../SearchBox.vue";
-import { ref, defineExpose } from "vue";
-
-const searchBoxRef = ref<InstanceType<typeof SearchBox> | null>(null);
-
-function focusSearch() {
-  searchBoxRef.value?.focusSearch();
-}
-
-// expose metoden så Header kan kalla den via ref
-defineExpose({ focusSearch });
+import heroImg from "/HeroimgExp.png";
 </script>
 <template>
   <div class="">
-    <img class="h-screen w-full object-cover" :src="heroImg" />
+    <img class="h-screen w-full object-cover object-bottom" :src="heroImg" />
     <div
-      class="absolute inset-0 flex items-center justify-center flex-col gap-10 md:gap-15"
+      class="absolute flex justify-center items-end inset-0 mb-15 md:mb-20 md:justify-start"
     >
-      <div class="flex max-w-6xl w-6/7">
+      <div
+        class="flex flex-col gap-40 sm:gap-65 md:gap-60 lg:gap-25 items-center md:items-start"
+      >
         <p
-          class="absolute text-4xl sm:text-5xl md:text-7xl leading-12 sm:leading-16 md:leading-22 text-white text-shadow-md text-shadow-red-900"
+          class="orbitron-hero mx-3 md:mx-10 text-5xl md:text-6xl lg:text-7xl leading-18 sm:leading-16 md:leading-24 text-white text-shadow-lg text-shadow-orange-950"
         >
           Try the Wildest <br />
           Experiences Today!
         </p>
-        <div class="absolute bottom-8 right-6 md:bottom-50 md:right-60">
-        <router-link
-          to="/experiences"
-          class="rounded-full bg-linear-to-r from-purple-700 via-pink-600 to-red-500 text-white px-15 py-3 text-2xl font-semibold shadow-2xl hover:scale-105 transition-transform"
-        >
-          Utforska våra upplevelser
-        </router-link>
-      </div>
+        <div class="hover:scale-102 transition-transform ease-in-out">
+          <router-link
+            to="/experiences"
+            class="md:mx-20 bg-linear-to-r from-black/10 via-(--color-accent)/30 to-(--color-accent)/50 border-[0.5px] text-white px-10 py-3 text-2xl font-semibold shadow-2xl rounded-2xl"
+          >
+            Utforska våra upplevelser
+          </router-link>
+        </div>
       </div>
     </div>
   </div>

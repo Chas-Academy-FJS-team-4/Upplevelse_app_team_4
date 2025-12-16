@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useCart } from "../../composables/useCart";
-import { defineEmits } from "vue";
+// import { defineEmits } from "vue";
 import { RouterLink } from "vue-router";
-import logo from "../../../public/WildLogo.png";
+import logo from "/WildLogo.png";
+// import logo from "/wildXLogo.png";
 
 const emit = defineEmits<{
   (e: "focus-search"): void;
@@ -14,11 +15,8 @@ const cartCount = computed(() => cartItems.value.length);
 </script>
 <template>
   <header
-    class="absolute w-full bg-purple-900/40 flex flex-row justify-between items-center px-5 py-1 text-white z-100"
+    class="absolute w-full flex flex-row justify-between items-center px-5 py-1 text-white z-100 bg-black/30"
   >
-    <!-- <h1 class="text-2xl">
-      <router-link to="/">WildX</router-link>
-    </h1> -->
     <router-link to="/">
       <img class="w-42" :src="logo" alt="" />
     </router-link>
@@ -26,7 +24,7 @@ const cartCount = computed(() => cartItems.value.length);
       class="flex flex-row sm:gap-8 gap-3 text-sm md:text-[0.9rem] font-semibold"
     >
       <li
-        class="flex flex-row items-center justify-center pr-1 gap-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
+        class="flex flex-row items-center justify-center pr-1 gap-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
         @click="emit('focus-search')"
       >
         <span class="hidden sm:flex">
@@ -55,7 +53,7 @@ const cartCount = computed(() => cartItems.value.length);
         <router-link to="/experiences">Våra upplevelser</router-link>
       </li>
       <li
-        class="flex flex-row items-center justify-center gap-2 pr-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent-dark) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
+        class="flex flex-row items-center justify-center gap-2 pr-1 relative after:content-[''] after:absolute after:left-0 after:h-[3px] after:w-0 after:bg-(--color-accent) after:bottom-[-0.2rem] after:transition-all after:duration-300 hover:after:w-full"
       >
         <span class="hidden sm:flex"
           ><svg
@@ -84,7 +82,7 @@ const cartCount = computed(() => cartItems.value.length);
         <router-link to="/cart">Kundkorg</router-link>
         <span
           v-if="cartCount > 0"
-          class="absolute -top-2 -right-3 bg-orange-400 text-black text-xs font-bold px-2 py-0.5 rounded-full"
+          class="absolute top-0 left-3 bg-(--color-accent) text-white text-xs font-bold h-3.5 w-3.5 rounded-full flex items-center justify-center"
         >
           {{ cartCount }}
         </span>

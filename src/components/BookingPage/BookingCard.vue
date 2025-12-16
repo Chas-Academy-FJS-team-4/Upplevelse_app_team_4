@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { useBookingStore, type Addon, type PriceRange } from "../stores/bookingStore";
+import {
+  useBookingStore,
+  type Addon,
+  type PriceRange,
+} from "../../stores/bookingStore";
 import Addons from "./addons/Addons.vue";
 import { useRoute, useRouter } from "vue-router";
-import experienceData from "../utils/experiences.json";
-import BaseModal from "./common/BaseModal.vue";
-import { useCart } from "../composables/useCart";
-import type { ExperienceType } from "../types/ExperienceType";
-import goBackButton from "./common/goBackButton.vue";
+import experienceData from "../../utils/experiences.json";
+import BaseModal from "../common/BaseModal.vue";
+import { useCart } from "../../composables/useCart";
+import type { ExperienceType } from "../../types/ExperienceType";
+import goBackButton from "../Common/GoBackButton.vue";
 
-const fallbackTitle = "Sky diving from the moon";
+const fallbackTitle = "Fallback Upplevelse";
 const fallbackDescription =
-  "Hoppa från månen i en trycksatt hypersuit och landa i Stilla havet.";
+  "Fallback beskrivning av upplevelsen. Detta är en hårdkodad text som visas när ingen upplevelse är vald i bokningsflödet.";
 const fallbackPrice = 12000000;
 const currency = "Kr";
 const fallbackTags = ["Rökgalet", "Rymd", "Fallskärm"];
@@ -81,7 +85,7 @@ const translatedAgeGroup = computed(() => {
 onMounted(() => {
   store.resetBooking(false);
 
-  const id = Number(route.params.id || route.query.id || 1);
+  const id = Number(route.params.id);
   const found = (experienceData as any[]).find((e: any) => Number(e.id) === id);
   if (found) {
     store.setExperience(found as ExperienceType);
@@ -129,12 +133,12 @@ watch(
   }
 );
 
-function continueDiscovering(navigate = true) {
-  store.resetBooking(true);
+function continueDiscovering() {
+  // store.resetBooking(false);
   showAddedModal.value = false;
-  if (navigate) {
-    router.push({ name: "experiences" });
-  }
+  // if (navigate) {
+  router.push({ name: "experiences" });
+  // }
 }
 
 // Emit för att skicka till parent (lägg till i varukorg) - men vi hanterar add direkt här
@@ -161,6 +165,13 @@ function addToCart() {
     selectedDate: store.date || "",
     pricePerPerson,
     image: displayImage.value,
+    ageGroup: exp?.ageGroup as
+      | "kids"
+      | "adults"
+      | "seniors"
+      | "any"
+      | undefined,
+
     addons: addonsSnapshot,
   });
   showAddedModal.value = true;
@@ -184,10 +195,11 @@ function formatAddonPrice(addon: Addon) {
 
 <template>
   <section
+    v-if="store.experience"
     class="flex flex-col items-center pt-20 gap-6 max-w-5xl mx-10 lg:mx-auto"
   >
-  <div class="self-start">
-    <goBackButton />
+    <div class="self-start">
+      <goBackButton />
     </div>
     <h2 class="w-full">Boka din upplevelse:</h2>
     <article
@@ -240,17 +252,6 @@ function formatAddonPrice(addon: Addon) {
               </option>
             </select>
 
-            <!-- <label for="alderskategori" class="sr-only">Ålderskategori</label>
-            <select
-              id="alderskategori"
-              v-model="ageCategory"
-              class="border p-2 rounded-md text-sm"
-              aria-label="Välj ålderskategori"
-            >
-              <option value="child">Barn (0-12)</option>
-              <option value="teen">Tonår (13-17)</option>
-              <option value="adult">Vuxen (18+)</option>
-            </select> -->
             <p class="text-sm border border-black rounded-md py-[8.2px] px-2">
               Åldersgrupp: <strong>{{ translatedAgeGroup }}</strong>
             </p>
@@ -339,14 +340,14 @@ function formatAddonPrice(addon: Addon) {
       </p>
       <div class="flex gap-3 justify-center">
         <button
-          @click="continueDiscovering(true)"
+          @click="continueDiscovering()"
           class="bg-gray-100 px-4 py-2 rounded-md"
         >
           Fortsätt upptäcka
         </button>
         <button
           @click="$router.push('/cart')"
-          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+          class="bg-(--color-primary) hover:bg-(--color-primary-hover) text-white px-4 py-2 rounded-md"
         >
           Gå till kundkorg
         </button>

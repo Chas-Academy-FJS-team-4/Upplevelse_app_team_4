@@ -4,7 +4,7 @@ import data from "../utils/experiences.json";
 import heroImg from "../assets/images/hero.jpg";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
-import goBackButton from "../components/common/goBackButton.vue";
+import goBackButton from "../components/common/GoBackButton.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -56,11 +56,11 @@ const translatedAgeGroup = ageGroupTranslations[ageGroup];
 <template>
   <div class="flex flex-col min-h-screen bg-(--color-bg-primary)">
     <div class="">
-      <img class="h-90 w-full object-cover blur-md" :src="heroImg" />
+      <img class="h-90 w-full object-cover blur-md" :src="image" />
       <div class="absolute h-105 inset-0 flex justify-center items-center">
         <Header class="self-start" @focus-search="focusSearch"></Header>
         <div
-          class="flex items-center justify-center flex-col text-center text-yellow-200 bg-purple-900/40 min-h-32 gap-2 p-5 md:px-6 w-6/7 max-w-5xl"
+          class="flex items-center justify-center flex-col text-center text-yellow-200 bg-black/30 min-h-32 gap-2 p-5 md:px-6 w-6/7 max-w-5xl"
         >
           <h1 class="text-2xl md:text-6xl font-bold">{{ title }}</h1>
           <p

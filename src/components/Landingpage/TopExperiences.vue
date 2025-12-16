@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import ExperienceCard from "../common/ExperienceCard.vue";
+import ExperienceCard from "../Common/ExperienceCard.vue";
 import experiencesData from "../../utils/experiences.json";
 
 const topExperiences = computed(() =>
@@ -23,21 +23,35 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <div class="max-w-5xl mx-10 lg:mx-auto pt-10">
-    <h2 class="">Mest bokade upplevelser</h2>
+  <div class="bg-(--color-bg-primary)">
+    <h2 class="max-w-5xl mx-10 lg:mx-auto pt-10">Mest bokade upplevelser</h2>
   </div>
 
-  <div class="pb-20 px-0 lg:px-0 max-w-7xl mx-0 lg:mx-auto">
+  <div
+    class="pb-20 px-0 lg:px-0 max-w-7xl mx-0 lg:mx-auto bg-(--color-bg-primary)"
+  >
     <div class="relative h-96 sm:mx-5">
       <!-- Fade-sidor -->
       <div
         class="absolute left-0 top-0 h-full w-20 pointer-events-none"
-        style="background: linear-gradient(to right, #fffcf9, transparent)"
+        style="
+          background: linear-gradient(
+            to right,
+            var(--color-bg-primary),
+            transparent
+          );
+        "
       ></div>
 
       <div
         class="absolute right-0 top-0 h-full w-40 pointer-events-none"
-        style="background: linear-gradient(to left, #fffcf9, transparent)"
+        style="
+          background: linear-gradient(
+            to left,
+            var(--color-bg-primary),
+            transparent
+          );
+        "
       ></div>
 
       <!-- Vänster pil -->
@@ -80,10 +94,12 @@ const scrollRight = () => {
           class="shrink-0 w-80 snap-start flex flex-col h-full"
         >
           <div class="flex items-center">
-            <div class="text-9xl font-bold text-(--color-primary-light) pl-3">
+            <div
+              class="text-9xl font-bold pl-3 bg-gradient-to-r from-(--color-primary) via(--color-primary) to-(--color-primary)/70 bg-clip-text text-transparent"
+            >
               {{ index + 1 }}
             </div>
-            <ExperienceCard :exp="exp" />
+            <ExperienceCard :exp="exp" class="w-60" />
           </div>
         </div>
       </div>
